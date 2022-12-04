@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "~iotcon-sdk",
+  "description": "IoT Configurator sdk for shared functionality",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rimraf dist && tsc"
+  },
+  "author": "Dmytro Petrenko",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "4.9.3"
+  },
+  "dependencies": {
+    "rimraf": "^3.0.2"
+  }
+}

@@ -22,7 +22,9 @@
     "cors": "2.8.5",
     "dotenv": "16.0.3",
     "express": "4.18.2",
-    "reflect-metadata": "0.1.13"
+    "reflect-metadata": "0.1.13",
+    "rimraf": "3.0.2",
+    "~iotcon-sdk": "workspace:*"
   },
   "devDependencies": {
     "@types/cookie-parser": "1.4.3",

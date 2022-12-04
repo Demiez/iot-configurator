@@ -4,9 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:all": "nx run-many --target=build --all",
+    "build:sdk": "nx build ~iotcon-sdk"
+  },
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=7"
   },
   "keywords": [],
   "author": "Dmytro Petrenko",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "nx": "15.2.4"
+  }
 }
