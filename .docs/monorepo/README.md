@@ -14,7 +14,11 @@ App centric repositories are used mainly for developing applications and product
 - applications names are standard kebab-lowercase without special characters
 - libraries names must be standard kebab-lowercase with `~` preceding the name
 
-## monorepo commands
+## Nx cacheable operations
+
+One of the main benefits of adding nx to our pnpm workspace is speed via computation caching. Adding operations to nx caching is performed in `nx.json` in root dir. `cacheableOperations` array should contain only operations, which are side-effect free.
+
+## monorepo commands examples
 
 - `npm i -g pnpm` - install pnpm globally (check other options in pnpm doc)
 - `pnpm add nx -D -w` - add NX to root monorepo workspace
