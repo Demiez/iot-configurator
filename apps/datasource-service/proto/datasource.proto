@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package datasource;
+
+import "google/protobuf/empty.proto";
+
+message DataSource {
+  optional string id = 1;
+  string author_id = 2;
+  string title = 3;
+  string content = 4;
+}
+
+message DataSourceId {
+  string id = 1;
+}
+
+service DataSourceService {
+  rpc CreateDataSource(Blog) returns (BlogId);
+}
