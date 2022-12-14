@@ -2,7 +2,9 @@ import 'reflect-metadata';
 
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import express, { Request, Response } from 'express';
+import express from 'express';
+import router from './core/router';
+import errorHandlingMiddleware from './core/middlewares/error-handling.middleware';
 
 require('dotenv').config();
 
@@ -15,9 +17,9 @@ class App {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cors());
 
-    this.app.get('/api/v1', (req: Request, res: Response) => {
-      res.status(200).send({ status: 'ok' });
-    });
+    router(this.app);
+
+    errorHandlingMiddleware(this.app);
   }
 }
 
