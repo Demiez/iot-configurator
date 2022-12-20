@@ -26,8 +26,8 @@
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "typedi": "0.10.0",
-    "~iotcon-sdk": "workspace:*",
-    "~iotcon-models": "workspace:*"
+    "~iotcon-models": "workspace:*",
+    "~iotcon-sdk": "workspace:*"
   },
   "devDependencies": {
     "@types/cookie-parser": "1.4.3",

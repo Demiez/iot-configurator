@@ -6,6 +6,7 @@ In project all libs must be saved to libs folder. Libs are packages, which conta
 
 - SDK
 - Models
+- Proto
 
 ## Lib usage
 
