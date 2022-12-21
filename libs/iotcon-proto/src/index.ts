@@ -3,6 +3,6 @@
  * This lib is used to share protobuf builds as ts inside of the project
  */
 
-import * as datasource from './proto/datasource';
+import { DataSource, DataSourceServiceClient } from './proto/datasource';
 
-export default { datasource };
+export { DataSource, DataSourceServiceClient };
