@@ -1,6 +1,5 @@
 import { Service } from 'typedi';
-import { ChannelCredentials } from '@grpc/grpc-js';
-import { DataSourceServiceClient } from '~iotcon-proto';
+import { DataSourceServiceClient, IDataSourceDto } from '~iotcon-proto';
 import { BaseGrpcClientService } from '../../core/abstract/base-grpc-service';
 import process from 'process';
 
@@ -24,7 +23,7 @@ export class DataSourceService extends BaseGrpcClientService {
     );
   }
 
-  public async getDataSources() {
+  public async createDataSource(requestModel: IDataSourceDto) {
     await Promise.resolve([]);
   }
 }

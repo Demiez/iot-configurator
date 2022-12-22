@@ -3,6 +3,8 @@
  * This lib is used to share protobuf builds as ts inside of the project
  */
 
-import { DataSource, DataSourceServiceClient } from './proto/datasource';
+import { DataSourceDto, DataSourceServiceClient } from './proto/datasource';
 
-export { DataSource, DataSourceServiceClient };
+interface IDataSourceDto extends DataSourceDto {}
+
+export { IDataSourceDto, DataSourceServiceClient };

@@ -4,11 +4,76 @@ package datasource;
 
 import "google/protobuf/empty.proto";
 
-message DataSource {
+enum DataSourceTypesEnum {
+  MQTT = 0;
+  INSITE = 1;
+  RMQ = 2;
+  MODBUS = 3;
+  OPCUA = 4;
+  WITS0 = 5;
+}
+
+enum SecurityPolicyEnum {
+  NONE = 0;
+  BASIC128 = 1;
+  BASIC128RSA15 = 2;
+  BASIC192 = 3;
+  BASIC192RSA15 = 4;
+  BASIC256 = 5;
+  BASIC256RSA15 = 6;
+  AES128SHA256RSA = 7;
+  PUBSUBAES128 = 8;
+  PUBSUBAES256 = 9;
+  BASIC256SHA256 = 10;
+}
+
+enum InsiteLogLevelEnum {
+  TRACE = 0;
+  DEBUG = 1;
+  INFO = 2;
+  WARN = 3;
+  ERROR = 4;
+  FATAL = 5;
+}
+
+message DataSourceDto {
   optional string id = 1;
-  string author_id = 2;
-  string title = 3;
-  string content = 4;
+  string name = 2;
+  int32 port = 3;
+  DataSourceTypesEnum type = 4;
+  bool isDefault = 5;
+  bool isPrimary = 6;
+
+  // insite specific
+  optional string insiteServerAddress = 7;
+  optional string bridgeId = 8;
+  optional InsiteLogLevelEnum logLevel = 9;
+  // mqtt specific
+  optional string mqttServerAddress = 10;
+  // rmq specific
+  optional string amqpServerAddress = 11;
+  // modbus specific
+  optional string slaveId = 12;
+  optional string modbusIpAddress = 13;
+  // opcua specific
+  optional string opcuaServerAddress = 14;
+  optional string domainName = 15;
+  optional int32 messageSecurityMode = 16;
+  optional SecurityPolicyEnum securityPolicy = 17;
+  optional string certificate = 18;
+  // wits0 specific
+  // took data structure from here https://github.com/TIBCOSoftware/flogo-contrib/pull/326/files
+  optional int32 baudRate = 19;
+  optional int32 dataBits = 20;
+  optional int32 stopBits = 21;
+  optional int32 parity = 22;
+  optional int32 readTimeoutSeconds = 23;
+  optional int32 heartBeatInterval = 24;
+  optional string heartBeatValue = 25;
+  optional string packetHeader = 26;
+  optional string packetFooter = 27;
+  optional string lineSeparator = 28;
+  optional bool outputRaw = 29;
 }
 
 message DataSourceId {
@@ -16,5 +81,5 @@ message DataSourceId {
 }
 
 service DataSourceService {
-  rpc CreateDataSource(DataSource) returns (DataSourceId);
+  rpc CreateDataSource(DataSourceDto) returns (DataSourceId);
 }
