@@ -1,6 +1,7 @@
 import { Metadata, ServerUnaryCall } from '@grpc/grpc-js';
 import { Controller, Get } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
+import { IDataSourceDto, IDataSourceId } from '~iotcon-proto';
 import { AppService } from './app.service';
 
 @Controller()
@@ -14,10 +15,10 @@ export class AppController {
 
   @GrpcMethod('DataSourceService', 'CreateDataSource')
   createDataSource(
-    data: { id: string },
-    metadata: Metadata,
-    call: ServerUnaryCall<any, any>,
-  ): void {
-    console.log(data.id);
+    data: IDataSourceDto,
+    _metadata: Metadata,
+    call: ServerUnaryCall<IDataSourceDto, IDataSourceId>,
+  ): IDataSourceId {
+    return { id: data.id };
   }
 }

@@ -13,7 +13,7 @@ export class DataSourceController extends BaseController {
   }
 
   @Post('')
-  public async getDataSources(
+  public async createDataSource(
     req: Request,
     res: Response
   ): Promise<Response<never>> {
