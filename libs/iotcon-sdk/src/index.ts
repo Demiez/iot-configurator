@@ -1,8 +1,10 @@
 /**
  * This is the entrypoint for the IoT Configurator SDK.
- * To use, make dafault import as SDK
  */
 
 import { IotConSdk } from './iotconSDK';
+import * as enums from './enums';
 
-export default new IotConSdk();
+const SDK = new IotConSdk();
+
+export { SDK, enums };

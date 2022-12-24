@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  iotcon-mongo:
+    image: mongo:4.4.0
+    restart: always
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - iotcon-mongo:/var/lib/iotcon-mongo/data
+
+volumes:
+  iotcon-mongo:
