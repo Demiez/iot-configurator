@@ -4,9 +4,11 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 import router from './core/router';
+import process from 'process';
+import { join } from 'path';
 import errorHandlingMiddleware from './core/middlewares/error-handling.middleware';
 
-require('dotenv').config();
+require('dotenv').config({ path: join(process.cwd(), '../../.env') });
 
 class App {
   public app = express();

@@ -16,3 +16,4 @@ Any available lib package can be used by updating corresponding package.json, bu
 
 - `npm run build:libs` - builds all the libs available
 - `pnpm --filter api-gateway i` - run command for the api-gateway to pickup lib package after adding it to package.json
+- `pnpm add ~iotcon-sdk --filter api-gateway --workspace` - add sdk lib as dependency to api gateway application from current workspace

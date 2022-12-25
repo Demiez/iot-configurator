@@ -17,7 +17,7 @@ export class AppController {
   createDataSource(
     data: IDataSourceDto,
     _metadata: Metadata,
-    call: ServerUnaryCall<IDataSourceDto, IDataSourceId>,
+    _call: ServerUnaryCall<IDataSourceDto, IDataSourceId>,
   ): IDataSourceId {
     return { id: data.id };
   }

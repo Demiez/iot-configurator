@@ -4,19 +4,31 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import * as express from 'express';
 import { join } from 'path';
 import { AppModule } from './app.module';
+import { SDK, enums } from '~iotcon-sdk';
+import process from 'process';
+import { resolve } from 'path';
+import { Logger } from '@nestjs/common';
 
-const PORT = 3000;
-const GRPC_SERVER_ADDRESS = `0.0.0.0:50051`;
+const { NODE_ENV, GRPC_PORT_DATA_SOURCE_SERVICE, PORT_DATA_SOURCE_SERVICE } =
+  process.env;
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    logger: SDK._initializeLogger(
+      enums.MetaContextEnum.DATA_SOURCE_SERVICE,
+      NODE_ENV === 'development' ? resolve(__dirname) : undefined,
+    ),
+  });
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.GRPC,
     options: {
       package: 'datasource',
       protoPath: join(__dirname, '../../../proto/datasource.proto'),
-      url: GRPC_SERVER_ADDRESS,
+      url:
+        NODE_ENV === 'development'
+          ? `0.0.0.0:${GRPC_PORT_DATA_SOURCE_SERVICE}`
+          : `${URL}:${GRPC_PORT_DATA_SOURCE_SERVICE}`,
       keepalive: {
         keepaliveTimeMs: 120000,
         keepaliveTimeoutMs: 20000,
@@ -36,10 +48,12 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(3000);
-  console.log(`HTTP Server is listening on port ${PORT}`);
+  await app.listen(PORT_DATA_SOURCE_SERVICE);
+  Logger.log(`HTTP Server is listening on port ${PORT_DATA_SOURCE_SERVICE}`);
 
   await app.startAllMicroservices();
-  console.log(`gRPC Server is listening on ${GRPC_SERVER_ADDRESS}`);
+  Logger.log(
+    `gRPC Server is listening on port ${GRPC_PORT_DATA_SOURCE_SERVICE}`,
+  );
 }
 bootstrap();
