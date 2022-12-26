@@ -2,20 +2,29 @@ import { Injectable, LoggerService } from '@nestjs/common';
 import { createLogger, format, Logger, transports } from 'winston';
 import { ILogger } from './interfaces/logger.interfaces';
 import { join, resolve } from 'path';
-import { SIMPLE_DATE_FORMAT } from '../../constants/global.constants';
+import { SIMPLE_DATE_FORMAT } from '../constants/global.constants';
 import dateformat from 'dateformat';
-import { MetaContextEnum } from '../../enums';
+import { MetaContextEnum } from '../enums';
+import { Inject, Service } from 'typedi';
 
-Injectable();
+@Injectable()
+@Service()
 export class IotconLogger implements ILogger, LoggerService {
+  @Inject('context')
   private readonly context: MetaContextEnum;
+  @Inject('contextPath')
   private readonly contextPath: string;
   private readonly date: string;
   private logger: Logger;
 
-  constructor(context: MetaContextEnum, contextPath?: string) {
-    this.context = context;
-    this.contextPath = contextPath || resolve(join(__dirname));
+  constructor(context?: MetaContextEnum, contextPath?: string) {
+    if (context) {
+      this.context = context;
+    }
+    if (contextPath) {
+      this.contextPath = contextPath || resolve(join(__dirname));
+    }
+
     this.date = dateformat(new Date(), SIMPLE_DATE_FORMAT.toLowerCase());
 
     this.logger = createLogger({

@@ -1,13 +1,11 @@
 import { MetaContextEnum } from './enums';
-import { IotconLogger } from './utils/logger/logger';
+import { IotconLogger } from './logger/iotcon-logger';
 
 /**
  * The entry point class for the IotCon SDK.
  * This class contains required functionality
  */
-export class IotConSdk {
-  constructor() {}
-
+export class IotconSdk {
   public _initializeLogger(
     context: MetaContextEnum,
     contextPath?: string

@@ -8,13 +8,15 @@
   },
   "author": "Dmytro Petrenko",
   "license": "MIT",
-  "devDependencies": {
-    "typescript": "4.9.3"
-  },
   "dependencies": {
     "@nestjs/common": "9.0.0",
     "dateformat": "4.6.3",
+    "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
+    "typedi": "0.10.0",
     "winston": "3.8.2"
+  },
+  "devDependencies": {
+    "typescript": "4.9.3"
   }
 }

@@ -1,10 +1,11 @@
 /**
  * This is the entrypoint for the IoT Configurator SDK.
  */
-
-import { IotConSdk } from './iotconSDK';
+import 'reflect-metadata';
+import { IotconSdk } from './iotcon-sdk';
+import { IotconLogger } from './logger/iotcon-logger';
 import * as enums from './enums';
 
-const SDK = new IotConSdk();
+const SDK = new IotconSdk();
 
-export { SDK, enums };
+export { SDK, IotconLogger, enums };

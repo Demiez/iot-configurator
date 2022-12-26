@@ -1,9 +1,17 @@
 import { ChannelCredentials } from '@grpc/grpc-js';
 import { readFileSync } from 'fs';
 import process from 'process';
+import Container from 'typedi';
+import { IotconLogger } from '~iotcon-sdk';
+import { GRPC_SSL_CREDENTIALS_MESSAGE } from '../constants';
 
 export abstract class BaseGrpcClientService {
+  protected readonly logger: IotconLogger;
   protected credentials: ChannelCredentials;
+
+  constructor() {
+    this.logger = Container.get(IotconLogger);
+  }
 
   protected setCredentials() {
     const { SSL_ON, ROOT_CERT } = process.env;
@@ -13,12 +21,11 @@ export abstract class BaseGrpcClientService {
 
       this.credentials = ChannelCredentials.createSsl(rootCert);
 
-      // TODO: add logger
-      // console.log('Set client ssl credentials');
+      this.logger.log(GRPC_SSL_CREDENTIALS_MESSAGE);
     } else {
       this.credentials = ChannelCredentials.createInsecure();
 
-      // console.log('Set client insecure credentials');
+      this.logger.log(GRPC_SSL_CREDENTIALS_MESSAGE);
     }
   }
 }

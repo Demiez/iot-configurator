@@ -6,7 +6,6 @@ import {
 } from '~iotcon-proto';
 import { BaseGrpcClientService } from '../../core/abstract/base-grpc-service';
 import process from 'process';
-import { promisify } from 'util';
 
 @Service()
 export class DataSourceService extends BaseGrpcClientService {
@@ -40,7 +39,7 @@ export class DataSourceService extends BaseGrpcClientService {
             reject(err);
           }
 
-          console.log(
+          this.logger.log(
             `DataSource was created:\n${JSON.stringify(res, null, 4)}`
           );
           resolve(res.id);
