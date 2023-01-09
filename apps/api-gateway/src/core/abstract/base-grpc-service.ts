@@ -1,4 +1,4 @@
-import { ChannelCredentials } from '@grpc/grpc-js';
+import { ChannelCredentials, ServiceError } from '@grpc/grpc-js';
 import { readFileSync } from 'fs';
 import process from 'process';
 import Container from 'typedi';
@@ -27,5 +27,28 @@ export abstract class BaseGrpcClientService {
 
       this.logger.log(GRPC_SSL_CREDENTIALS_MESSAGE);
     }
+  }
+
+  /**
+   * @template T - grpc client type
+   * @template R - request model type
+   * @template V - response value type
+   */
+  protected async sendUnaryGrpcRequest<T, R, V>(
+    grpcClient: T,
+    procedureName: string,
+    requestModel: R
+  ): Promise<V> {
+    const result: V = await new Promise((resolve, reject) => {
+      grpcClient[procedureName](requestModel, (err: ServiceError, res: V) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(res);
+      });
+    });
+
+    return result;
   }
 }

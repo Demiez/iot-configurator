@@ -7,6 +7,13 @@
       "name": "Attach API Gateway",
       "address": "localhost",
       "port": 5800
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach Data Source Service",
+      "address": "localhost",
+      "port": 5801
     }
   ]
 }
