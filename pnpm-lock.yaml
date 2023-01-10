@@ -88,6 +88,7 @@ importers:
       ts-node: 10.0.0
       tsconfig-paths: 4.1.0
       typescript: 4.7.4
+      ~iotcon-errors: workspace:*
       ~iotcon-proto: workspace:*
       ~iotcon-sdk: workspace:*
     dependencies:
@@ -101,6 +102,7 @@ importers:
       reflect-metadata: 0.1.13
       rimraf: 3.0.2
       rxjs: 7.2.0
+      ~iotcon-errors: link:../../libs/iotcon-errors
       ~iotcon-proto: link:../../libs/iotcon-proto
       ~iotcon-sdk: link:../../libs/iotcon-sdk
     devDependencies:
@@ -125,6 +127,19 @@ importers:
       ts-node: 10.0.0_obrsqnaqniu2x2rgbw3thf4upm
       tsconfig-paths: 4.1.0
       typescript: 4.7.4
+
+  libs/iotcon-errors:
+    specifiers:
+      '@grpc/grpc-js': 1.8.0
+      '@nestjs/microservices': 9.2.1
+      rimraf: 3.0.2
+      typescript: 4.9.3
+    dependencies:
+      '@grpc/grpc-js': 1.8.0
+      '@nestjs/microservices': 9.2.1_hqdzqkj325o42wreyvztqm6phu
+      rimraf: 3.0.2
+    devDependencies:
+      typescript: 4.9.3
 
   libs/iotcon-models:
     specifiers:
@@ -1087,6 +1102,39 @@ packages:
       uuid: 8.3.2
     dev: false
 
+  /@nestjs/core/9.0.0_fgflybxzu32ezunggdlxx4ta2q:
+    resolution: {integrity: sha512-Ib25JrYQf5ICro19FBytoMpMQicanC4HG3goPBSqsolu+AhVzSU0OhDwmmiDy3aHgmheFnNEEdUH+Gh5Rm2cNw==}
+    requiresBuild: true
+    peerDependencies:
+      '@nestjs/common': ^9.0.0
+      '@nestjs/microservices': ^9.0.0
+      '@nestjs/platform-express': ^9.0.0
+      '@nestjs/websockets': ^9.0.0
+      reflect-metadata: ^0.1.12
+      rxjs: ^7.1.0
+    peerDependenciesMeta:
+      '@nestjs/microservices':
+        optional: true
+      '@nestjs/platform-express':
+        optional: true
+      '@nestjs/websockets':
+        optional: true
+    dependencies:
+      '@nestjs/common': 9.0.0_mnr6j2del53muneqly5h4y27ai
+      '@nestjs/microservices': 9.2.1_hqdzqkj325o42wreyvztqm6phu
+      '@nuxtjs/opencollective': 0.3.2
+      fast-safe-stringify: 2.1.1
+      iterare: 1.2.1
+      object-hash: 3.0.0
+      path-to-regexp: 3.2.0
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.0
+      tslib: 2.4.0
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /@nestjs/core/9.0.0_r6xshbggffvo2kxlvn7lufc3ym:
     resolution: {integrity: sha512-Ib25JrYQf5ICro19FBytoMpMQicanC4HG3goPBSqsolu+AhVzSU0OhDwmmiDy3aHgmheFnNEEdUH+Gh5Rm2cNw==}
     requiresBuild: true
@@ -1119,6 +1167,51 @@ packages:
       uuid: 8.3.2
     transitivePeerDependencies:
       - encoding
+
+  /@nestjs/microservices/9.2.1_hqdzqkj325o42wreyvztqm6phu:
+    resolution: {integrity: sha512-ve4dqgoIaUG9VtinHHGCvf6SvtPjd3I44Mj8z8mSkcB8BEPfJnf4FNOShFBgsedtxLaiZyjpv8NCLcNVv5KKGg==}
+    peerDependencies:
+      '@grpc/grpc-js': '*'
+      '@nestjs/common': ^9.0.0
+      '@nestjs/core': ^9.0.0
+      '@nestjs/websockets': ^9.0.0
+      amqp-connection-manager: '*'
+      amqplib: '*'
+      cache-manager: '*'
+      ioredis: '*'
+      kafkajs: '*'
+      mqtt: '*'
+      nats: '*'
+      reflect-metadata: ^0.1.12
+      rxjs: ^7.1.0
+    peerDependenciesMeta:
+      '@grpc/grpc-js':
+        optional: true
+      '@nestjs/websockets':
+        optional: true
+      amqp-connection-manager:
+        optional: true
+      amqplib:
+        optional: true
+      cache-manager:
+        optional: true
+      ioredis:
+        optional: true
+      kafkajs:
+        optional: true
+      mqtt:
+        optional: true
+      nats:
+        optional: true
+    dependencies:
+      '@grpc/grpc-js': 1.8.0
+      '@nestjs/common': 9.0.0_mnr6j2del53muneqly5h4y27ai
+      '@nestjs/core': 9.0.0_fgflybxzu32ezunggdlxx4ta2q
+      iterare: 1.2.1
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.0
+      tslib: 2.4.1
+    dev: false
 
   /@nestjs/microservices/9.2.1_ngbrldr55ttouas65ti4qqmga4:
     resolution: {integrity: sha512-ve4dqgoIaUG9VtinHHGCvf6SvtPjd3I44Mj8z8mSkcB8BEPfJnf4FNOShFBgsedtxLaiZyjpv8NCLcNVv5KKGg==}

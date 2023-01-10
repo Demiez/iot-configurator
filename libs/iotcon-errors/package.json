@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "~iotcon-errors",
+  "description": "IoT Configurator Errors lib",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rimraf dist && tsc"
+  },
+  "author": "Dmytro Petrenko",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "4.9.3"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "1.8.0",
+    "@nestjs/microservices": "9.2.1",
+    "rimraf": "3.0.2"
+  }
+}

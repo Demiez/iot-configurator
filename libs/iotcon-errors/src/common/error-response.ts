@@ -11,12 +11,8 @@ export class ErrorResponse extends Error {
 
   public errorDetails: errorDetailsType;
 
-  // to adopt MongoError and RPC handling
+  // to adopt MongoError handling
   public code?: number;
-  public details?: string;
-  public level?: string;
-  public metadata?: unknown;
-  public timestamp?: Date;
 
   constructor(errorCode: string, errorDetails: errorDetailsType = []) {
     super(errorCode);
@@ -25,6 +21,7 @@ export class ErrorResponse extends Error {
     this.type = ErrorResponseTypes.INTERNAL_SERVER_ERROR;
   }
 }
+
 export class ForbiddenError extends ErrorResponse {
   constructor(errorCode: string, errorDetails: any[] = []) {
     super(errorCode, errorDetails);

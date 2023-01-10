@@ -1,8 +1,5 @@
 import { ErrorResponseTypes } from '../enums/error-response-types.enum';
-
-// Required for generic handling
-/* eslint-disable */
-type errorDetailsType = any[] | any;
+import { errorDetailsType } from '../types/error-details.type';
 
 export class ErrorResponse extends Error {
   public type: ErrorResponseTypes;
@@ -25,6 +22,7 @@ export class ErrorResponse extends Error {
     this.type = ErrorResponseTypes.INTERNAL_SERVER_ERROR;
   }
 }
+
 export class ForbiddenError extends ErrorResponse {
   constructor(errorCode: string, errorDetails: any[] = []) {
     super(errorCode, errorDetails);
