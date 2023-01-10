@@ -1,12 +1,12 @@
 import { ErrorResponseTypes } from '../enums/error-response-types.enum';
-import { errorDetailsType } from '../types/error-details.type';
+import { ErrorDetailsType } from '../types/error-details.type';
 
 export class ErrorResponse extends Error {
   public type: ErrorResponseTypes;
 
   public errorCode: string;
 
-  public errorDetails: errorDetailsType;
+  public errorDetails: ErrorDetailsType;
 
   // to adopt MongoError and RPC handling
   public code?: number;
@@ -15,7 +15,7 @@ export class ErrorResponse extends Error {
   public metadata?: unknown;
   public timestamp?: Date;
 
-  constructor(errorCode: string, errorDetails: errorDetailsType = []) {
+  constructor(errorCode: string, errorDetails: ErrorDetailsType = []) {
     super(errorCode);
     this.errorCode = errorCode;
     this.errorDetails = errorDetails;
@@ -29,18 +29,21 @@ export class ForbiddenError extends ErrorResponse {
     this.type = ErrorResponseTypes.FORBIDDEN;
   }
 }
+
 export class UnauthorizedError extends ErrorResponse {
   constructor(errorCode: string, errorDetails: any[] = []) {
     super(errorCode, errorDetails);
     this.type = ErrorResponseTypes.UNAUTHORIZED;
   }
 }
+
 export class NotFoundError extends ErrorResponse {
   constructor(errorCode: string, errorDetails: any[] = []) {
     super(errorCode, errorDetails);
     this.type = ErrorResponseTypes.NOT_FOUND;
   }
 }
+
 export class InternalServerError extends ErrorResponse {
   constructor(errorCode: string, errorDetails: any[] = []) {
     super(errorCode, errorDetails);

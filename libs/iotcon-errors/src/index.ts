@@ -3,22 +3,32 @@
  * This lib contains sharable error models
  */
 
-import { errorDetailsType } from './types/error-details.type';
+import { ErrorCodes } from './enums';
+import { ErrorDetailsType } from './types/error-details.type';
 import {
-  RpcForbiddenError,
-  RpcBadRequestError,
-  RpcNotFoundError,
-  RpcUnauthorizedError,
-  RpcInternalError,
-  RpcError,
-} from './rpc/rpc-error-response';
+  BadRequestError,
+  BadRequestRpcError,
+  ForbiddenError,
+  ForbiddenRpcError,
+  NotFoundError,
+  NotFoundRpcError,
+  UnauthorizedError,
+  UnauthorizedRpcError,
+  InternalRpcError,
+  InternalServerError,
+} from './errors';
 
 export {
-  errorDetailsType,
-  RpcForbiddenError,
-  RpcBadRequestError,
-  RpcNotFoundError,
-  RpcUnauthorizedError,
-  RpcInternalError,
-  RpcError,
+  ErrorCodes,
+  ErrorDetailsType,
+  BadRequestError,
+  BadRequestRpcError,
+  ForbiddenError,
+  ForbiddenRpcError,
+  NotFoundError,
+  NotFoundRpcError,
+  UnauthorizedError,
+  UnauthorizedRpcError,
+  InternalRpcError,
+  InternalServerError,
 };

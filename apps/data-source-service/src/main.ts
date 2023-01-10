@@ -14,11 +14,12 @@ const { NODE_ENV, GRPC_PORT_DATA_SOURCE_SERVICE, PORT_DATA_SOURCE_SERVICE } =
   process.env;
 
 async function bootstrap() {
+  const logger = SDK._initializeLogger(
+    enums.MetaContextEnum.DATA_SOURCE_SERVICE,
+    NODE_ENV === 'development' ? resolve(__dirname) : undefined,
+  );
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    logger: SDK._initializeLogger(
-      enums.MetaContextEnum.DATA_SOURCE_SERVICE,
-      NODE_ENV === 'development' ? resolve(__dirname) : undefined,
-    ),
+    logger,
   });
 
   app.use(express.json({ limit: '10mb' }));
@@ -29,7 +30,7 @@ async function bootstrap() {
       parameterLimit: 10000,
     }),
   );
-  app.useGlobalFilters(new GlobalRpcExceptionFilter());
+  app.useGlobalFilters(new GlobalRpcExceptionFilter(logger));
 
   app.connectMicroservice<MicroserviceOptions>(
     {

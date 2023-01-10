@@ -12,6 +12,11 @@ function handleRpcError(
   delete error.metadata;
   delete error.level;
 
+  const errorData = error.details.split('/');
+  const errorMessage = errorData[1] || error.details;
+
+  error.errorCode = errorData[1] ? errorData[0] : undefined;
+
   switch (error.code) {
     case 3:
       return res
@@ -19,7 +24,7 @@ function handleRpcError(
         .send(
           new StandardResponseViewModel<ErrorResponse>(
             error,
-            error.details,
+            errorMessage,
             BaseStatus.BAD_REQUEST
           )
         );
@@ -30,7 +35,7 @@ function handleRpcError(
         .send(
           new StandardResponseViewModel<ErrorResponse>(
             error,
-            error.details,
+            errorMessage,
             BaseStatus.UNAUTHORIZED
           )
         );
@@ -41,7 +46,7 @@ function handleRpcError(
         .send(
           new StandardResponseViewModel<ErrorResponse>(
             error,
-            error.details,
+            errorMessage,
             BaseStatus.FORBIDDEN
           )
         );
@@ -51,7 +56,7 @@ function handleRpcError(
         .send(
           new StandardResponseViewModel<ErrorResponse>(
             error,
-            error.details,
+            errorMessage,
             BaseStatus.NOT_FOUND
           )
         );
@@ -63,7 +68,7 @@ function handleRpcError(
         .send(
           new StandardResponseViewModel<ErrorResponse>(
             error,
-            error.details || 'Internal Server Error',
+            errorMessage || 'Internal Server Error',
             BaseStatus.INTERNAL_SERVER_ERROR
           )
         );

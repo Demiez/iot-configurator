@@ -1,5 +1,4 @@
-import { NextFunction, Request } from 'express';
-import { RequestHandler, Response } from 'express-serve-static-core';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { isEmpty, isObject } from 'lodash';
 import Container from 'typedi';
 import { IotconLogger } from '~iotcon-sdk';

@@ -1,11 +1,10 @@
 import { RpcException } from '@nestjs/microservices';
 import { status } from '@grpc/grpc-js';
-import { ErrorDetailsType } from '../types/error-details.type';
-import { ErrorCodes } from '../enums';
+import { ErrorCodes, ErrorDetailsType } from '~iotcon-errors';
 
 function createMessage(
   errorCode: ErrorCodes,
-  errorDetails: ErrorDetailsType
+  errorDetails: ErrorDetailsType,
 ): string {
   let errorDataMessage = '';
 

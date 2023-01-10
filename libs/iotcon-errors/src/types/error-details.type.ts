@@ -1,3 +1,3 @@
 // Required for generic handling
 /* eslint-disable */
-export type errorDetailsType = any[] | any;
+export type ErrorDetailsType = any[] | any;
