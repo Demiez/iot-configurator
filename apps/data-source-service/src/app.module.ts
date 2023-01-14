@@ -1,9 +1,8 @@
 import { Logger, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import process from 'process';
 import { join } from 'path';
+import { DataSourceModule } from './modules';
 
 console.log(process.cwd());
 
@@ -12,8 +11,9 @@ console.log(process.cwd());
     ConfigModule.forRoot({
       envFilePath: join(process.cwd(), '../../.env'),
     }),
+    DataSourceModule,
   ],
-  controllers: [AppController],
-  providers: [Logger, AppService],
+  controllers: [],
+  providers: [Logger],
 })
 export class AppModule {}
