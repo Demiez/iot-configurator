@@ -1,9 +1,11 @@
 import { Application, NextFunction, Request, Response } from 'express';
 import { inRange } from 'lodash';
-import { BaseStatus } from '../enums/base-statuses.enum';
-import { ErrorResponseTypes } from '../enums/error-response-types.enum';
-import { ErrorResponse } from '../errors';
-import { FieldIsBadModel, StandardResponseViewModel } from '../view-models';
+import {
+  ErrorResponse,
+  ErrorResponseTypes,
+  FieldIsBadModel,
+} from '~iotcon-errors';
+import { BaseStatus, StandardResponseViewModel } from '~iotcon-models';
 
 function handleRpcError(
   error: ErrorResponse,

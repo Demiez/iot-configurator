@@ -1,11 +1,10 @@
 import { Application, Request, Response } from 'express';
 import Container from 'typedi';
+import { BaseStatus, StandardResponseViewModel } from '~iotcon-models';
 import { DataSourceController } from '../../modules';
 import { APP_ROOT, APP_ROOT_MESSAGE } from '../constants';
-import { BaseStatus } from '../enums/base-statuses.enum';
 import { MetadataKeysEnum } from '../enums/metadata-keys.enum';
 import { IRouteDefinition } from '../interfaces/route.interfaces';
-import { StandardResponseViewModel } from '../view-models';
 import { wrapRouteAction } from './route-wrapper';
 
 export default (app: Application): void => {

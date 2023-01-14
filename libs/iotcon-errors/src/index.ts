@@ -3,32 +3,27 @@
  * This lib contains sharable error models
  */
 
-import { ErrorCodes } from './enums';
+import { ErrorCodes, ErrorResponseTypes } from './enums';
 import { ErrorDetailsType } from './types/error-details.type';
 import {
   BadRequestError,
-  BadRequestRpcError,
   ForbiddenError,
-  ForbiddenRpcError,
   NotFoundError,
-  NotFoundRpcError,
   UnauthorizedError,
-  UnauthorizedRpcError,
-  InternalRpcError,
   InternalServerError,
+  ErrorResponse,
 } from './errors';
+import { FieldIsBadModel } from './view-models';
 
 export {
   ErrorCodes,
+  ErrorResponseTypes,
   ErrorDetailsType,
   BadRequestError,
-  BadRequestRpcError,
   ForbiddenError,
-  ForbiddenRpcError,
   NotFoundError,
-  NotFoundRpcError,
   UnauthorizedError,
-  UnauthorizedRpcError,
-  InternalRpcError,
   InternalServerError,
+  ErrorResponse,
+  FieldIsBadModel,
 };

@@ -1,6 +1,5 @@
 import { Response } from 'express';
-
-import { ErrorResponse } from '../errors/error-response';
+import { ErrorResponse } from '~iotcon-errors';
 
 export default class BaseController {
   /* eslint-disable */

@@ -28,6 +28,7 @@
     "rimraf": "3.0.2",
     "ts-proto": "1.126.1",
     "typedi": "0.10.0",
+    "~iotcon-errors": "workspace:*",
     "~iotcon-models": "workspace:*",
     "~iotcon-proto": "workspace:*",
     "~iotcon-sdk": "workspace:*"

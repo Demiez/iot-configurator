@@ -1,4 +1,4 @@
-import { HttpMethodsEnum } from '../enums/http-methods.enum';
+import { HttpMethodsEnum } from '~iotcon-models';
 import { MetadataKeysEnum } from '../enums/metadata-keys.enum';
 import { IRouteDefinition } from '../interfaces/route.interfaces';
 

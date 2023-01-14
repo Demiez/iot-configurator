@@ -1,4 +1,4 @@
-import { BaseStatus } from '../enums/base-statuses.enum';
+import { BaseStatus } from '../../enums/core';
 
 export class StandardResponseViewModel<T> {
   public result: T;
