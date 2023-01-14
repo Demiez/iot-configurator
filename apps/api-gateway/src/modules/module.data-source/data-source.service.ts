@@ -33,7 +33,9 @@ export class DataSourceService extends BaseGrpcClientService {
     this.logger.log(`gRPC Client started for ${this.serverAddress}`);
   }
 
-  public async createDataSource(requestModel: IDataSourceDto) {
+  public async createDataSource(
+    requestModel: IDataSourceDto
+  ): Promise<IDataSourceId> {
     const result = await this.sendUnaryGrpcRequest<
       DataSourceServiceClient,
       IDataSourceDto,

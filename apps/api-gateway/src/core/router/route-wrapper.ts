@@ -3,7 +3,9 @@ import { isEmpty, isObject } from 'lodash';
 import Container from 'typedi';
 import { IotconLogger } from '~iotcon-sdk';
 
-export function wrapRouteAction(action: RequestHandler) {
+export function wrapRouteAction(
+  action: RequestHandler
+): (req: Request, res: Response, next: NextFunction) => Promise<void> {
   const logger = Container.get(IotconLogger);
 
   return async (

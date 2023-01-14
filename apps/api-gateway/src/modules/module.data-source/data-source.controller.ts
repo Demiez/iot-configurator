@@ -1,6 +1,6 @@
 import { Service } from 'typedi';
 import BaseController from '../../core/abstract/base-controller';
-import { Controller, Get, Post } from '../../core/decorators';
+import { Controller, Post } from '../../core/decorators';
 import { Request, Response } from 'express';
 import { APP_ROOT } from '../../core/constants';
 import { DataSourceService } from './data-source.service';

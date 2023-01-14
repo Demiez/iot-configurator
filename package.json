@@ -2,6 +2,8 @@
   "name": "iot-configurator",
   "version": "1.0.0",
   "description": "",
+  "author": "Dmytro Petrenko",
+  "license": "MIT",
   "main": "index.js",
   "scripts": {
     "build:all": "nx run-many --target=build --all",
@@ -9,6 +11,8 @@
     "build:libs": "nx run-many --target=build --projects=~iotcon-sdk,~iotcon-models,~iotcon-proto,~iotcon-errors",
     "build:sdk": "nx build ~iotcon-sdk",
     "dev:all": "nx run-many --target=dev --projects=api-gateway,data-source-service",
+    "dev:api-gateway": "nx run api-gateway:dev",
+    "lint:all": "nx run-many --target=lint --projects=api-gateway,data-source-service",
     "graph": "nx graph"
   },
   "engines": {
@@ -16,8 +20,6 @@
     "pnpm": ">=7"
   },
   "keywords": [],
-  "author": "Dmytro Petrenko",
-  "license": "MIT",
   "devDependencies": {
     "nx": "15.2.4"
   }

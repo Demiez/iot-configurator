@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import express from 'express';
+import express, { Application } from 'express';
 import router from './core/router';
 import process from 'process';
 import { join, resolve } from 'path';
@@ -13,7 +13,7 @@ import { enums } from '~iotcon-sdk';
 require('dotenv').config({ path: join(process.cwd(), '../../.env') });
 
 class App {
-  public app = express();
+  public app: Application = express();
 
   constructor() {
     Container.set('context', enums.MetaContextEnum.API_GATEWAY);

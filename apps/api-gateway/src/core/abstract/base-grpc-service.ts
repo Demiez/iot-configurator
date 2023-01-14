@@ -13,7 +13,7 @@ export abstract class BaseGrpcClientService {
     this.logger = Container.get(IotconLogger);
   }
 
-  protected setCredentials() {
+  protected setCredentials(): void {
     const { SSL_ON, ROOT_CERT } = process.env;
 
     if (SSL_ON === 'true') {
