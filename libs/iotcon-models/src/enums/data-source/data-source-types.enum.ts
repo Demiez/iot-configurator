@@ -1,8 +1,8 @@
 export enum DataSourceTypesEnum {
-  MQTT = 'mqtt',
-  INSITE = 'insite',
-  RMQ = 'rmq',
-  MODBUS = 'modbus',
-  OPCUA = 'opcua',
-  WITS0 = 'wits0',
+  MQTT = 'MQTT',
+  INSITE = 'INSITE',
+  RMQ = 'RMQ',
+  MODBUS = 'MODBUS',
+  OPCUA = 'OPCUA',
+  WITS0 = 'WITS0',
 }

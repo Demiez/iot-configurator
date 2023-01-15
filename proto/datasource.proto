@@ -5,35 +5,38 @@ package datasource;
 import "google/protobuf/empty.proto";
 
 enum DataSourceTypesEnum {
-  MQTT = 0;
-  INSITE = 1;
-  RMQ = 2;
-  MODBUS = 3;
-  OPCUA = 4;
-  WITS0 = 5;
+  UNKNOWN_TYPE = 0;
+  MQTT = 1;
+  INSITE = 2;
+  RMQ = 3;
+  MODBUS = 4;
+  OPCUA = 5;
+  WITS0 = 6;
 }
 
 enum SecurityPolicyEnum {
-  NONE = 0;
-  BASIC128 = 1;
-  BASIC128RSA15 = 2;
-  BASIC192 = 3;
-  BASIC192RSA15 = 4;
-  BASIC256 = 5;
-  BASIC256RSA15 = 6;
-  AES128SHA256RSA = 7;
-  PUBSUBAES128 = 8;
-  PUBSUBAES256 = 9;
-  BASIC256SHA256 = 10;
+  UNKNOWN_POLICY = 0;
+  NONE = 1;
+  BASIC128 = 2;
+  BASIC128RSA15 = 3;
+  BASIC192 = 4;
+  BASIC192RSA15 = 5;
+  BASIC256 = 6;
+  BASIC256RSA15 = 7;
+  AES128SHA256RSA = 8;
+  PUBSUBAES128 = 9;
+  PUBSUBAES256 = 10;
+  BASIC256SHA256 = 11;
 }
 
 enum InsiteLogLevelEnum {
-  TRACE = 0;
-  DEBUG = 1;
-  INFO = 2;
-  WARN = 3;
-  ERROR = 4;
-  FATAL = 5;
+  UNKNOWN_LEVEL = 0;
+  TRACE = 1;
+  DEBUG = 2;
+  INFO = 3;
+  WARN = 4;
+  ERROR = 5;
+  FATAL = 6;
 }
 
 message DataSourceDto {

@@ -22,6 +22,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger,
   });
+  const protoPath = join(__dirname, '../../../proto/datasource.proto');
 
   app.use(express.json({ limit: '10mb' }));
   app.use(
@@ -38,7 +39,7 @@ async function bootstrap() {
       transport: Transport.GRPC,
       options: {
         package: 'datasource',
-        protoPath: join(__dirname, '../../../proto/datasource.proto'),
+        protoPath,
         url:
           NODE_ENV === 'development'
             ? `0.0.0.0:${GRPC_PORT_DATA_SOURCE_SERVICE}`
@@ -49,6 +50,15 @@ async function bootstrap() {
           keepalivePermitWithoutCalls: 1,
           http2MinTimeBetweenPingsMs: 120000,
           http2MaxPingsWithoutData: 0,
+        },
+        loader: {
+          keepCase: true,
+          longs: Number,
+          enums: String,
+          defaults: false,
+          arrays: true,
+          objects: true,
+          includeDirs: [protoPath],
         },
       },
     },

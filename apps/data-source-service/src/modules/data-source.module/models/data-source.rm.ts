@@ -1,11 +1,53 @@
+import { keys, pick } from 'lodash';
+import { DataSourceTypesEnum } from '~iotcon-models';
 import { IDataSourceDto } from '~iotcon-proto';
-import {
-  DataSourceTypesEnum,
-  InsiteLogLevelEnum,
-  SecurityPolicyEnum,
-} from '~iotcon-models';
+import { DataSourceTypesBaseModel } from './abstract/data-source-types.bm';
 
-export class DataSourceRequestModel implements IDataSourceDto {
+// export class DataSourceRequestModel implements IDataSourceDto {
+//   public id?: string = undefined;
+//   public name: string = undefined;
+//   public port: number = undefined;
+//   public type: DataSourceTypesEnum = undefined;
+//   public isDefault: boolean = undefined;
+//   public isPrimary: boolean = undefined;
+
+//   // insite
+//   public insiteServerAddress?: string;
+//   public bridgeId?: string;
+//   public logLevel?: InsiteLogLevelEnum;
+
+//   // mqtt
+//   public mqttServerAddress?: string;
+
+//   // rmq
+//   public amqpServerAddress?: string;
+
+//   // modbus
+//   public slaveId?: string;
+//   public modbusIpAddress?: string;
+
+//   // opcua
+//   public opcuaServerAddress?: string;
+//   public domainName?: string;
+//   public messageSecurityMode?: number;
+//   public securityPolicy?: SecurityPolicyEnum;
+//   public certificate?: string;
+
+//   // wits0
+//   public baudRate?: number;
+//   public dataBits?: number;
+//   public stopBits?: number;
+//   public parity?: number;
+//   public readTimeoutSeconds?: number;
+//   public heartBeatInterval?: number;
+//   public heartBeatValue?: string;
+//   public packetHeader?: string;
+//   public packetFooter?: string;
+//   public lineSeparator?: string;
+//   public outputRaw?: boolean;
+// }
+
+export class DataSourceRequestModel extends DataSourceTypesBaseModel {
   public id?: string = undefined;
   public name: string = undefined;
   public port: number = undefined;
@@ -13,38 +55,10 @@ export class DataSourceRequestModel implements IDataSourceDto {
   public isDefault: boolean = undefined;
   public isPrimary: boolean = undefined;
 
-  // insite
-  public insiteServerAddress?: string;
-  public bridgeId?: string;
-  public logLevel?: InsiteLogLevelEnum;
+  constructor(dataSourceData: IDataSourceDto) {
+    super();
+    const pickedBody = pick(dataSourceData, keys(dataSourceData));
 
-  // mqtt
-  public mqttServerAddress?: string;
-
-  // rmq
-  public amqpServerAddress?: string;
-
-  // modbus
-  public slaveId?: string;
-  public modbusIpAddress?: string;
-
-  // opcua
-  opcuaServerAddress?: string;
-  domainName?: string;
-  messageSecurityMode?: number;
-  securityPolicy?: SecurityPolicyEnum;
-  certificate?: string;
-
-  // wits0
-  baudRate?: number;
-  dataBits?: number;
-  stopBits?: number;
-  parity?: number;
-  readTimeoutSeconds?: number;
-  heartBeatInterval?: number;
-  heartBeatValue?: string;
-  packetHeader?: string;
-  packetFooter?: string;
-  lineSeparator?: string;
-  outputRaw?: boolean;
+    Object.assign(this, pickedBody);
+  }
 }

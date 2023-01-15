@@ -7,7 +7,7 @@
   "scripts": {
     "pb:gen": "node --require ts-node/register/transpile-only ./scripts/build-proto.ts",
     "pb:rm": "node --require ts-node/register/transpile-only ./scripts/clear-proto.ts",
-    "build": "rimraf dist && rimraf src/proto && node --require ts-node/register/transpile-only ./scripts/build-proto.ts && tsc"
+    "build": "rimraf lib && rimraf src/proto && node --require ts-node/register/transpile-only ./scripts/build-proto.ts && tsc"
   },
   "author": "Dmytro Petrenko",
   "license": "MIT",

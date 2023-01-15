@@ -13,3 +13,4 @@ interface IDataSourceDto extends DataSourceDto {}
 interface IDataSourceId extends DataSourceId {}
 
 export { IDataSourceDto, IDataSourceId, DataSourceServiceClient };
+export * from './mapping';

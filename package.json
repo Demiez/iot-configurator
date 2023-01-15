@@ -10,6 +10,7 @@
     "build:apps": "nx run-many --target=build --projects=api-gateway",
     "build:libs": "nx run-many --target=build --projects=~iotcon-sdk,~iotcon-models,~iotcon-proto,~iotcon-errors",
     "build:sdk": "nx build ~iotcon-sdk",
+    "build:proto": "nx build ~iotcon-proto --skip-nx-cache",
     "dev:all": "nx run-many --target=dev --projects=api-gateway,data-source-service",
     "dev:api-gateway": "nx run api-gateway:dev",
     "lint:all": "nx run-many --target=lint --projects=api-gateway,data-source-service",

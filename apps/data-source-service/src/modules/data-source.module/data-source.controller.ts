@@ -3,6 +3,7 @@ import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { IDataSourceDto, IDataSourceId } from '~iotcon-proto';
 import { DataSourceService } from './data-source.service';
+import { DataSourceRequestModel } from './models';
 
 @Controller()
 export class DataSourceController {
@@ -14,10 +15,10 @@ export class DataSourceController {
     _metadata: Metadata,
     _call: ServerUnaryCall<IDataSourceDto, IDataSourceId>,
   ): Promise<IDataSourceId> {
-    // throw new ForbiddenRpcError(ErrorCodes.INVALID_INPUT_PARAMS, ['hello']);
+    const requestModel = new DataSourceRequestModel(data);
 
-    const dataSourceId = await this.dataSourceService.createDataSource();
+    const result = await this.dataSourceService.createDataSource(requestModel);
 
-    return { id: dataSourceId };
+    return result;
   }
 }

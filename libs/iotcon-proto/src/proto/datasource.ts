@@ -14,33 +14,37 @@ import {
 import _m0 from "protobufjs/minimal";
 
 export enum DataSourceTypesEnum {
-  MQTT = 0,
-  INSITE = 1,
-  RMQ = 2,
-  MODBUS = 3,
-  OPCUA = 4,
-  WITS0 = 5,
+  UNKNOWN_TYPE = 0,
+  MQTT = 1,
+  INSITE = 2,
+  RMQ = 3,
+  MODBUS = 4,
+  OPCUA = 5,
+  WITS0 = 6,
   UNRECOGNIZED = -1,
 }
 
 export function dataSourceTypesEnumFromJSON(object: any): DataSourceTypesEnum {
   switch (object) {
     case 0:
+    case "UNKNOWN_TYPE":
+      return DataSourceTypesEnum.UNKNOWN_TYPE;
+    case 1:
     case "MQTT":
       return DataSourceTypesEnum.MQTT;
-    case 1:
+    case 2:
     case "INSITE":
       return DataSourceTypesEnum.INSITE;
-    case 2:
+    case 3:
     case "RMQ":
       return DataSourceTypesEnum.RMQ;
-    case 3:
+    case 4:
     case "MODBUS":
       return DataSourceTypesEnum.MODBUS;
-    case 4:
+    case 5:
     case "OPCUA":
       return DataSourceTypesEnum.OPCUA;
-    case 5:
+    case 6:
     case "WITS0":
       return DataSourceTypesEnum.WITS0;
     case -1:
@@ -52,6 +56,8 @@ export function dataSourceTypesEnumFromJSON(object: any): DataSourceTypesEnum {
 
 export function dataSourceTypesEnumToJSON(object: DataSourceTypesEnum): string {
   switch (object) {
+    case DataSourceTypesEnum.UNKNOWN_TYPE:
+      return "UNKNOWN_TYPE";
     case DataSourceTypesEnum.MQTT:
       return "MQTT";
     case DataSourceTypesEnum.INSITE:
@@ -71,53 +77,57 @@ export function dataSourceTypesEnumToJSON(object: DataSourceTypesEnum): string {
 }
 
 export enum SecurityPolicyEnum {
-  NONE = 0,
-  BASIC128 = 1,
-  BASIC128RSA15 = 2,
-  BASIC192 = 3,
-  BASIC192RSA15 = 4,
-  BASIC256 = 5,
-  BASIC256RSA15 = 6,
-  AES128SHA256RSA = 7,
-  PUBSUBAES128 = 8,
-  PUBSUBAES256 = 9,
-  BASIC256SHA256 = 10,
+  UNKNOWN_POLICY = 0,
+  NONE = 1,
+  BASIC128 = 2,
+  BASIC128RSA15 = 3,
+  BASIC192 = 4,
+  BASIC192RSA15 = 5,
+  BASIC256 = 6,
+  BASIC256RSA15 = 7,
+  AES128SHA256RSA = 8,
+  PUBSUBAES128 = 9,
+  PUBSUBAES256 = 10,
+  BASIC256SHA256 = 11,
   UNRECOGNIZED = -1,
 }
 
 export function securityPolicyEnumFromJSON(object: any): SecurityPolicyEnum {
   switch (object) {
     case 0:
+    case "UNKNOWN_POLICY":
+      return SecurityPolicyEnum.UNKNOWN_POLICY;
+    case 1:
     case "NONE":
       return SecurityPolicyEnum.NONE;
-    case 1:
+    case 2:
     case "BASIC128":
       return SecurityPolicyEnum.BASIC128;
-    case 2:
+    case 3:
     case "BASIC128RSA15":
       return SecurityPolicyEnum.BASIC128RSA15;
-    case 3:
+    case 4:
     case "BASIC192":
       return SecurityPolicyEnum.BASIC192;
-    case 4:
+    case 5:
     case "BASIC192RSA15":
       return SecurityPolicyEnum.BASIC192RSA15;
-    case 5:
+    case 6:
     case "BASIC256":
       return SecurityPolicyEnum.BASIC256;
-    case 6:
+    case 7:
     case "BASIC256RSA15":
       return SecurityPolicyEnum.BASIC256RSA15;
-    case 7:
+    case 8:
     case "AES128SHA256RSA":
       return SecurityPolicyEnum.AES128SHA256RSA;
-    case 8:
+    case 9:
     case "PUBSUBAES128":
       return SecurityPolicyEnum.PUBSUBAES128;
-    case 9:
+    case 10:
     case "PUBSUBAES256":
       return SecurityPolicyEnum.PUBSUBAES256;
-    case 10:
+    case 11:
     case "BASIC256SHA256":
       return SecurityPolicyEnum.BASIC256SHA256;
     case -1:
@@ -129,6 +139,8 @@ export function securityPolicyEnumFromJSON(object: any): SecurityPolicyEnum {
 
 export function securityPolicyEnumToJSON(object: SecurityPolicyEnum): string {
   switch (object) {
+    case SecurityPolicyEnum.UNKNOWN_POLICY:
+      return "UNKNOWN_POLICY";
     case SecurityPolicyEnum.NONE:
       return "NONE";
     case SecurityPolicyEnum.BASIC128:
@@ -158,33 +170,37 @@ export function securityPolicyEnumToJSON(object: SecurityPolicyEnum): string {
 }
 
 export enum InsiteLogLevelEnum {
-  TRACE = 0,
-  DEBUG = 1,
-  INFO = 2,
-  WARN = 3,
-  ERROR = 4,
-  FATAL = 5,
+  UNKNOWN_LEVEL = 0,
+  TRACE = 1,
+  DEBUG = 2,
+  INFO = 3,
+  WARN = 4,
+  ERROR = 5,
+  FATAL = 6,
   UNRECOGNIZED = -1,
 }
 
 export function insiteLogLevelEnumFromJSON(object: any): InsiteLogLevelEnum {
   switch (object) {
     case 0:
+    case "UNKNOWN_LEVEL":
+      return InsiteLogLevelEnum.UNKNOWN_LEVEL;
+    case 1:
     case "TRACE":
       return InsiteLogLevelEnum.TRACE;
-    case 1:
+    case 2:
     case "DEBUG":
       return InsiteLogLevelEnum.DEBUG;
-    case 2:
+    case 3:
     case "INFO":
       return InsiteLogLevelEnum.INFO;
-    case 3:
+    case 4:
     case "WARN":
       return InsiteLogLevelEnum.WARN;
-    case 4:
+    case 5:
     case "ERROR":
       return InsiteLogLevelEnum.ERROR;
-    case 5:
+    case 6:
     case "FATAL":
       return InsiteLogLevelEnum.FATAL;
     case -1:
@@ -196,6 +212,8 @@ export function insiteLogLevelEnumFromJSON(object: any): InsiteLogLevelEnum {
 
 export function insiteLogLevelEnumToJSON(object: InsiteLogLevelEnum): string {
   switch (object) {
+    case InsiteLogLevelEnum.UNKNOWN_LEVEL:
+      return "UNKNOWN_LEVEL";
     case InsiteLogLevelEnum.TRACE:
       return "TRACE";
     case InsiteLogLevelEnum.DEBUG:
