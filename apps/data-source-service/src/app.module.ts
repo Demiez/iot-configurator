@@ -4,8 +4,6 @@ import process from 'process';
 import { join } from 'path';
 import { DataSourceModule } from './modules';
 
-console.log(process.cwd());
-
 @Module({
   imports: [
     ConfigModule.forRoot({

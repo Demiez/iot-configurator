@@ -4,7 +4,7 @@
     "module": "commonjs",
     "lib": ["es6", "dom"],
     "declaration": true,
-    "outDir": "./dist",
+    "outDir": "./lib",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,

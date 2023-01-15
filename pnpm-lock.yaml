@@ -101,6 +101,7 @@ importers:
       tsconfig-paths: 4.1.0
       typescript: 4.7.4
       ~iotcon-errors: workspace:*
+      ~iotcon-models: workspace:*
       ~iotcon-proto: workspace:*
       ~iotcon-sdk: workspace:*
     dependencies:
@@ -115,6 +116,7 @@ importers:
       rimraf: 3.0.2
       rxjs: 7.2.0
       ~iotcon-errors: link:../../libs/iotcon-errors
+      ~iotcon-models: link:../../libs/iotcon-models
       ~iotcon-proto: link:../../libs/iotcon-proto
       ~iotcon-sdk: link:../../libs/iotcon-sdk
     devDependencies:
@@ -4059,6 +4061,7 @@ packages:
   /jest-cli/28.1.3_wcht2oh6f25rlmm4jcagra5h7u:
     resolution: {integrity: sha512-roY3kvrv57Azn1yPgdTebPAXvdR2xfezaKKYzVxZ6It/5NCxzJym6tUI5P1zkdWhfUYkxEI9uZWcQdaFLo8mJQ==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
+    hasBin: true
     peerDependencies:
       node-notifier: ^8.0.1 || ^9.0.0 || ^10.0.0
     peerDependenciesMeta:
@@ -4457,6 +4460,7 @@ packages:
   /jest/28.1.3_wcht2oh6f25rlmm4jcagra5h7u:
     resolution: {integrity: sha512-N4GT5on8UkZgH0O5LUavMRV1EDEhNTL0KEfRmDIeZHSV7p2XgLoY9t9VDUgL6o+yfdgYHVxuz81G8oB9VG5uyA==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
+    hasBin: true
     peerDependencies:
       node-notifier: ^8.0.1 || ^9.0.0 || ^10.0.0
     peerDependenciesMeta:
@@ -5891,6 +5895,7 @@ packages:
   /ts-jest/28.0.8_npjokvdlirw4hoeayivmipidfq:
     resolution: {integrity: sha512-5FaG0lXmRPzApix8oFG8RKjAz4ehtm8yMKOTy5HX3fY6W8kmvOrmcY0hKDElW52FJov+clhUbrKAqofnj4mXTg==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
+    hasBin: true
     peerDependencies:
       '@babel/core': '>=7.0.0-beta.0 <8'
       '@jest/types': ^28.0.0
@@ -5939,6 +5944,7 @@ packages:
   /ts-node/10.0.0_obrsqnaqniu2x2rgbw3thf4upm:
     resolution: {integrity: sha512-ROWeOIUvfFbPZkoDis0L/55Fk+6gFQNZwwKPLinacRl6tsxstTF1DbAcLKkovwnpKMVvOMHP1TIbnwXwtLg1gg==}
     engines: {node: '>=12.0.0'}
+    hasBin: true
     peerDependencies:
       '@swc/core': '>=1.2.45'
       '@swc/wasm': '>=1.2.45'
@@ -6165,6 +6171,7 @@ packages:
 
   /update-browserslist-db/1.0.10_browserslist@4.21.4:
     resolution: {integrity: sha512-OztqDenkfFkbSG+tRxBeAnCVPckDBcvibKd35yDONx6OU8N7sqgwc7rCbkJ/WcYtVRZ4ba68d6byhC21GFh7sQ==}
+    hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
     dependencies:
@@ -6246,6 +6253,7 @@ packages:
   /webpack/5.73.0:
     resolution: {integrity: sha512-svjudQRPPa0YiOYa2lM/Gacw0r6PvxptHj4FuEKQ2kX05ZLkjbVc5MnPs6its5j7IZljnIqSVo/OsY2X0IpHGA==}
     engines: {node: '>=10.13.0'}
+    hasBin: true
     peerDependencies:
       webpack-cli: '*'
     peerDependenciesMeta:

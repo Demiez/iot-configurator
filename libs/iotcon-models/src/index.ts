@@ -3,14 +3,5 @@
  * This lib contains sharable enums, interfaces or models
  */
 
-import { BaseStatus, HttpMethodsEnum, SortOrderEnum } from './enums/core';
-import { DataSourceTypesEnum } from './enums/data-source';
-import { StandardResponseViewModel } from './view-models/core';
-
-export {
-  BaseStatus,
-  HttpMethodsEnum,
-  SortOrderEnum,
-  DataSourceTypesEnum,
-  StandardResponseViewModel,
-};
+export * from './enums';
+export * from './view-models';

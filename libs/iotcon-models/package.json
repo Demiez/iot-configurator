@@ -2,7 +2,8 @@
   "private": true,
   "name": "~iotcon-models",
   "description": "IoT Configurator Models lib",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "rimraf dist && tsc"
   },

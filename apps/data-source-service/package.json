@@ -27,6 +27,7 @@
     "rimraf": "3.0.2",
     "rxjs": "7.2.0",
     "~iotcon-errors": "workspace:*",
+    "~iotcon-models": "workspace:*",
     "~iotcon-proto": "workspace:*",
     "~iotcon-sdk": "workspace:*"
   },

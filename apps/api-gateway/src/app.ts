@@ -8,7 +8,7 @@ import process from 'process';
 import { join, resolve } from 'path';
 import errorHandlingMiddleware from './core/middlewares/error-handling.middleware';
 import Container from 'typedi';
-import { enums } from '~iotcon-sdk';
+import { MetaContextEnum } from '~iotcon-models';
 
 require('dotenv').config({ path: join(process.cwd(), '../../.env') });
 
@@ -16,7 +16,7 @@ class App {
   public app: Application = express();
 
   constructor() {
-    Container.set('context', enums.MetaContextEnum.API_GATEWAY);
+    Container.set('context', MetaContextEnum.API_GATEWAY);
     Container.set(
       'contextPath',
       process.env.NODE_ENV === 'development'

@@ -68,6 +68,7 @@ typings/
 
 # Additional
 dist
+lib
 data
 
 # Git hooks dir

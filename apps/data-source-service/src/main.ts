@@ -4,7 +4,8 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import * as express from 'express';
 import { join } from 'path';
 import { AppModule } from './app.module';
-import { SDK, enums } from '~iotcon-sdk';
+import { IotconLogger } from '~iotcon-sdk';
+import { MetaContextEnum } from '~iotcon-models';
 import process from 'process';
 import { resolve } from 'path';
 import { Logger } from '@nestjs/common';
@@ -14,8 +15,8 @@ const { NODE_ENV, GRPC_PORT_DATA_SOURCE_SERVICE, PORT_DATA_SOURCE_SERVICE } =
   process.env;
 
 async function bootstrap() {
-  const logger = SDK._initializeLogger(
-    enums.MetaContextEnum.DATA_SOURCE_SERVICE,
+  const logger = new IotconLogger(
+    MetaContextEnum.DATA_SOURCE_SERVICE,
     NODE_ENV === 'development' ? resolve(__dirname) : undefined,
   );
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
