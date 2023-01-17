@@ -1,6 +1,6 @@
 import { Service } from 'typedi';
 import BaseController from '../../core/abstract/base-controller';
-import { Controller, GrpcBodyUpdate, Post } from '../../core/decorators';
+import { Controller, Get, GrpcBodyUpdate, Post } from '../../core/decorators';
 import { Request, Response } from 'express';
 import { APP_ROOT } from '../../core/constants';
 import { DataSourceService } from './data-source.service';
@@ -20,6 +20,18 @@ export class DataSourceController extends BaseController {
     res: Response
   ): Promise<Response<never>> {
     const result = await this.dataSourceService.createDataSource(req.body);
+
+    return super.sendSuccessResponse(res, result);
+  }
+
+  @Get('/:id')
+  public async getDataSourceById(
+    req: Request,
+    res: Response
+  ): Promise<Response<never>> {
+    const dataSourceId = req.params.id;
+
+    const result = await this.dataSourceService.getDataSourceById(dataSourceId);
 
     return super.sendSuccessResponse(res, result);
   }

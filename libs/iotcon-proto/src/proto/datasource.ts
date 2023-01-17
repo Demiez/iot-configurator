@@ -679,10 +679,20 @@ export const DataSourceServiceService = {
     responseSerialize: (value: DataSourceId) => Buffer.from(DataSourceId.encode(value).finish()),
     responseDeserialize: (value: Buffer) => DataSourceId.decode(value),
   },
+  getDataSourceById: {
+    path: "/datasource.DataSourceService/GetDataSourceById",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: DataSourceId) => Buffer.from(DataSourceId.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => DataSourceId.decode(value),
+    responseSerialize: (value: DataSourceDto) => Buffer.from(DataSourceDto.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => DataSourceDto.decode(value),
+  },
 } as const;
 
 export interface DataSourceServiceServer extends UntypedServiceImplementation {
   createDataSource: handleUnaryCall<DataSourceDto, DataSourceId>;
+  getDataSourceById: handleUnaryCall<DataSourceId, DataSourceDto>;
 }
 
 export interface DataSourceServiceClient extends Client {
@@ -700,6 +710,21 @@ export interface DataSourceServiceClient extends Client {
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: DataSourceId) => void,
+  ): ClientUnaryCall;
+  getDataSourceById(
+    request: DataSourceId,
+    callback: (error: ServiceError | null, response: DataSourceDto) => void,
+  ): ClientUnaryCall;
+  getDataSourceById(
+    request: DataSourceId,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: DataSourceDto) => void,
+  ): ClientUnaryCall;
+  getDataSourceById(
+    request: DataSourceId,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: DataSourceDto) => void,
   ): ClientUnaryCall;
 }
 

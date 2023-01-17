@@ -85,4 +85,5 @@ message DataSourceId {
 
 service DataSourceService {
   rpc CreateDataSource(DataSourceDto) returns (DataSourceId);
+  rpc GetDataSourceById(DataSourceId) returns (DataSourceDto);
 }

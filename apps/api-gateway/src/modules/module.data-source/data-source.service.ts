@@ -44,4 +44,18 @@ export class DataSourceService extends BaseGrpcClientService {
 
     return result;
   }
+
+  public async getDataSourceById(
+    dataSourceId: string
+  ): Promise<IDataSourceDto> {
+    const result = await this.sendUnaryGrpcRequest<
+      DataSourceServiceClient,
+      IDataSourceId,
+      IDataSourceDto
+    >(this.grpcClient, ProcedureNamesEnum.GET_DATA_SOURCE_BY_ID, {
+      id: dataSourceId,
+    });
+
+    return result;
+  }
 }
