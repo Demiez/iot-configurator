@@ -1,16 +1,8 @@
 /**
  * This is the entrypoint for the IoT Configurator Proto Lib.
- * This lib is used to share protobuf builds as ts inside of the project
+ * This lib is used to share proto related mappings and protobuf builds as ts inside of the project
+ * Proto lib must have zero in-project dependencies
  */
 
-import {
-  DataSourceDto,
-  DataSourceId,
-  DataSourceServiceClient,
-} from './proto/datasource';
-
-interface IDataSourceDto extends DataSourceDto {}
-interface IDataSourceId extends DataSourceId {}
-
-export { IDataSourceDto, IDataSourceId, DataSourceServiceClient };
 export * from './mapping';
+export * from './proto/datasource';

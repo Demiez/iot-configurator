@@ -4,4 +4,5 @@
  */
 
 export * from './enums';
-export * from './view-models';
+export * from './interfaces';
+export * from './models';
