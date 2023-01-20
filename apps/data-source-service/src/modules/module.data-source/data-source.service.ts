@@ -1,9 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  DataSourceDataModel,
-  DataSourceIdViewModel,
-  DataSourceRequestModel,
-} from './models';
+import { DataSourceDataModel, DataSourceIdDataModel } from '~iotcon-models';
 import { DataSourceRepository } from './repository/data-source.repository';
 
 @Injectable()
@@ -11,15 +7,13 @@ export class DataSourceService {
   constructor(private readonly dataSourceRepository: DataSourceRepository) {}
 
   public async createDataSource(
-    requestModel: DataSourceRequestModel,
-  ): Promise<DataSourceIdViewModel> {
-    const dataSourceData = new DataSourceDataModel(requestModel);
-
+    dataSourceData: DataSourceDataModel,
+  ): Promise<DataSourceIdDataModel> {
     const dataSource = await this.dataSourceRepository.saveDataSource(
       dataSourceData,
     );
 
-    return new DataSourceIdViewModel(dataSource._id);
+    return new DataSourceIdDataModel(dataSource._id);
   }
 
   public async getDataSourceById(

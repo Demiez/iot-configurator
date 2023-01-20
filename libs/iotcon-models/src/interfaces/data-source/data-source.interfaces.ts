@@ -8,7 +8,9 @@ import { IIdentifier } from '../core';
 
 export interface IDataSourceId extends DataSourceId {}
 
-export interface IDataSource extends DataSourceDto, IIdentifier {
+export interface IDataSourceDto extends DataSourceDto {}
+
+export interface IDataSource extends IIdentifier, IDataSourceDto {
   name: string;
   port: number;
   type: DataSourceTypesEnum;

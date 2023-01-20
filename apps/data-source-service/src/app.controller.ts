@@ -2,7 +2,7 @@ import { Metadata, ServerUnaryCall } from '@grpc/grpc-js';
 import { Controller, Get } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { ErrorCodes } from '~iotcon-errors';
-import { IDataSourceDto, IDataSourceId } from '~iotcon-proto';
+import { IDataSourceDto, IDataSourceId } from '~iotcon-models';
 import { AppService } from './app.service';
 import { ForbiddenRpcError } from './core/errors/rpc-errors';
 

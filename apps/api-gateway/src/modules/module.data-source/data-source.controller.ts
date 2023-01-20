@@ -5,6 +5,7 @@ import { Request, Response } from 'express';
 import { APP_ROOT } from '../../core/constants';
 import { DataSourceService } from './data-source.service';
 import { MetaContextEnum } from '~iotcon-models';
+import { DataSourceRequestModel } from './models';
 
 @Controller(`${APP_ROOT}/data-sources`)
 @Service()
@@ -19,7 +20,9 @@ export class DataSourceController extends BaseController {
     req: Request,
     res: Response
   ): Promise<Response<never>> {
-    const result = await this.dataSourceService.createDataSource(req.body);
+    const requestModel = new DataSourceRequestModel(req.body);
+
+    const result = await this.dataSourceService.createDataSource(requestModel);
 
     return super.sendSuccessResponse(res, result);
   }
