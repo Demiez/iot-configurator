@@ -2,13 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ErrorCodes } from '~iotcon-errors';
+import { DataSourceDataModel, IDataSource } from '~iotcon-models';
 import { NotFoundRpcError } from '../../../core/errors/rpc-errors';
-import {
-  DataSource,
-  DataSourceDocument,
-  IDataSource,
-} from '../../module.db/schemas';
-import { DataSourceDataModel } from '../models';
+import { DataSource, DataSourceDocument } from '../../module.db/schemas';
 
 @Injectable()
 export class DataSourceRepository {

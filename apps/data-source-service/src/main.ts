@@ -9,7 +9,10 @@ import { MetaContextEnum } from '~iotcon-models';
 import process from 'process';
 import { resolve } from 'path';
 import { Logger } from '@nestjs/common';
-import { GlobalRpcExceptionFilter } from './core/filters/global-rpc-exception.filter';
+import {
+  GlobalGenericExceptionFilter,
+  GlobalRpcExceptionFilter,
+} from './core/filters';
 
 const { NODE_ENV, GRPC_PORT_DATA_SOURCE_SERVICE, PORT_DATA_SOURCE_SERVICE } =
   process.env;
@@ -32,7 +35,10 @@ async function bootstrap() {
       parameterLimit: 10000,
     }),
   );
-  app.useGlobalFilters(new GlobalRpcExceptionFilter(logger));
+  app.useGlobalFilters(
+    new GlobalGenericExceptionFilter(logger),
+    new GlobalRpcExceptionFilter(logger),
+  );
 
   app.connectMicroservice<MicroserviceOptions>(
     {
