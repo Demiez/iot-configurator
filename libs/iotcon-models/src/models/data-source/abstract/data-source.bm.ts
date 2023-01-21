@@ -1,4 +1,17 @@
-import { InsiteLogLevelEnum, SecurityPolicyEnum } from '../../../enums';
+import {
+  DataSourceTypesEnum,
+  InsiteLogLevelEnum,
+  SecurityPolicyEnum,
+} from '../../../enums';
+
+export abstract class DataSourceBaseModel {
+  public id: string;
+  public name: string;
+  public port: number;
+  public type: DataSourceTypesEnum;
+  public isDefault: boolean;
+  public isPrimary: boolean;
+}
 
 export abstract class InsiteDataSourceBaseModel {
   public insiteServerAddress?: string = undefined;

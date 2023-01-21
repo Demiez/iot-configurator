@@ -9,6 +9,7 @@ import { join, resolve } from 'path';
 import errorHandlingMiddleware from './core/middlewares/error-handling.middleware';
 import Container from 'typedi';
 import { MetaContextEnum } from '~iotcon-models';
+import { registerSwagger } from '../swagger';
 
 require('dotenv').config({ path: join(process.cwd(), '../../.env') });
 
@@ -29,6 +30,7 @@ class App {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cors());
 
+    registerSwagger(this.app);
     router(this.app);
 
     errorHandlingMiddleware(this.app);
