@@ -1,8 +1,11 @@
 import { Service } from 'typedi';
-import { DataSourceServiceClient } from '~iotcon-proto';
+import {
+  DataSourceRpcNamesEnum,
+  DataSourceServiceClient,
+  mapDataSource,
+} from '~iotcon-proto';
 import { BaseGrpcClientService } from '../../core/abstract/base-grpc-service';
 import process from 'process';
-import { ProcedureNamesEnum } from './enums/procedure-names.enum';
 import { DataSourceIdViewModel, DataSourceRequestModel } from './models';
 import { IDataSource, IDataSourceId } from '~iotcon-models';
 
@@ -38,7 +41,7 @@ export class DataSourceService extends BaseGrpcClientService {
       DataSourceServiceClient,
       IDataSource,
       IDataSourceId
-    >(this.grpcClient, ProcedureNamesEnum.CREATE_DATA_SOURCE, requestModel);
+    >(this.grpcClient, DataSourceRpcNamesEnum.CREATE_DATA_SOURCE, requestModel);
 
     return result;
   }
@@ -48,9 +51,14 @@ export class DataSourceService extends BaseGrpcClientService {
       DataSourceServiceClient,
       IDataSourceId,
       IDataSource
-    >(this.grpcClient, ProcedureNamesEnum.GET_DATA_SOURCE_BY_ID, {
-      id: dataSourceId,
-    });
+    >(
+      this.grpcClient,
+      DataSourceRpcNamesEnum.GET_DATA_SOURCE_BY_ID,
+      {
+        id: dataSourceId,
+      },
+      mapDataSource
+    );
 
     return result;
   }

@@ -37,7 +37,8 @@ export abstract class BaseGrpcClientService {
   protected async sendUnaryGrpcRequest<T, R, V>(
     grpcClient: T,
     procedureName: string,
-    requestModel: R
+    requestModel: R,
+    mappingMethod?: (data: V) => void
   ): Promise<V> {
     const result: V = await new Promise((resolve, reject) => {
       grpcClient[procedureName](requestModel, (err: ServiceError, res: V) => {
@@ -48,6 +49,10 @@ export abstract class BaseGrpcClientService {
         resolve(res);
       });
     });
+
+    if (mappingMethod) {
+      mappingMethod(result);
+    }
 
     return result;
   }

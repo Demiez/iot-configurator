@@ -12,6 +12,7 @@ import {
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
 import _m0 from "protobufjs/minimal";
+import { Empty } from "./google/protobuf/empty";
 
 export enum DataSourceTypesEnum {
   UNKNOWN_TYPE = 0,
@@ -283,8 +284,17 @@ export interface DataSourceDto {
   outputRaw?: boolean | undefined;
 }
 
+export interface DataSourcesDto {
+  total: number;
+  dataSources: DataSourceDto[];
+}
+
 export interface DataSourceId {
   id: string;
+}
+
+export interface DataSourcesIds {
+  ids: string[];
 }
 
 function createBaseDataSourceDto(): DataSourceDto {
@@ -621,6 +631,70 @@ export const DataSourceDto = {
   },
 };
 
+function createBaseDataSourcesDto(): DataSourcesDto {
+  return { total: 0, dataSources: [] };
+}
+
+export const DataSourcesDto = {
+  encode(message: DataSourcesDto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.total !== 0) {
+      writer.uint32(8).int32(message.total);
+    }
+    for (const v of message.dataSources) {
+      DataSourceDto.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): DataSourcesDto {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDataSourcesDto();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.total = reader.int32();
+          break;
+        case 2:
+          message.dataSources.push(DataSourceDto.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): DataSourcesDto {
+    return {
+      total: isSet(object.total) ? Number(object.total) : 0,
+      dataSources: Array.isArray(object?.dataSources)
+        ? object.dataSources.map((e: any) => DataSourceDto.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: DataSourcesDto): unknown {
+    const obj: any = {};
+    message.total !== undefined && (obj.total = Math.round(message.total));
+    if (message.dataSources) {
+      obj.dataSources = message.dataSources.map((e) => e ? DataSourceDto.toJSON(e) : undefined);
+    } else {
+      obj.dataSources = [];
+    }
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<DataSourcesDto>, I>>(object: I): DataSourcesDto {
+    const message = createBaseDataSourcesDto();
+    message.total = object.total ?? 0;
+    message.dataSources = object.dataSources?.map((e) => DataSourceDto.fromPartial(e)) || [];
+    return message;
+  },
+};
+
 function createBaseDataSourceId(): DataSourceId {
   return { id: "" };
 }
@@ -668,10 +742,61 @@ export const DataSourceId = {
   },
 };
 
+function createBaseDataSourcesIds(): DataSourcesIds {
+  return { ids: [] };
+}
+
+export const DataSourcesIds = {
+  encode(message: DataSourcesIds, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.ids) {
+      writer.uint32(10).string(v!);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): DataSourcesIds {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDataSourcesIds();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.ids.push(reader.string());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): DataSourcesIds {
+    return { ids: Array.isArray(object?.ids) ? object.ids.map((e: any) => String(e)) : [] };
+  },
+
+  toJSON(message: DataSourcesIds): unknown {
+    const obj: any = {};
+    if (message.ids) {
+      obj.ids = message.ids.map((e) => e);
+    } else {
+      obj.ids = [];
+    }
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<DataSourcesIds>, I>>(object: I): DataSourcesIds {
+    const message = createBaseDataSourcesIds();
+    message.ids = object.ids?.map((e) => e) || [];
+    return message;
+  },
+};
+
 export type DataSourceServiceService = typeof DataSourceServiceService;
 export const DataSourceServiceService = {
   createDataSource: {
-    path: "/datasource.DataSourceService/CreateDataSource",
+    path: "/datasource.DataSourceService/createDataSource",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: DataSourceDto) => Buffer.from(DataSourceDto.encode(value).finish()),
@@ -680,7 +805,7 @@ export const DataSourceServiceService = {
     responseDeserialize: (value: Buffer) => DataSourceId.decode(value),
   },
   getDataSourceById: {
-    path: "/datasource.DataSourceService/GetDataSourceById",
+    path: "/datasource.DataSourceService/getDataSourceById",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: DataSourceId) => Buffer.from(DataSourceId.encode(value).finish()),
@@ -688,11 +813,51 @@ export const DataSourceServiceService = {
     responseSerialize: (value: DataSourceDto) => Buffer.from(DataSourceDto.encode(value).finish()),
     responseDeserialize: (value: Buffer) => DataSourceDto.decode(value),
   },
+  getAllDataSources: {
+    path: "/datasource.DataSourceService/getAllDataSources",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => Empty.decode(value),
+    responseSerialize: (value: DataSourcesDto) => Buffer.from(DataSourcesDto.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => DataSourcesDto.decode(value),
+  },
+  getDataSourcesByIds: {
+    path: "/datasource.DataSourceService/getDataSourcesByIds",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: DataSourcesIds) => Buffer.from(DataSourcesIds.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => DataSourcesIds.decode(value),
+    responseSerialize: (value: DataSourcesDto) => Buffer.from(DataSourcesDto.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => DataSourcesDto.decode(value),
+  },
+  deleteAllDataSources: {
+    path: "/datasource.DataSourceService/deleteAllDataSources",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => Empty.decode(value),
+    responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => Empty.decode(value),
+  },
+  deleteDataSourceById: {
+    path: "/datasource.DataSourceService/deleteDataSourceById",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: DataSourceId) => Buffer.from(DataSourceId.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => DataSourceId.decode(value),
+    responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => Empty.decode(value),
+  },
 } as const;
 
 export interface DataSourceServiceServer extends UntypedServiceImplementation {
   createDataSource: handleUnaryCall<DataSourceDto, DataSourceId>;
   getDataSourceById: handleUnaryCall<DataSourceId, DataSourceDto>;
+  getAllDataSources: handleUnaryCall<Empty, DataSourcesDto>;
+  getDataSourcesByIds: handleUnaryCall<DataSourcesIds, DataSourcesDto>;
+  deleteAllDataSources: handleUnaryCall<Empty, Empty>;
+  deleteDataSourceById: handleUnaryCall<DataSourceId, Empty>;
 }
 
 export interface DataSourceServiceClient extends Client {
@@ -725,6 +890,66 @@ export interface DataSourceServiceClient extends Client {
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: DataSourceDto) => void,
+  ): ClientUnaryCall;
+  getAllDataSources(
+    request: Empty,
+    callback: (error: ServiceError | null, response: DataSourcesDto) => void,
+  ): ClientUnaryCall;
+  getAllDataSources(
+    request: Empty,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: DataSourcesDto) => void,
+  ): ClientUnaryCall;
+  getAllDataSources(
+    request: Empty,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: DataSourcesDto) => void,
+  ): ClientUnaryCall;
+  getDataSourcesByIds(
+    request: DataSourcesIds,
+    callback: (error: ServiceError | null, response: DataSourcesDto) => void,
+  ): ClientUnaryCall;
+  getDataSourcesByIds(
+    request: DataSourcesIds,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: DataSourcesDto) => void,
+  ): ClientUnaryCall;
+  getDataSourcesByIds(
+    request: DataSourcesIds,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: DataSourcesDto) => void,
+  ): ClientUnaryCall;
+  deleteAllDataSources(
+    request: Empty,
+    callback: (error: ServiceError | null, response: Empty) => void,
+  ): ClientUnaryCall;
+  deleteAllDataSources(
+    request: Empty,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: Empty) => void,
+  ): ClientUnaryCall;
+  deleteAllDataSources(
+    request: Empty,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: Empty) => void,
+  ): ClientUnaryCall;
+  deleteDataSourceById(
+    request: DataSourceId,
+    callback: (error: ServiceError | null, response: Empty) => void,
+  ): ClientUnaryCall;
+  deleteDataSourceById(
+    request: DataSourceId,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: Empty) => void,
+  ): ClientUnaryCall;
+  deleteDataSourceById(
+    request: DataSourceId,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
 }
 

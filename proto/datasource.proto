@@ -79,11 +79,25 @@ message DataSourceDto {
   optional bool outputRaw = 29;
 }
 
+message DataSourcesDto {
+  int32 total = 1;
+  repeated DataSourceDto dataSources = 2;
+}
+
 message DataSourceId {
   string id = 1;
 }
 
+message DataSourcesIds {
+  repeated string ids = 1;
+}
+
+
 service DataSourceService {
-  rpc CreateDataSource(DataSourceDto) returns (DataSourceId);
-  rpc GetDataSourceById(DataSourceId) returns (DataSourceDto);
+  rpc createDataSource(DataSourceDto) returns (DataSourceId);
+  rpc getDataSourceById(DataSourceId) returns (DataSourceDto);
+  rpc getAllDataSources(google.protobuf.Empty) returns (DataSourcesDto);
+  rpc getDataSourcesByIds(DataSourcesIds) returns (DataSourcesDto);
+  rpc deleteAllDataSources(google.protobuf.Empty) returns (google.protobuf.Empty);
+  rpc deleteDataSourceById(DataSourceId) returns (google.protobuf.Empty);
 }
