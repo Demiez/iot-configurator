@@ -6,7 +6,11 @@ import {
 } from '~iotcon-proto';
 import { BaseGrpcClientService } from '../../core/abstract/base-grpc-service';
 import process from 'process';
-import { DataSourceIdViewModel, DataSourceRequestModel } from './models';
+import {
+  DataSourceIdViewModel,
+  DataSourceRequestModel,
+  DataSourceViewModel,
+} from './models';
 import { IDataSource, IDataSourceId } from '~iotcon-models';
 
 @Service()
@@ -43,7 +47,7 @@ export class DataSourceService extends BaseGrpcClientService {
       IDataSourceId
     >(this.grpcClient, DataSourceRpcNamesEnum.CREATE_DATA_SOURCE, requestModel);
 
-    return result;
+    return new DataSourceIdViewModel(result);
   }
 
   public async getDataSourceById(dataSourceId: string): Promise<IDataSource> {
@@ -60,6 +64,6 @@ export class DataSourceService extends BaseGrpcClientService {
       mapDataSource
     );
 
-    return result;
+    return DataSourceViewModel._factory(result);
   }
 }
