@@ -8,6 +8,7 @@ import { MetaContextEnum } from '~iotcon-models';
 import { DataSourceRequestModel } from './models';
 import {
   ApiOperationGet,
+  ApiOperationPost,
   ApiPath,
   SwaggerDefinitionConstant,
 } from 'swagger-express-ts';
@@ -24,6 +25,26 @@ export class DataSourceController extends BaseController {
     super();
   }
 
+  @ApiOperationPost({
+    path: '',
+    summary: 'Creates DataSource in Database',
+    parameters: {
+      body: {
+        required: true,
+        model: 'DataSourceRequestModel',
+      },
+    },
+    responses: {
+      200: { model: 'DataSourceIdViewModel' },
+      500: {
+        description: `INTERNAL_SERVER_ERROR: ErrorResponseViewModel`,
+        type: SwaggerDefinitionConstant.OBJECT,
+      },
+    },
+    security: {
+      basicAuth: [],
+    },
+  })
   @Post('')
   @GrpcBodyUpdate(MetaContextEnum.DATA_SOURCE_SERVICE)
   public async createDataSource(
@@ -53,12 +74,12 @@ export class DataSourceController extends BaseController {
     responses: {
       200: { model: 'DataSourceViewModel' },
       404: {
-        description: `
-        { "errorCode": "RECORD_NOT_FOUND", "errorDetails": ['dataSource not found'], "type": "NOT_FOUND" },
-        `,
+        description: `RECORD_NOT_FOUND: ErrorResponseViewModel`,
+        type: SwaggerDefinitionConstant.OBJECT,
       },
       500: {
-        description: `INTERNAL_SERVER_ERROR: DataSourceController:__getDataSourceById`,
+        description: `INTERNAL_SERVER_ERROR: ErrorResponseViewModel`,
+        type: SwaggerDefinitionConstant.OBJECT,
       },
     },
     security: {
