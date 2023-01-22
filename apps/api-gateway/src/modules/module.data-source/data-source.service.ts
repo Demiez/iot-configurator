@@ -51,7 +51,7 @@ export class DataSourceService extends BaseGrpcClientService {
   }
 
   public async getDataSourceById(dataSourceId: string): Promise<IDataSource> {
-    const result = await this.sendUnaryGrpcRequest<
+    const dataSource = await this.sendUnaryGrpcRequest<
       DataSourceServiceClient,
       IDataSourceId,
       IDataSource
@@ -64,6 +64,6 @@ export class DataSourceService extends BaseGrpcClientService {
       mapDataSource
     );
 
-    return DataSourceViewModel._factory(result);
+    return new DataSourceViewModel(dataSource);
   }
 }

@@ -50,9 +50,8 @@ export class DataSourceController extends BaseController {
         },
       },
     },
-    produces: ['InsiteDataSourceViewModel', 'MqttDataSourceViewModel'],
     responses: {
-      200: { model: 'InsiteDataSourceViewModel' },
+      200: { model: 'DataSourceViewModel' },
       404: {
         description: `
         { "errorCode": "RECORD_NOT_FOUND", "errorDetails": ['dataSource not found'], "type": "NOT_FOUND" },
