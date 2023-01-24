@@ -11,6 +11,15 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
       - iotcon-mongo:/var/lib/iotcon-mongo/data
+  iotcon-redis:
+    image: 'bitnami/redis:latest'
+    ports:
+      - '6379:6379'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - iotcon-redis:/bitnami/redis/data
 
 volumes:
   iotcon-mongo:
+  iotcon-redis:
