@@ -103,4 +103,16 @@ export class DataSourceController {
   ): Promise<void> {
     return await this.dataSourceService.deleteDataSourceById(request.id);
   }
+
+  @GrpcMethod(
+    RpcServicesEnum.DATA_SOURCE_SERVICE,
+    DataSourceRpcNamesEnum.DELETE_ALL_DATA_SOURCES,
+  )
+  public async deleteAllDataSources(
+    _request: Empty,
+    _metadata: Metadata,
+    _call: ServerUnaryCall<Empty, Empty>,
+  ): Promise<void> {
+    return await this.dataSourceService.deleteAllDataSources();
+  }
 }

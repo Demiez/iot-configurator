@@ -62,14 +62,10 @@ export class DataSourceService {
   }
 
   public async deleteDataSourceById(dataSourceId: string): Promise<void> {
-    const dataSource = await this.dataSourceRepository.findDataSourceById(
-      dataSourceId,
-    );
+    await this.dataSourceRepository.deleteDataSourceById(dataSourceId);
+  }
 
-    if (!dataSource) {
-      return;
-    }
-
-    await dataSource.deleteOne();
+  public async deleteAllDataSources(): Promise<void> {
+    await this.dataSourceRepository.deleteAllDataSources();
   }
 }

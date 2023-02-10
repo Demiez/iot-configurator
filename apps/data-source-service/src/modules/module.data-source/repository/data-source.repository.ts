@@ -65,13 +65,19 @@ export class DataSourceRepository {
     return dataSources;
   }
 
-  public async deleteDataSourcesById(
-    ids: string[],
-  ): Promise<DataSourceDocument[]> {
-    const dataSources = await this.dataSourceModel.find({
-      _id: { $in: ids },
+  public async deleteDataSourceById(_id: string): Promise<unknown> {
+    const dataSource = await this.dataSourceModel.findOne({
+      _id,
     });
 
-    return dataSources;
+    if (!dataSource) {
+      return;
+    }
+
+    return await dataSource.deleteOne();
+  }
+
+  public async deleteAllDataSources(): Promise<unknown> {
+    return await this.dataSourceModel.deleteMany();
   }
 }

@@ -2,16 +2,26 @@ import { Service } from 'typedi';
 import {
   DataSourceRpcNamesEnum,
   DataSourceServiceClient,
+  Empty,
   mapDataSource,
+  mapDataSources,
 } from '~iotcon-proto';
 import { BaseGrpcClientService } from '../../core/abstract/base-grpc-service';
 import process from 'process';
 import {
   DataSourceIdViewModel,
   DataSourceRequestModel,
+  DataSourcesIdsRequestModel,
+  DataSourcesViewModel,
   DataSourceViewModel,
 } from './models';
-import { IDataSource, IDataSourceId } from '~iotcon-models';
+import {
+  IDataSource,
+  IDataSourceId,
+  IDataSources,
+  IDataSourcesIds,
+  StandardResponseViewModel,
+} from '~iotcon-models';
 
 @Service()
 export class DataSourceService extends BaseGrpcClientService {
@@ -50,7 +60,9 @@ export class DataSourceService extends BaseGrpcClientService {
     return new DataSourceIdViewModel(result);
   }
 
-  public async getDataSourceById(dataSourceId: string): Promise<IDataSource> {
+  public async getDataSourceById(
+    dataSourceId: string
+  ): Promise<DataSourceViewModel> {
     const dataSource = await this.sendUnaryGrpcRequest<
       DataSourceServiceClient,
       IDataSourceId,
@@ -65,5 +77,51 @@ export class DataSourceService extends BaseGrpcClientService {
     );
 
     return new DataSourceViewModel(dataSource);
+  }
+
+  public async getAllDataSources(): Promise<DataSourcesViewModel> {
+    const dataSourcesData = await this.sendUnaryGrpcRequest<
+      DataSourceServiceClient,
+      Empty,
+      IDataSources
+    >(
+      this.grpcClient,
+      DataSourceRpcNamesEnum.GET_ALL_DATA_SOURCES,
+      undefined,
+      mapDataSources
+    );
+
+    return new DataSourcesViewModel(dataSourcesData);
+  }
+
+  public async getDataSourcesByIds(
+    requestModel: DataSourcesIdsRequestModel
+  ): Promise<DataSourcesViewModel> {
+    const dataSourcesData = await this.sendUnaryGrpcRequest<
+      DataSourceServiceClient,
+      IDataSourcesIds,
+      IDataSources
+    >(
+      this.grpcClient,
+      DataSourceRpcNamesEnum.GET_DATA_SOURCE_BY_ID,
+      requestModel,
+      mapDataSources
+    );
+
+    return new DataSourcesViewModel(dataSourcesData);
+  }
+
+  public async deleteDataSourceById(
+    dataSourceId: string
+  ): Promise<StandardResponseViewModel<unknown>> {
+    await this.sendUnaryGrpcRequest<
+      DataSourceServiceClient,
+      IDataSourceId,
+      Empty
+    >(this.grpcClient, DataSourceRpcNamesEnum.DELETE_DATA_SOURCE_BY_ID, {
+      id: dataSourceId,
+    });
+
+    return new StandardResponseViewModel({});
   }
 }
