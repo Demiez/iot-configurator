@@ -3,6 +3,7 @@ version: '3'
 services:
   iotcon-mongo:
     image: mongo:4.4.0
+    container_name: mongo
     restart: always
     ports:
       - '27017:27017'
@@ -11,8 +12,10 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
       - iotcon-mongo:/var/lib/iotcon-mongo/data
+
   iotcon-redis:
     image: 'bitnami/redis:latest'
+    container_name: redis
     ports:
       - '6379:6379'
     environment:
@@ -20,6 +23,29 @@ services:
     volumes:
       - iotcon-redis:/bitnami/redis/data
 
+  iotcon-rmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./configs/rmq/etc/definitions.json:/etc/rabbitmq/definitions.json
+      - ./configs/rmq/etc/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+      - iotcon-rmq-data:/var/lib/rabbitmq
+      - iotcon-rmq-log:/var/log/rabbitmq
+
+  iotcon-mqtt:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    volumes:
+      - ./configs/mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    ports:
+      - 1883:1883
+      - 9001:9001
+
 volumes:
   iotcon-mongo:
   iotcon-redis:
+  iotcon-rmq-data:
+  iotcon-rmq-log:
