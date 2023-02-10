@@ -289,12 +289,17 @@ export interface DataSourcesDto {
   dataSources: DataSourceDto[];
 }
 
-export interface DataSourceId {
+export interface DataSourceIdDto {
   id: string;
 }
 
-export interface DataSourcesIds {
+export interface DataSourcesIdsDto {
   ids: string[];
+}
+
+export interface DataSourcesByTypesDto {
+  types: DataSourceTypesEnum[];
+  isDefault: boolean;
 }
 
 function createBaseDataSourceDto(): DataSourceDto {
@@ -695,22 +700,22 @@ export const DataSourcesDto = {
   },
 };
 
-function createBaseDataSourceId(): DataSourceId {
+function createBaseDataSourceIdDto(): DataSourceIdDto {
   return { id: "" };
 }
 
-export const DataSourceId = {
-  encode(message: DataSourceId, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const DataSourceIdDto = {
+  encode(message: DataSourceIdDto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): DataSourceId {
+  decode(input: _m0.Reader | Uint8Array, length?: number): DataSourceIdDto {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseDataSourceId();
+    const message = createBaseDataSourceIdDto();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -725,39 +730,39 @@ export const DataSourceId = {
     return message;
   },
 
-  fromJSON(object: any): DataSourceId {
+  fromJSON(object: any): DataSourceIdDto {
     return { id: isSet(object.id) ? String(object.id) : "" };
   },
 
-  toJSON(message: DataSourceId): unknown {
+  toJSON(message: DataSourceIdDto): unknown {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<DataSourceId>, I>>(object: I): DataSourceId {
-    const message = createBaseDataSourceId();
+  fromPartial<I extends Exact<DeepPartial<DataSourceIdDto>, I>>(object: I): DataSourceIdDto {
+    const message = createBaseDataSourceIdDto();
     message.id = object.id ?? "";
     return message;
   },
 };
 
-function createBaseDataSourcesIds(): DataSourcesIds {
+function createBaseDataSourcesIdsDto(): DataSourcesIdsDto {
   return { ids: [] };
 }
 
-export const DataSourcesIds = {
-  encode(message: DataSourcesIds, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const DataSourcesIdsDto = {
+  encode(message: DataSourcesIdsDto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.ids) {
       writer.uint32(10).string(v!);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): DataSourcesIds {
+  decode(input: _m0.Reader | Uint8Array, length?: number): DataSourcesIdsDto {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseDataSourcesIds();
+    const message = createBaseDataSourcesIdsDto();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -772,11 +777,11 @@ export const DataSourcesIds = {
     return message;
   },
 
-  fromJSON(object: any): DataSourcesIds {
+  fromJSON(object: any): DataSourcesIdsDto {
     return { ids: Array.isArray(object?.ids) ? object.ids.map((e: any) => String(e)) : [] };
   },
 
-  toJSON(message: DataSourcesIds): unknown {
+  toJSON(message: DataSourcesIdsDto): unknown {
     const obj: any = {};
     if (message.ids) {
       obj.ids = message.ids.map((e) => e);
@@ -786,9 +791,80 @@ export const DataSourcesIds = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<DataSourcesIds>, I>>(object: I): DataSourcesIds {
-    const message = createBaseDataSourcesIds();
+  fromPartial<I extends Exact<DeepPartial<DataSourcesIdsDto>, I>>(object: I): DataSourcesIdsDto {
+    const message = createBaseDataSourcesIdsDto();
     message.ids = object.ids?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseDataSourcesByTypesDto(): DataSourcesByTypesDto {
+  return { types: [], isDefault: false };
+}
+
+export const DataSourcesByTypesDto = {
+  encode(message: DataSourcesByTypesDto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    writer.uint32(10).fork();
+    for (const v of message.types) {
+      writer.int32(v);
+    }
+    writer.ldelim();
+    if (message.isDefault === true) {
+      writer.uint32(16).bool(message.isDefault);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): DataSourcesByTypesDto {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDataSourcesByTypesDto();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if ((tag & 7) === 2) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.types.push(reader.int32() as any);
+            }
+          } else {
+            message.types.push(reader.int32() as any);
+          }
+          break;
+        case 2:
+          message.isDefault = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): DataSourcesByTypesDto {
+    return {
+      types: Array.isArray(object?.types) ? object.types.map((e: any) => dataSourceTypesEnumFromJSON(e)) : [],
+      isDefault: isSet(object.isDefault) ? Boolean(object.isDefault) : false,
+    };
+  },
+
+  toJSON(message: DataSourcesByTypesDto): unknown {
+    const obj: any = {};
+    if (message.types) {
+      obj.types = message.types.map((e) => dataSourceTypesEnumToJSON(e));
+    } else {
+      obj.types = [];
+    }
+    message.isDefault !== undefined && (obj.isDefault = message.isDefault);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<DataSourcesByTypesDto>, I>>(object: I): DataSourcesByTypesDto {
+    const message = createBaseDataSourcesByTypesDto();
+    message.types = object.types?.map((e) => e) || [];
+    message.isDefault = object.isDefault ?? false;
     return message;
   },
 };
@@ -801,15 +877,15 @@ export const DataSourceServiceService = {
     responseStream: false,
     requestSerialize: (value: DataSourceDto) => Buffer.from(DataSourceDto.encode(value).finish()),
     requestDeserialize: (value: Buffer) => DataSourceDto.decode(value),
-    responseSerialize: (value: DataSourceId) => Buffer.from(DataSourceId.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => DataSourceId.decode(value),
+    responseSerialize: (value: DataSourceIdDto) => Buffer.from(DataSourceIdDto.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => DataSourceIdDto.decode(value),
   },
   getDataSourceById: {
     path: "/datasource.DataSourceService/getDataSourceById",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: DataSourceId) => Buffer.from(DataSourceId.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => DataSourceId.decode(value),
+    requestSerialize: (value: DataSourceIdDto) => Buffer.from(DataSourceIdDto.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => DataSourceIdDto.decode(value),
     responseSerialize: (value: DataSourceDto) => Buffer.from(DataSourceDto.encode(value).finish()),
     responseDeserialize: (value: Buffer) => DataSourceDto.decode(value),
   },
@@ -826,8 +902,17 @@ export const DataSourceServiceService = {
     path: "/datasource.DataSourceService/getDataSourcesByIds",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: DataSourcesIds) => Buffer.from(DataSourcesIds.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => DataSourcesIds.decode(value),
+    requestSerialize: (value: DataSourcesIdsDto) => Buffer.from(DataSourcesIdsDto.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => DataSourcesIdsDto.decode(value),
+    responseSerialize: (value: DataSourcesDto) => Buffer.from(DataSourcesDto.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => DataSourcesDto.decode(value),
+  },
+  getDataSourcesByTypes: {
+    path: "/datasource.DataSourceService/getDataSourcesByTypes",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: DataSourcesByTypesDto) => Buffer.from(DataSourcesByTypesDto.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => DataSourcesByTypesDto.decode(value),
     responseSerialize: (value: DataSourcesDto) => Buffer.from(DataSourcesDto.encode(value).finish()),
     responseDeserialize: (value: Buffer) => DataSourcesDto.decode(value),
   },
@@ -844,49 +929,50 @@ export const DataSourceServiceService = {
     path: "/datasource.DataSourceService/deleteDataSourceById",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: DataSourceId) => Buffer.from(DataSourceId.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => DataSourceId.decode(value),
+    requestSerialize: (value: DataSourceIdDto) => Buffer.from(DataSourceIdDto.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => DataSourceIdDto.decode(value),
     responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
 } as const;
 
 export interface DataSourceServiceServer extends UntypedServiceImplementation {
-  createDataSource: handleUnaryCall<DataSourceDto, DataSourceId>;
-  getDataSourceById: handleUnaryCall<DataSourceId, DataSourceDto>;
+  createDataSource: handleUnaryCall<DataSourceDto, DataSourceIdDto>;
+  getDataSourceById: handleUnaryCall<DataSourceIdDto, DataSourceDto>;
   getAllDataSources: handleUnaryCall<Empty, DataSourcesDto>;
-  getDataSourcesByIds: handleUnaryCall<DataSourcesIds, DataSourcesDto>;
+  getDataSourcesByIds: handleUnaryCall<DataSourcesIdsDto, DataSourcesDto>;
+  getDataSourcesByTypes: handleUnaryCall<DataSourcesByTypesDto, DataSourcesDto>;
   deleteAllDataSources: handleUnaryCall<Empty, Empty>;
-  deleteDataSourceById: handleUnaryCall<DataSourceId, Empty>;
+  deleteDataSourceById: handleUnaryCall<DataSourceIdDto, Empty>;
 }
 
 export interface DataSourceServiceClient extends Client {
   createDataSource(
     request: DataSourceDto,
-    callback: (error: ServiceError | null, response: DataSourceId) => void,
+    callback: (error: ServiceError | null, response: DataSourceIdDto) => void,
   ): ClientUnaryCall;
   createDataSource(
     request: DataSourceDto,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: DataSourceId) => void,
+    callback: (error: ServiceError | null, response: DataSourceIdDto) => void,
   ): ClientUnaryCall;
   createDataSource(
     request: DataSourceDto,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: DataSourceId) => void,
+    callback: (error: ServiceError | null, response: DataSourceIdDto) => void,
   ): ClientUnaryCall;
   getDataSourceById(
-    request: DataSourceId,
+    request: DataSourceIdDto,
     callback: (error: ServiceError | null, response: DataSourceDto) => void,
   ): ClientUnaryCall;
   getDataSourceById(
-    request: DataSourceId,
+    request: DataSourceIdDto,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: DataSourceDto) => void,
   ): ClientUnaryCall;
   getDataSourceById(
-    request: DataSourceId,
+    request: DataSourceIdDto,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: DataSourceDto) => void,
@@ -907,16 +993,31 @@ export interface DataSourceServiceClient extends Client {
     callback: (error: ServiceError | null, response: DataSourcesDto) => void,
   ): ClientUnaryCall;
   getDataSourcesByIds(
-    request: DataSourcesIds,
+    request: DataSourcesIdsDto,
     callback: (error: ServiceError | null, response: DataSourcesDto) => void,
   ): ClientUnaryCall;
   getDataSourcesByIds(
-    request: DataSourcesIds,
+    request: DataSourcesIdsDto,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: DataSourcesDto) => void,
   ): ClientUnaryCall;
   getDataSourcesByIds(
-    request: DataSourcesIds,
+    request: DataSourcesIdsDto,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: DataSourcesDto) => void,
+  ): ClientUnaryCall;
+  getDataSourcesByTypes(
+    request: DataSourcesByTypesDto,
+    callback: (error: ServiceError | null, response: DataSourcesDto) => void,
+  ): ClientUnaryCall;
+  getDataSourcesByTypes(
+    request: DataSourcesByTypesDto,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: DataSourcesDto) => void,
+  ): ClientUnaryCall;
+  getDataSourcesByTypes(
+    request: DataSourcesByTypesDto,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: DataSourcesDto) => void,
@@ -937,16 +1038,16 @@ export interface DataSourceServiceClient extends Client {
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   deleteDataSourceById(
-    request: DataSourceId,
+    request: DataSourceIdDto,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   deleteDataSourceById(
-    request: DataSourceId,
+    request: DataSourceIdDto,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: Empty) => void,
   ): ClientUnaryCall;
   deleteDataSourceById(
-    request: DataSourceId,
+    request: DataSourceIdDto,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Empty) => void,

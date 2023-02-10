@@ -6,4 +6,5 @@
 
 export * from './enums';
 export * from './mapping';
+export * from './proto/google/protobuf/empty';
 export * from './proto/datasource';

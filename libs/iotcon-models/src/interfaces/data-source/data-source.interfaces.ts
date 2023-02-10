@@ -1,4 +1,4 @@
-import { DataSourceDto, DataSourceId } from '~iotcon-proto';
+import { DataSourceDto, DataSourceIdDto } from '~iotcon-proto';
 import {
   DataSourceTypesEnum,
   InsiteLogLevelEnum,
@@ -6,11 +6,8 @@ import {
 } from '../../enums';
 import { IIdentifier } from '../core';
 
-export interface IDataSourceId extends DataSourceId {}
-
-export interface IDataSourceDto extends DataSourceDto {}
-
-export interface IDataSource extends IIdentifier, IDataSourceDto {
+export interface IDataSourceId extends DataSourceIdDto {}
+export interface IDataSource extends IIdentifier, DataSourceDto {
   name: string;
   port: number;
   type: DataSourceTypesEnum;

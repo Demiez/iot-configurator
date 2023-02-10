@@ -84,20 +84,26 @@ message DataSourcesDto {
   repeated DataSourceDto dataSources = 2;
 }
 
-message DataSourceId {
+message DataSourceIdDto {
   string id = 1;
 }
 
-message DataSourcesIds {
+message DataSourcesIdsDto {
   repeated string ids = 1;
+}
+
+message DataSourcesByTypesDto {
+  repeated DataSourceTypesEnum types = 1;
+  bool isDefault = 2;
 }
 
 
 service DataSourceService {
-  rpc createDataSource(DataSourceDto) returns (DataSourceId);
-  rpc getDataSourceById(DataSourceId) returns (DataSourceDto);
+  rpc createDataSource(DataSourceDto) returns (DataSourceIdDto);
+  rpc getDataSourceById(DataSourceIdDto) returns (DataSourceDto);
   rpc getAllDataSources(google.protobuf.Empty) returns (DataSourcesDto);
-  rpc getDataSourcesByIds(DataSourcesIds) returns (DataSourcesDto);
+  rpc getDataSourcesByIds(DataSourcesIdsDto) returns (DataSourcesDto);
+  rpc getDataSourcesByTypes(DataSourcesByTypesDto) returns (DataSourcesDto);
   rpc deleteAllDataSources(google.protobuf.Empty) returns (google.protobuf.Empty);
-  rpc deleteDataSourceById(DataSourceId) returns (google.protobuf.Empty);
+  rpc deleteDataSourceById(DataSourceIdDto) returns (google.protobuf.Empty);
 }

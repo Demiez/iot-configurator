@@ -1,5 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { DataSourceDataModel, DataSourceIdDataModel } from '~iotcon-models';
+import {
+  DataSourceDataModel,
+  DataSourceIdDataModel,
+  DataSourcesDataModel,
+  IDataSourcesByTypes,
+  IDataSourcesIds,
+} from '~iotcon-models';
 import { DataSourceRepository } from './repository/data-source.repository';
 
 @Injectable()
@@ -24,5 +30,46 @@ export class DataSourceService {
     );
 
     return new DataSourceDataModel(dataSource);
+  }
+
+  public async getAllDataSources(): Promise<DataSourcesDataModel> {
+    const dataSources = await this.dataSourceRepository.findAllDataSources();
+
+    return new DataSourcesDataModel(dataSources.length, dataSources);
+  }
+
+  public async getDataSourcesByTypes(
+    request: IDataSourcesByTypes,
+  ): Promise<DataSourcesDataModel> {
+    const { types, isDefault } = request;
+
+    const dataSources = await this.dataSourceRepository.findDataSourcesByTypes(
+      types,
+      isDefault,
+    );
+
+    return new DataSourcesDataModel(dataSources.length, dataSources);
+  }
+
+  public async getDataSourcesByIds(
+    request: IDataSourcesIds,
+  ): Promise<DataSourcesDataModel> {
+    const dataSources = await this.dataSourceRepository.findDataSourcesByIds(
+      request.ids,
+    );
+
+    return new DataSourcesDataModel(dataSources.length, dataSources);
+  }
+
+  public async deleteDataSourceById(dataSourceId: string): Promise<void> {
+    const dataSource = await this.dataSourceRepository.findDataSourceById(
+      dataSourceId,
+    );
+
+    if (!dataSource) {
+      return;
+    }
+
+    await dataSource.deleteOne();
   }
 }
