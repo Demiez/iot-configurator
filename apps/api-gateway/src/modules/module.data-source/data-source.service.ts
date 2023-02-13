@@ -87,7 +87,7 @@ export class DataSourceService extends BaseGrpcClientService {
     >(
       this.grpcClient,
       DataSourceRpcNamesEnum.GET_ALL_DATA_SOURCES,
-      undefined,
+      null,
       mapDataSources
     );
 
@@ -103,12 +103,24 @@ export class DataSourceService extends BaseGrpcClientService {
       IDataSources
     >(
       this.grpcClient,
-      DataSourceRpcNamesEnum.GET_DATA_SOURCE_BY_ID,
+      DataSourceRpcNamesEnum.GET_DATA_SOURCES_BY_IDS,
       requestModel,
       mapDataSources
     );
 
     return new DataSourcesViewModel(dataSourcesData);
+  }
+
+  public async deleteAllDataSources(): Promise<
+    StandardResponseViewModel<unknown>
+  > {
+    await this.sendUnaryGrpcRequest<DataSourceServiceClient, Empty, Empty>(
+      this.grpcClient,
+      DataSourceRpcNamesEnum.DELETE_ALL_DATA_SOURCES,
+      null
+    );
+
+    return new StandardResponseViewModel({}, 'DataSources Removed');
   }
 
   public async deleteDataSourceById(
@@ -122,6 +134,6 @@ export class DataSourceService extends BaseGrpcClientService {
       id: dataSourceId,
     });
 
-    return new StandardResponseViewModel({});
+    return new StandardResponseViewModel({}, 'DataSource Removed');
   }
 }

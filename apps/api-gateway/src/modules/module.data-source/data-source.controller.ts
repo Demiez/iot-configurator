@@ -165,6 +165,31 @@ export class DataSourceController extends BaseController {
   }
 
   @ApiOperationDelete({
+    path: '/all',
+    summary: 'Deletes all dataSources',
+    parameters: {},
+    responses: {
+      200: { description: 'Success', type: SwaggerDefinitionConstant.OBJECT },
+      500: {
+        description: `INTERNAL_SERVER_ERROR: ErrorResponseViewModel`,
+        type: SwaggerDefinitionConstant.OBJECT,
+      },
+    },
+    security: {
+      basicAuth: [],
+    },
+  })
+  @Delete('/all')
+  public async deleteAllDataSources(
+    req: Request,
+    res: Response
+  ): Promise<Response<never>> {
+    const result = await this.dataSourceService.deleteAllDataSources();
+
+    return super.sendSuccessResponse(res, result);
+  }
+
+  @ApiOperationDelete({
     path: '/{id}',
     summary: 'Deletes dataSource by id',
     parameters: {
@@ -179,7 +204,7 @@ export class DataSourceController extends BaseController {
       },
     },
     responses: {
-      200: { description: 'Success' },
+      200: { description: 'Success', type: SwaggerDefinitionConstant.OBJECT },
       500: {
         description: `INTERNAL_SERVER_ERROR: ErrorResponseViewModel`,
         type: SwaggerDefinitionConstant.OBJECT,
@@ -196,7 +221,9 @@ export class DataSourceController extends BaseController {
   ): Promise<Response<never>> {
     const dataSourceId = req.params.id;
 
-    const result = await this.dataSourceService.getDataSourceById(dataSourceId);
+    const result = await this.dataSourceService.deleteDataSourceById(
+      dataSourceId
+    );
 
     return super.sendSuccessResponse(res, result);
   }
