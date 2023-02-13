@@ -934,6 +934,15 @@ export const DataSourceServiceService = {
     responseSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Empty.decode(value),
   },
+  seedDataSources: {
+    path: "/datasource.DataSourceService/seedDataSources",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => Empty.decode(value),
+    responseSerialize: (value: DataSourcesDto) => Buffer.from(DataSourcesDto.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => DataSourcesDto.decode(value),
+  },
 } as const;
 
 export interface DataSourceServiceServer extends UntypedServiceImplementation {
@@ -944,6 +953,7 @@ export interface DataSourceServiceServer extends UntypedServiceImplementation {
   getDataSourcesByTypes: handleUnaryCall<DataSourcesByTypesDto, DataSourcesDto>;
   deleteAllDataSources: handleUnaryCall<Empty, Empty>;
   deleteDataSourceById: handleUnaryCall<DataSourceIdDto, Empty>;
+  seedDataSources: handleUnaryCall<Empty, DataSourcesDto>;
 }
 
 export interface DataSourceServiceClient extends Client {
@@ -1051,6 +1061,21 @@ export interface DataSourceServiceClient extends Client {
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Empty) => void,
+  ): ClientUnaryCall;
+  seedDataSources(
+    request: Empty,
+    callback: (error: ServiceError | null, response: DataSourcesDto) => void,
+  ): ClientUnaryCall;
+  seedDataSources(
+    request: Empty,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: DataSourcesDto) => void,
+  ): ClientUnaryCall;
+  seedDataSources(
+    request: Empty,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: DataSourcesDto) => void,
   ): ClientUnaryCall;
 }
 

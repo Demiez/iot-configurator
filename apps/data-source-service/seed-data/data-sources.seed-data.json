@@ -1,0 +1,91 @@
+[
+  {
+    "_id": "38ffb9c6-0ff5-4616-b679-76c64f8fbbca",
+    "name": "Mqtt-default",
+    "port": 1883,
+    "type": "MQTT",
+    "isDefault": true,
+    "isPrimary": true,
+    "mqttServerAddress": "iot-configurator:1883"
+  },
+  {
+    "_id": "68e88b35-6f6e-4177-b191-f2528d8df454",
+    "name": "Mqtt-01",
+    "port": 1883,
+    "type": "MQTT",
+    "isDefault": false,
+    "isPrimary": false,
+    "mqttServerAddress": "iot-configurator:1883"
+  },
+  {
+    "_id": "fb2b23b6-1340-4615-81d3-6f9e6bcb0412",
+    "name": "Insite-01",
+    "port": 7003,
+    "type": "INSITE",
+    "isDefault": false,
+    "isPrimary": true,
+    "insiteServerAddress": "localhost",
+    "bridgeId": "081c2f4f-7156-408c-ae9a-ad9962dc7dc3",
+    "logLevel": "INFO"
+  },
+  {
+    "_id": "93200d75-5022-428d-b2fb-e3a8506c29f1",
+    "name": "Rmq-default",
+    "port": 5672,
+    "type": "RMQ",
+    "isDefault": true,
+    "isPrimary": false,
+    "amqpServerAddress": "amqp://test:test@localhost:5672/dev"
+  },
+  {
+    "id": "585ede44-bf70-4df9-8882-87c8e20574ed",
+    "name": "Rmq-01",
+    "port": 5672,
+    "type": "RMQ",
+    "isDefault": false,
+    "isPrimary": true,
+    "amqpServerAddress": "amqp://test:test@localhost:5672/dev"
+  },
+  {
+    "id": "b3bf542e-9c27-4c84-b2c4-d48f1db2734f",
+    "name": "Modbus-01",
+    "port": 502,
+    "type": 4,
+    "isDefault": false,
+    "isPrimary": true,
+    "slaveId": "081c2f4f-7156-408c-ae9a-ad9962dc7dc3",
+    "modbusIpAddress": "localhost"
+  },
+  {
+    "id": "e1d1fc5e-f8ba-44e6-9a73-585b10c5ab85",
+    "name": "Opcua-01",
+    "port": 48031,
+    "type": "OPCUA",
+    "isDefault": false,
+    "isPrimary": true,
+    "opcuaServerAddress": "iot-configurator:48031",
+    "domainName": "iot-configurator",
+    "messageSecurityMode": 2,
+    "securityPolicy": "BASIC128RSA15",
+    "certificate": "none"
+  },
+  {
+    "id": "1915222f-be2f-4e8c-8a50-a5c775439a97",
+    "name": "Wits0-01",
+    "port": 1025,
+    "type": "WITS0",
+    "isDefault": false,
+    "isPrimary": true,
+    "daudRate": 8600,
+    "dataBits": 6,
+    "stopBits": 1,
+    "parity": 0,
+    "readTimeoutSeconds": 1,
+    "heartBeatInterval": 20,
+    "heartBeatValue": "&&\n0111-8888\n!!",
+    "packetHeader": "&&",
+    "packetFooter": "!!",
+    "lineSeparator": "\r\n",
+    "outputRaw": true
+  }
+]

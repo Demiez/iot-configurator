@@ -6,4 +6,5 @@ export enum DataSourceRpcNamesEnum {
   GET_DATA_SOURCES_BY_TYPES = 'getDataSourcesByTypes',
   DELETE_ALL_DATA_SOURCES = 'deleteAllDataSources',
   DELETE_DATA_SOURCE_BY_ID = 'deleteDataSourceById',
+  SEED_DATA_SOURCES = 'seedDataSources',
 }

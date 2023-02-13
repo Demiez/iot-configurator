@@ -106,4 +106,5 @@ service DataSourceService {
   rpc getDataSourcesByTypes(DataSourcesByTypesDto) returns (DataSourcesDto);
   rpc deleteAllDataSources(google.protobuf.Empty) returns (google.protobuf.Empty);
   rpc deleteDataSourceById(DataSourceIdDto) returns (google.protobuf.Empty);
+  rpc seedDataSources(google.protobuf.Empty) returns (DataSourcesDto);
 }
