@@ -10,3 +10,16 @@ The **Internet of Things (IoT)** describes physical objects with sensors, proces
 
 - [Monorepo Setup and Management](./.docs/monorepo/README.md)
 - [Project libraries](./.docs/libs/README.md)
+
+# Supported data sources
+
+**Iotcon** dataSources serve as generic source of data standartization, with specific default fields, which will be managed on deeper layers of IoT system. The number of configured fields differ. In current system implementation only basic and not all dataSource fields are taken (they are available for extension), mostly with aim to identify that mandatory data of specific type can be persisted in the system.
+
+**Iotcon** has the following supported data sources for connectors (these are added as examples, with the links to documentations):
+
+- INSITE ([Intelligent Edge](https://www.insight.com/en_US/what-we-do/expertise/intelligent-edge.html))
+- MQTT ([MQTT: The Standard for IoT Messaging](https://mqtt.org/)
+- OPC Unified Architecture ([OPCUA](https://opcfoundation.org/about/opc-technologies/opc-ua/))
+- RMQ ([RMQ for IoT](https://funprojects.blog/2018/12/07/rabbitmq-for-iot/))
+- MODBUS ([Modbus Refference](https://www.modbus.org/docs/PI_MBUS_300.pdf))
+- Wellsite Information Transfer Specification ([WITS0](https://info.erdosmiller.com/blog/wits-wellsite-information-transfer-specification-fundamentals))
