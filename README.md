@@ -11,6 +11,12 @@ The **Internet of Things (IoT)** describes physical objects with sensors, proces
 - [Monorepo Setup and Management](./.docs/monorepo/README.md)
 - [Project libraries](./.docs/libs/README.md)
 
+# Design
+
+Architecture of **Iotcon** is shown on below diagram, iotcon subsystem can represent a part of Overall IoT System Architecture:
+
+![flowdiagram](./.docs/images/iotcon_architecture.png)
+
 # Supported data sources
 
 **Iotcon** dataSources serve as generic source of data standartization, with specific default fields, which will be managed on deeper layers of IoT system. The number of configured fields differ. In current system implementation only basic and not all dataSource fields are taken (they are available for extension), mostly with aim to identify that mandatory data of specific type can be persisted in the system.
