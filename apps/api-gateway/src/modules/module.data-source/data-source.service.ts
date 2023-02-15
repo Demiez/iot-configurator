@@ -111,6 +111,21 @@ export class DataSourceService extends BaseGrpcClientService {
     return new DataSourcesViewModel(dataSourcesData);
   }
 
+  public async seedDataSources(): Promise<DataSourcesViewModel> {
+    const dataSourcesData = await this.sendUnaryGrpcRequest<
+      DataSourceServiceClient,
+      Empty,
+      IDataSources
+    >(
+      this.grpcClient,
+      DataSourceRpcNamesEnum.SEED_DATA_SOURCES,
+      null,
+      mapDataSources
+    );
+
+    return new DataSourcesViewModel(dataSourcesData);
+  }
+
   public async deleteAllDataSources(): Promise<
     StandardResponseViewModel<unknown>
   > {

@@ -7,6 +7,9 @@ import {
   IDataSourcesIds,
 } from '~iotcon-models';
 import { DataSourceRepository } from './repository/data-source.repository';
+import { join } from 'path';
+import process from 'process';
+import { readFileSync } from 'fs';
 
 @Injectable()
 export class DataSourceService {
@@ -67,5 +70,23 @@ export class DataSourceService {
 
   public async deleteAllDataSources(): Promise<void> {
     await this.dataSourceRepository.deleteAllDataSources();
+  }
+
+  public async seedDataSources(): Promise<DataSourcesDataModel> {
+    const seedFilePath = join(
+      process.cwd(),
+      '/seed-data/data-sources.seed-data.json',
+    );
+
+    const dataSourcesData: DataSourceDataModel[] = JSON.parse(
+      readFileSync(seedFilePath).toString(),
+    );
+    const dataSourcesIds = dataSourcesData.map(
+      (dataSourceData) => dataSourceData._id,
+    );
+
+    await this.dataSourceRepository.insertManyDataSources(dataSourcesData);
+
+    return await this.getDataSourcesByIds({ ids: dataSourcesIds });
   }
 }

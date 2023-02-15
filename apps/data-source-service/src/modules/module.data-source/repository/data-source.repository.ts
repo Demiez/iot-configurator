@@ -80,4 +80,18 @@ export class DataSourceRepository {
   public async deleteAllDataSources(): Promise<unknown> {
     return await this.dataSourceModel.deleteMany();
   }
+
+  public async insertManyDataSources(
+    dataSources: DataSourceDataModel[],
+  ): Promise<void> {
+    try {
+      await this.dataSourceModel.insertMany(dataSources, {
+        ordered: false,
+      });
+    } catch (error) {
+      if (error.code !== 11000) {
+        throw error;
+      }
+    }
+  }
 }

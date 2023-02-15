@@ -10,8 +10,14 @@ import {
 import { Request, Response } from 'express';
 import { APP_ROOT, UUID_REGEX } from '../../core/constants';
 import { DataSourceService } from './data-source.service';
-import { MetaContextEnum } from '~iotcon-models';
-import { DataSourceRequestModel, DataSourcesIdsRequestModel } from './models';
+import { MetaContextEnum, StandardResponseViewModel } from '~iotcon-models';
+import {
+  DataSourceIdViewModel,
+  DataSourceRequestModel,
+  DataSourcesIdsRequestModel,
+  DataSourcesViewModel,
+  DataSourceViewModel,
+} from './models';
 import {
   ApiOperationDelete,
   ApiOperationGet,
@@ -57,7 +63,7 @@ export class DataSourceController extends BaseController {
   public async createDataSource(
     req: Request,
     res: Response
-  ): Promise<Response<never>> {
+  ): Promise<Response<DataSourceIdViewModel>> {
     const requestModel = new DataSourceRequestModel(req.body);
 
     const result = await this.dataSourceService.createDataSource(requestModel);
@@ -83,8 +89,32 @@ export class DataSourceController extends BaseController {
   public async getAllDataSources(
     req: Request,
     res: Response
-  ): Promise<Response<never>> {
+  ): Promise<Response<DataSourcesViewModel>> {
     const result = await this.dataSourceService.getAllDataSources();
+
+    return super.sendSuccessResponse(res, result);
+  }
+
+  @ApiOperationGet({
+    path: '/seed',
+    summary: 'Seeds DataSources of available types with standard configs',
+    responses: {
+      200: { model: 'DataSourcesViewModel' },
+      500: {
+        description: `INTERNAL_SERVER_ERROR: ErrorResponseViewModel`,
+        type: SwaggerDefinitionConstant.OBJECT,
+      },
+    },
+    security: {
+      basicAuth: [],
+    },
+  })
+  @Get('/seed')
+  public async seedDataSources(
+    req: Request,
+    res: Response
+  ): Promise<Response<DataSourcesViewModel>> {
+    const result = await this.dataSourceService.seedDataSources();
 
     return super.sendSuccessResponse(res, result);
   }
@@ -122,7 +152,7 @@ export class DataSourceController extends BaseController {
   public async getDataSourceById(
     req: Request,
     res: Response
-  ): Promise<Response<never>> {
+  ): Promise<Response<DataSourceViewModel>> {
     const dataSourceId = req.params.id;
 
     const result = await this.dataSourceService.getDataSourceById(dataSourceId);
@@ -154,7 +184,7 @@ export class DataSourceController extends BaseController {
   public async getDataSourcesByIds(
     req: Request,
     res: Response
-  ): Promise<Response<never>> {
+  ): Promise<Response<DataSourcesViewModel>> {
     const requestModel = new DataSourcesIdsRequestModel(req.body);
 
     const result = await this.dataSourceService.getDataSourcesByIds(
@@ -183,7 +213,7 @@ export class DataSourceController extends BaseController {
   public async deleteAllDataSources(
     req: Request,
     res: Response
-  ): Promise<Response<never>> {
+  ): Promise<Response<StandardResponseViewModel<unknown>>> {
     const result = await this.dataSourceService.deleteAllDataSources();
 
     return super.sendSuccessResponse(res, result);
@@ -218,7 +248,7 @@ export class DataSourceController extends BaseController {
   public async deleteDataSourceById(
     req: Request,
     res: Response
-  ): Promise<Response<never>> {
+  ): Promise<Response<StandardResponseViewModel<unknown>>> {
     const dataSourceId = req.params.id;
 
     const result = await this.dataSourceService.deleteDataSourceById(

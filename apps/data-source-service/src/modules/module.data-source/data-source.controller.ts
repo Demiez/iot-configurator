@@ -115,4 +115,16 @@ export class DataSourceController {
   ): Promise<void> {
     return await this.dataSourceService.deleteAllDataSources();
   }
+
+  @GrpcMethod(
+    RpcServicesEnum.DATA_SOURCE_SERVICE,
+    DataSourceRpcNamesEnum.SEED_DATA_SOURCES,
+  )
+  public async seedDataSources(
+    _request: Empty,
+    _metadata: Metadata,
+    _call: ServerUnaryCall<Empty, IDataSources>,
+  ): Promise<DataSourcesDataModel> {
+    return await this.dataSourceService.seedDataSources();
+  }
 }

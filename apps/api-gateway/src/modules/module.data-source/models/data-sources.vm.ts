@@ -14,7 +14,7 @@ export class DataSourcesViewModel {
   @ApiModelProperty({
     description: 'number of dataSources',
     type: SwaggerDefinitionConstant.NUMBER,
-    example: 10 as number,
+    example: 1 as number,
     required: true,
   })
   public total: number;
