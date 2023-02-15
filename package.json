@@ -1,7 +1,7 @@
 {
   "name": "iot-configurator",
   "version": "1.0.0",
-  "description": "",
+  "description": "IoT microservice system for optimal data management",
   "author": "Dmytro Petrenko",
   "license": "MIT",
   "main": "index.js",
