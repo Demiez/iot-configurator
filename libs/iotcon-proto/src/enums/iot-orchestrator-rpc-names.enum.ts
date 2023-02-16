@@ -1,4 +1,4 @@
-export enum OrchestratorRpcNamesEnum {
+export enum IotOrchestratorRpcNamesEnum {
   GET_ALL_SCHEMAS = 'getAllSchemas',
   GET_ALL_TEMPLATES = 'getAllTemplates',
   SUBMIT_TRANSACTION = 'submitTransaction',

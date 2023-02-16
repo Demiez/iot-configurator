@@ -1,4 +1,4 @@
 export enum RpcServicesEnum {
   DATA_SOURCE_SERVICE = 'DataSourceService',
-  ORCHESTRATOR_SERVICE = 'OrchestratorService',
+  IOT_ORCHESTRATOR_SERVICE = 'IotOrchestratorService',
 }

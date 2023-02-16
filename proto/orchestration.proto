@@ -58,18 +58,19 @@ message TransactionCompleteDto {
   bool isComplete = 1;
 }
 
-message ModulesIds {
+message ModulesIdsDto {
   repeated string ids = 1;
 }
 
 message ModulesConfigsDto {
-  repeated string configs = 1;
+  int32 total = 1;
+  repeated string configs = 2;
 }
 
-service OrchestratorService {
+service IotOrchestratorService {
   rpc getAllSchemas(google.protobuf.Empty) returns (SchemasDto);
   rpc getAllTemplates(google.protobuf.Empty) returns (TemplatesDto);
   rpc submitTransaction(TransactionDto) returns (TransactionDto);
   rpc checkIsTransactionComplete(TransactionIdDto) returns (TransactionCompleteDto);
-  rpc getModulesConfigsByIds(ModulesIds) returns (ModulesConfigsDto);
+  rpc getModulesConfigsByIds(ModulesIdsDto) returns (ModulesConfigsDto);
 }

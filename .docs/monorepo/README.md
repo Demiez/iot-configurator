@@ -26,4 +26,5 @@ One of the main benefits of adding nx to our pnpm workspace is speed via computa
 - `pnpm add --filter ~iotcon-sdk typescript -D` - install dependency to sdk lib from root folder
 - `pnpm add ~iotcon-sdk --filter api-gateway --workspace` - add sdk lib as dependency to api gateway application from current workspace
 - `pnpm run -r build` - run command recursively
+- `pnpm install` - if in root installs all dependencies for the project
 - `npx nx run-many --target=build --projects=api-gateway,~iotcon-sdk` - run specificied projects from root folder (npx is used to run directly from node_modules)

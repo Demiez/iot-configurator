@@ -131,11 +131,12 @@ export interface TransactionCompleteDto {
   isComplete: boolean;
 }
 
-export interface ModulesIds {
+export interface ModulesIdsDto {
   ids: string[];
 }
 
 export interface ModulesConfigsDto {
+  total: number;
   configs: string[];
 }
 
@@ -629,22 +630,22 @@ export const TransactionCompleteDto = {
   },
 };
 
-function createBaseModulesIds(): ModulesIds {
+function createBaseModulesIdsDto(): ModulesIdsDto {
   return { ids: [] };
 }
 
-export const ModulesIds = {
-  encode(message: ModulesIds, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const ModulesIdsDto = {
+  encode(message: ModulesIdsDto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.ids) {
       writer.uint32(10).string(v!);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): ModulesIds {
+  decode(input: _m0.Reader | Uint8Array, length?: number): ModulesIdsDto {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseModulesIds();
+    const message = createBaseModulesIdsDto();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -659,11 +660,11 @@ export const ModulesIds = {
     return message;
   },
 
-  fromJSON(object: any): ModulesIds {
+  fromJSON(object: any): ModulesIdsDto {
     return { ids: Array.isArray(object?.ids) ? object.ids.map((e: any) => String(e)) : [] };
   },
 
-  toJSON(message: ModulesIds): unknown {
+  toJSON(message: ModulesIdsDto): unknown {
     const obj: any = {};
     if (message.ids) {
       obj.ids = message.ids.map((e) => e);
@@ -673,21 +674,24 @@ export const ModulesIds = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ModulesIds>, I>>(object: I): ModulesIds {
-    const message = createBaseModulesIds();
+  fromPartial<I extends Exact<DeepPartial<ModulesIdsDto>, I>>(object: I): ModulesIdsDto {
+    const message = createBaseModulesIdsDto();
     message.ids = object.ids?.map((e) => e) || [];
     return message;
   },
 };
 
 function createBaseModulesConfigsDto(): ModulesConfigsDto {
-  return { configs: [] };
+  return { total: 0, configs: [] };
 }
 
 export const ModulesConfigsDto = {
   encode(message: ModulesConfigsDto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.total !== 0) {
+      writer.uint32(8).int32(message.total);
+    }
     for (const v of message.configs) {
-      writer.uint32(10).string(v!);
+      writer.uint32(18).string(v!);
     }
     return writer;
   },
@@ -700,6 +704,9 @@ export const ModulesConfigsDto = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          message.total = reader.int32();
+          break;
+        case 2:
           message.configs.push(reader.string());
           break;
         default:
@@ -711,11 +718,15 @@ export const ModulesConfigsDto = {
   },
 
   fromJSON(object: any): ModulesConfigsDto {
-    return { configs: Array.isArray(object?.configs) ? object.configs.map((e: any) => String(e)) : [] };
+    return {
+      total: isSet(object.total) ? Number(object.total) : 0,
+      configs: Array.isArray(object?.configs) ? object.configs.map((e: any) => String(e)) : [],
+    };
   },
 
   toJSON(message: ModulesConfigsDto): unknown {
     const obj: any = {};
+    message.total !== undefined && (obj.total = Math.round(message.total));
     if (message.configs) {
       obj.configs = message.configs.map((e) => e);
     } else {
@@ -726,15 +737,16 @@ export const ModulesConfigsDto = {
 
   fromPartial<I extends Exact<DeepPartial<ModulesConfigsDto>, I>>(object: I): ModulesConfigsDto {
     const message = createBaseModulesConfigsDto();
+    message.total = object.total ?? 0;
     message.configs = object.configs?.map((e) => e) || [];
     return message;
   },
 };
 
-export type OrchestratorServiceService = typeof OrchestratorServiceService;
-export const OrchestratorServiceService = {
+export type IotOrchestratorServiceService = typeof IotOrchestratorServiceService;
+export const IotOrchestratorServiceService = {
   getAllSchemas: {
-    path: "/orchestration.OrchestratorService/getAllSchemas",
+    path: "/orchestration.IotOrchestratorService/getAllSchemas",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
@@ -743,7 +755,7 @@ export const OrchestratorServiceService = {
     responseDeserialize: (value: Buffer) => SchemasDto.decode(value),
   },
   getAllTemplates: {
-    path: "/orchestration.OrchestratorService/getAllTemplates",
+    path: "/orchestration.IotOrchestratorService/getAllTemplates",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
@@ -752,7 +764,7 @@ export const OrchestratorServiceService = {
     responseDeserialize: (value: Buffer) => TemplatesDto.decode(value),
   },
   submitTransaction: {
-    path: "/orchestration.OrchestratorService/submitTransaction",
+    path: "/orchestration.IotOrchestratorService/submitTransaction",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: TransactionDto) => Buffer.from(TransactionDto.encode(value).finish()),
@@ -761,7 +773,7 @@ export const OrchestratorServiceService = {
     responseDeserialize: (value: Buffer) => TransactionDto.decode(value),
   },
   checkIsTransactionComplete: {
-    path: "/orchestration.OrchestratorService/checkIsTransactionComplete",
+    path: "/orchestration.IotOrchestratorService/checkIsTransactionComplete",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: TransactionIdDto) => Buffer.from(TransactionIdDto.encode(value).finish()),
@@ -770,25 +782,25 @@ export const OrchestratorServiceService = {
     responseDeserialize: (value: Buffer) => TransactionCompleteDto.decode(value),
   },
   getModulesConfigsByIds: {
-    path: "/orchestration.OrchestratorService/getModulesConfigsByIds",
+    path: "/orchestration.IotOrchestratorService/getModulesConfigsByIds",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: ModulesIds) => Buffer.from(ModulesIds.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => ModulesIds.decode(value),
+    requestSerialize: (value: ModulesIdsDto) => Buffer.from(ModulesIdsDto.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => ModulesIdsDto.decode(value),
     responseSerialize: (value: ModulesConfigsDto) => Buffer.from(ModulesConfigsDto.encode(value).finish()),
     responseDeserialize: (value: Buffer) => ModulesConfigsDto.decode(value),
   },
 } as const;
 
-export interface OrchestratorServiceServer extends UntypedServiceImplementation {
+export interface IotOrchestratorServiceServer extends UntypedServiceImplementation {
   getAllSchemas: handleUnaryCall<Empty, SchemasDto>;
   getAllTemplates: handleUnaryCall<Empty, TemplatesDto>;
   submitTransaction: handleUnaryCall<TransactionDto, TransactionDto>;
   checkIsTransactionComplete: handleUnaryCall<TransactionIdDto, TransactionCompleteDto>;
-  getModulesConfigsByIds: handleUnaryCall<ModulesIds, ModulesConfigsDto>;
+  getModulesConfigsByIds: handleUnaryCall<ModulesIdsDto, ModulesConfigsDto>;
 }
 
-export interface OrchestratorServiceClient extends Client {
+export interface IotOrchestratorServiceClient extends Client {
   getAllSchemas(request: Empty, callback: (error: ServiceError | null, response: SchemasDto) => void): ClientUnaryCall;
   getAllSchemas(
     request: Empty,
@@ -847,28 +859,32 @@ export interface OrchestratorServiceClient extends Client {
     callback: (error: ServiceError | null, response: TransactionCompleteDto) => void,
   ): ClientUnaryCall;
   getModulesConfigsByIds(
-    request: ModulesIds,
+    request: ModulesIdsDto,
     callback: (error: ServiceError | null, response: ModulesConfigsDto) => void,
   ): ClientUnaryCall;
   getModulesConfigsByIds(
-    request: ModulesIds,
+    request: ModulesIdsDto,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: ModulesConfigsDto) => void,
   ): ClientUnaryCall;
   getModulesConfigsByIds(
-    request: ModulesIds,
+    request: ModulesIdsDto,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: ModulesConfigsDto) => void,
   ): ClientUnaryCall;
 }
 
-export const OrchestratorServiceClient = makeGenericClientConstructor(
-  OrchestratorServiceService,
-  "orchestration.OrchestratorService",
+export const IotOrchestratorServiceClient = makeGenericClientConstructor(
+  IotOrchestratorServiceService,
+  "orchestration.IotOrchestratorService",
 ) as unknown as {
-  new (address: string, credentials: ChannelCredentials, options?: Partial<ChannelOptions>): OrchestratorServiceClient;
-  service: typeof OrchestratorServiceService;
+  new (
+    address: string,
+    credentials: ChannelCredentials,
+    options?: Partial<ChannelOptions>,
+  ): IotOrchestratorServiceClient;
+  service: typeof IotOrchestratorServiceService;
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
