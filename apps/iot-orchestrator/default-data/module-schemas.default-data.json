@@ -1,0 +1,74 @@
+[
+  {
+    "name": "mqtt-sensor-schema",
+    "type": "IOTCON_COLLECTOR",
+    "class": "iot.management.mqtt.type.collector.MqttClass",
+    "config": "iot.management.mqtt.type.collector.MqttConfig"
+  },
+  {
+    "name": "mqtt-publisher-schema",
+    "type": "IOTCON_PUBLISHER",
+    "class": "iot.management.mqtt.type.publisher.MqttClass",
+    "config": "iot.management.mqtt.type.publisher.MqttConfig"
+  },
+  {
+    "name": "insite-sensor-schema",
+    "type": "IOT_SENSOR",
+    "class": "iot.management.insite.type.sensor.InsiteClass",
+    "config": "iot.management.insite.type.sensor.InsiteConfig"
+  },
+  {
+    "name": "insite-publisher-schema",
+    "type": "IOT_PUBLISHER",
+    "class": "iot.management.insite.type.publisher.InsiteClass",
+    "config": "iot.management.insite.type.publisher.InsiteConfig"
+  },
+  {
+    "name": "rmq-sensor-schema",
+    "type": "IOTCON_COLLECTOR",
+    "class": "iot.management.rmq.type.collector.RmqClass",
+    "config": "iot.management.rmq.type.collector.RmqConfig"
+  },
+  {
+    "name": "rmq-publisher-schema",
+    "type": "IOTCON_PUBLISHER",
+    "class": "iot.management.rmq.type.publisher.RmqClass",
+    "config": "iot.management.rmq.type.publisher.RmqConfig"
+  },
+  {
+    "name": "modbus-sensor-schema",
+    "type": "IOT_SENSOR",
+    "class": "iot.management.modbus.type.sensor.ModbusClass",
+    "config": "iot.management.modbus.type.sensor.ModbusConfig"
+  },
+  {
+    "name": "modbus-publisher-schema",
+    "type": "IOT_PUBLISHER",
+    "class": "iot.management.modbus.type.publisher.ModbusClass",
+    "config": "iot.management.modbus.type.publisher.ModbusConfig"
+  },
+  {
+    "name": "opcua-sensor-schema",
+    "type": "IOT_SENSOR",
+    "class": "iot.management.opcua.type.sensor.OpcuaClass",
+    "config": "iot.management.opcua.type.sensor.OpcuaConfig"
+  },
+  {
+    "name": "opcua-publisher-schema",
+    "type": "IOT_PUBLISHER",
+    "class": "iot.management.opcua.type.publisher.OpcuaClass",
+    "config": "iot.management.opcua.type.publisher.OpcuaConfig"
+  },
+  {
+    "name": "wits0-sensor-schema",
+    "type": "IOT_SENSOR",
+    "class": "iot.management.wits0.type.sensor.Wits0Class",
+    "config": "iot.management.wits0.type.sensor.Wits0Config"
+  },
+  {
+    "name": "wits0-publisher-schema",
+    "type": "IOT_PUBLISHER",
+    "class": "iot.management.wits0.type.publisher.Wits0Class",
+    "config": "iot.management.wits0.type.publisher.Wits0Config"
+  }
+]

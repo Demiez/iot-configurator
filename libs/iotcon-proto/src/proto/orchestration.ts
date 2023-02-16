@@ -89,9 +89,66 @@ export function operationModesEnumToJSON(object: OperationModesEnum): string {
   }
 }
 
+export enum ModuleTypesEnum {
+  UNKNOWN_MODULE_TYPE = 0,
+  CORE_LIB_MODULE = 1,
+  IOT_SENSOR = 2,
+  IOT_PUBLISHER = 3,
+  IOTCON_COLLECTOR = 4,
+  IOTCON_PUBLISHER = 5,
+  UNRECOGNIZED = -1,
+}
+
+export function moduleTypesEnumFromJSON(object: any): ModuleTypesEnum {
+  switch (object) {
+    case 0:
+    case "UNKNOWN_MODULE_TYPE":
+      return ModuleTypesEnum.UNKNOWN_MODULE_TYPE;
+    case 1:
+    case "CORE_LIB_MODULE":
+      return ModuleTypesEnum.CORE_LIB_MODULE;
+    case 2:
+    case "IOT_SENSOR":
+      return ModuleTypesEnum.IOT_SENSOR;
+    case 3:
+    case "IOT_PUBLISHER":
+      return ModuleTypesEnum.IOT_PUBLISHER;
+    case 4:
+    case "IOTCON_COLLECTOR":
+      return ModuleTypesEnum.IOTCON_COLLECTOR;
+    case 5:
+    case "IOTCON_PUBLISHER":
+      return ModuleTypesEnum.IOTCON_PUBLISHER;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return ModuleTypesEnum.UNRECOGNIZED;
+  }
+}
+
+export function moduleTypesEnumToJSON(object: ModuleTypesEnum): string {
+  switch (object) {
+    case ModuleTypesEnum.UNKNOWN_MODULE_TYPE:
+      return "UNKNOWN_MODULE_TYPE";
+    case ModuleTypesEnum.CORE_LIB_MODULE:
+      return "CORE_LIB_MODULE";
+    case ModuleTypesEnum.IOT_SENSOR:
+      return "IOT_SENSOR";
+    case ModuleTypesEnum.IOT_PUBLISHER:
+      return "IOT_PUBLISHER";
+    case ModuleTypesEnum.IOTCON_COLLECTOR:
+      return "IOTCON_COLLECTOR";
+    case ModuleTypesEnum.IOTCON_PUBLISHER:
+      return "IOTCON_PUBLISHER";
+    case ModuleTypesEnum.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
 export interface SchemaDto {
   name: string;
-  target: string;
+  type: ModuleTypesEnum;
   class: string;
   config: string;
 }
@@ -141,7 +198,7 @@ export interface ModulesConfigsDto {
 }
 
 function createBaseSchemaDto(): SchemaDto {
-  return { name: "", target: "", class: "", config: "" };
+  return { name: "", type: 0, class: "", config: "" };
 }
 
 export const SchemaDto = {
@@ -149,8 +206,8 @@ export const SchemaDto = {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
-    if (message.target !== "") {
-      writer.uint32(18).string(message.target);
+    if (message.type !== 0) {
+      writer.uint32(16).int32(message.type);
     }
     if (message.class !== "") {
       writer.uint32(26).string(message.class);
@@ -172,7 +229,7 @@ export const SchemaDto = {
           message.name = reader.string();
           break;
         case 2:
-          message.target = reader.string();
+          message.type = reader.int32() as any;
           break;
         case 3:
           message.class = reader.string();
@@ -191,7 +248,7 @@ export const SchemaDto = {
   fromJSON(object: any): SchemaDto {
     return {
       name: isSet(object.name) ? String(object.name) : "",
-      target: isSet(object.target) ? String(object.target) : "",
+      type: isSet(object.type) ? moduleTypesEnumFromJSON(object.type) : 0,
       class: isSet(object.class) ? String(object.class) : "",
       config: isSet(object.config) ? String(object.config) : "",
     };
@@ -200,7 +257,7 @@ export const SchemaDto = {
   toJSON(message: SchemaDto): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
-    message.target !== undefined && (obj.target = message.target);
+    message.type !== undefined && (obj.type = moduleTypesEnumToJSON(message.type));
     message.class !== undefined && (obj.class = message.class);
     message.config !== undefined && (obj.config = message.config);
     return obj;
@@ -209,7 +266,7 @@ export const SchemaDto = {
   fromPartial<I extends Exact<DeepPartial<SchemaDto>, I>>(object: I): SchemaDto {
     const message = createBaseSchemaDto();
     message.name = object.name ?? "";
-    message.target = object.target ?? "";
+    message.type = object.type ?? 0;
     message.class = object.class ?? "";
     message.config = object.config ?? "";
     return message;

@@ -1,0 +1,62 @@
+[
+  {
+    "version": 1,
+    "templateId": "07cf394f-4d49-4fa9-8a48-4fce835dc003",
+    "config": "iot.management.mqtt.type.collector.MqttConfig"
+  },
+  {
+    "version": 1,
+    "templateId": "0a560022-977a-4e65-bf7e-289c7458bbd3",
+    "config": "iot.management.mqtt.type.publisher.MqttConfig"
+  },
+  {
+    "version": 1,
+    "templateId": "953bbbc1-f3c2-4c0f-a519-46e9b2559d33",
+    "config": "iot.management.insite.type.sensor.InsiteConfig"
+  },
+  {
+    "version": 1,
+    "templateId": "b418912c-ce5b-4f20-96d0-d2ec2ed2ff02",
+    "config": "iot.management.insite.type.publisher.InsiteConfig"
+  },
+  {
+    "version": 2,
+    "templateId": "12dee636-2ac1-49b2-ac40-865186e7745d",
+    "config": "iot.management.rmq.type.collector.RmqConfig"
+  },
+  {
+    "version": 2,
+    "templateId": "995f9a24-26b5-4bdd-8c4c-65390fd2ddf7",
+    "config": "iot.management.rmq.type.publisher.RmqConfig"
+  },
+  {
+    "version": 1,
+    "templateId": "3c78f9fe-f14e-467f-a36d-565e517adc14",
+    "config": "iot.management.modbus.type.sensor.ModbusConfig"
+  },
+  {
+    "version": 1,
+    "templateId": "d2c36386-c6ae-4899-aeac-d4a13b9dfb4c",
+    "config": "iot.management.modbus.type.publisher.ModbusConfig"
+  },
+  {
+    "version": 3,
+    "templateId": "1024b6b6-51f1-4c63-b4c9-6b2b0a051b4b",
+    "config": "iot.management.opcua.type.sensor.OpcuaConfig"
+  },
+  {
+    "version": 3,
+    "templateId": "1c187e12-a965-496a-9ff4-0a48817a1776",
+    "config": "iot.management.opcua.type.publisher.OpcuaConfig"
+  },
+  {
+    "version": 3,
+    "templateId": "edb25a45-9059-4eb5-9b71-13b4c23cd750",
+    "config": "iot.management.wits0.type.sensor.Wits0Config"
+  },
+  {
+    "version": 3,
+    "templateId": "01f681ba-741f-4da3-adc8-b84b7106a51e",
+    "config": "iot.management.wits0.type.publisher.Wits0Config"
+  }
+]

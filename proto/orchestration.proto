@@ -16,9 +16,18 @@ enum OperationModesEnum {
   DELETE_ALL = 8;
 }
 
+enum ModuleTypesEnum {
+  UNKNOWN_MODULE_TYPE = 0;
+  CORE_LIB_MODULE = 1;
+  IOT_SENSOR = 2;
+  IOT_PUBLISHER = 3;
+  IOTCON_COLLECTOR = 4;
+  IOTCON_PUBLISHER = 5;
+}
+
 message SchemaDto {
   string name = 1;
-  string target = 2;
+  ModuleTypesEnum type = 2;
   string class = 3;
   string config = 4;
 }
