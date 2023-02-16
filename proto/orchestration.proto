@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package orchestration;
+
+import "google/protobuf/empty.proto";
+
+enum OperationModesEnum {
+  UNKNOWN_MODE = 0;
+  MODULE_CREATE = 1;
+  MODULE_CREATE_AND_START = 2;
+  MODULE_REPLACE = 3;
+  MODULE_START = 4;
+  MODULE_STOP = 5;
+  MODULE_RESTART = 6;
+  MODULE_DELETE = 7;
+  DELETE_ALL = 8;
+}
+
+message SchemaDto {
+  string name = 1;
+  string target = 2;
+  string class = 3;
+  string config = 4;
+}
+
+message SchemasDto {
+  int32 total = 1;
+  repeated SchemaDto schemas = 2;
+}
+
+message TemplateDto {
+  int32 version = 1;
+  string templateId = 2;
+  string config = 3;
+}
+
+message TemplatesDto {
+  int32 total = 1;
+  repeated TemplateDto templates = 2;
+}
+
+message OperationDto {
+  string transactionId = 1;
+  OperationModesEnum mode = 2;
+  string config = 3;
+}
+
+message TransactionDto {
+  optional string transactionId = 1;
+  repeated OperationDto operations = 2;
+}
+
+message TransactionIdDto {
+  string transactionId = 1;
+}
+
+message TransactionCompleteDto {
+  bool isComplete = 1;
+}
+
+message ModulesIds {
+  repeated string ids = 1;
+}
+
+message ModulesConfigsDto {
+  repeated string configs = 1;
+}
+
+service OrchestratorService {
+  rpc getAllSchemas(google.protobuf.Empty) returns (SchemasDto);
+  rpc getAllTemplates(google.protobuf.Empty) returns (TemplatesDto);
+  rpc submitTransaction(TransactionDto) returns (TransactionDto);
+  rpc checkIsTransactionComplete(TransactionIdDto) returns (TransactionCompleteDto);
+  rpc getModulesConfigsByIds(ModulesIds) returns (ModulesConfigsDto);
+}
