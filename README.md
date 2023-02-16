@@ -10,6 +10,7 @@ The **Internet of Things (IoT)** describes physical objects with sensors, proces
 
 - [Monorepo Setup and Management](./.docs/monorepo/README.md)
 - [Project libraries](./.docs/libs/README.md)
+- [Project board](https://github.com/users/Demiez/projects/2)
 
 # Design
 
