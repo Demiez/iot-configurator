@@ -4,8 +4,17 @@ import {
   Schema,
   SchemaFactory,
 } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 import { v4 } from 'uuid';
+import { IBriefOperation, OperationModesEnum } from '~iotcon-models';
+
+@Schema({ _id: false })
+export class BriefOperation implements IBriefOperation {
+  @Prop({ type: String, enum: OperationModesEnum, required: true })
+  mode: OperationModesEnum;
+  @Prop({ required: true })
+  moduleId: string;
+}
 
 @Schema({
   toObject: {
@@ -22,8 +31,8 @@ export class TransactionLog {
   _id: string;
   @Prop({ required: true })
   isComplete: boolean;
-  @Prop({ required: true })
-  moduleId: string;
+  @Prop({ type: MongooseSchema.Types.Array, required: true })
+  operations: BriefOperation[];
 
   // special fields
   @Prop()
