@@ -1,0 +1,112 @@
+syntax = "proto3";
+
+package indicator;
+
+import "google/protobuf/empty.proto";
+
+enum DataSourceTypesEnum {
+  UNKNOWN_TYPE = 0;
+  MQTT = 1;
+  INSITE = 2;
+  RMQ = 3;
+  MODBUS = 4;
+  OPCUA = 5;
+  WITS0 = 6;
+}
+
+enum RmqExchangeTypesEnum {
+  UNKNOWN_EXCHANGE_TYPE = 0;
+  DIRECT = 1;
+  FANOUT = 2;
+  HEADERS = 3;
+  TOPIC = 4;
+}
+
+enum RegisterTypesEnum {
+  UNKNOWN_REGISTER_TYPE = 0;
+  COILS = 1;
+  INPUTS = 2;
+  REGISTERS = 3;
+  QUEUE = 4;
+}
+
+enum TypeValuesEnum {
+  UNKNOWN_TYPE_VALUE = 0;
+  INT16 = 1;
+  INT32 = 2;
+  LONG = 3;
+  DOUBLE = 4;
+  BOOL = 5;
+}
+
+enum EndiansEnum {
+  UNKNOWN_ENDIAN = 0;
+  BIG = 1;
+  LITTLE = 2;
+}
+
+enum SubscriptionModesEnum {
+  UNKNOWN_SUBSCRIPTION_MODE = 0;
+  POLLING = 1;
+  SUBSCRIPTION = 2;
+}
+
+message VariableModbusDataDto {
+  RegisterTypesEnum registerType = 1;
+  TypeValuesEnum typeValue = 2;
+  EndiansEnum endian = 3;
+  int32 startAddress = 4;
+}
+
+message IndicatorSourceDto {
+  optional string id = 1;
+  string dataSourceId = 2;
+  string variableName = 3;
+  string uom = 4;
+  string uoc = 5;
+
+  optional DataSourceTypesEnum dataSourceType = 6;
+  optional string group = 7;
+  optional bool isExternal = 8;
+  optional bool isDefault = 9;
+  optional bool isPrimary = 10;
+
+  // insite specific
+  optional string record = 11;
+  optional string descriptor = 12;
+  optional string isWellBased = 13;
+  // mqtt specific
+  optional string mqttServerAddress = 14;
+  optional string mqttTopic = 15;
+  // rmq specific
+  optional string exchangeName = 16;
+  optional RmqExchangeTypesEnum exchangeType = 17;
+  optional bool exchangeDurable = 18;
+  optional string routingKey = 19;
+  // modbus specific
+  optional int32 modbusSampleRate = 20;
+  optional bool modbusReadBlocksData = 21;
+  optional VariableModbusDataDto modbusData = 22;
+  // opcua specific
+  optional SubscriptionModesEnum subscriptionMode = 23;
+  // wits0 specific
+  optional int32 wits0SampleRate = 24;
+  optional bool wits0Direction = 25;
+  optional string variableId = 26;
+}
+
+message IndicatorDto {
+  optional string id = 1;
+  string name = 2;
+  optional string description = 3;
+  optional string group = 4;
+  repeated string tags = 5;
+
+  IndicatorSourceDto root = 6;
+  repeated IndicatorSourceDto targets = 7;
+}
+
+
+service IndicatorService {
+  rpc createIndicator(IndicatorDto) returns (IndicatorDto);
+}

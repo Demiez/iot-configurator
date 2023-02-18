@@ -49,3 +49,40 @@ The following limitations also apply:
 
 - All transactions automatically marked as complete and cannot fail (no integration with external IoT/Edge system)
 - Nested stored config types absent on the level of Orchestrator
+
+# Variable types at IoT Configurator
+
+Variables usage at **Iotcon** is based on the understanding, explained by AWS for IoT Sitewise ([AWS IoT Sitewise](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/expression-variables.html)) and represents an asset of properties. Because **Iotcon** uses different dataSources (not precisely AWS IoT Sitewise) the differentiation of variables has been provided.<br>
+
+**Differentiation of variables** for transaction creation is currently based on Data Source, in scope of which this variable is supposed to be used. Primary key (`PK`) is unique through out all the variables and unique key (`UK`) is unique in scope of selected connector (check diagram below for interactions):<br>
+
+![dataflowdiagram](./.docs/images/iotcon_variable_types.png)
+
+# Generic Variable fields explanation
+
+- Variable name - unique name of variable in scope of connector
+- Indicator key - used to link variable to indicator and allows correct data flow (exists in 1:1 relation on the connector module level)
+- UoM (Unit of Measurement) - definite magnitude of a quantity, defined and adopted by convention
+- UoC (Unit of Class) - classification used for units
+
+# External and internal types of indicators
+
+The terminology is mostly used to comprehend with understanding of indicators produced inside of the IoT Configurator (**internals**) and from outside of the system (**externals**). The aim here stays for possibility of integration with other/external Edge systems. In architectural plane IoT system is not isolated, so creating a basis for externals is logical. The external indicator is also supposed to have unpublished state, which leads to possibility to use it like placeholder for future external data (from MQTT or RMQ brokers). Internals meanwhile are required to have both root and target (at least default one).
+
+# Single API
+
+Single API flow includes CRUD for indicators (internals and externals). Standard indicator request body has the following base structure:
+
+```json
+{
+  "id": "uuid",
+  "name": "string",
+  "description": "string",
+  "group": "string",
+  "tags": ["string"],
+  "root": {},
+  "targets": {}[]
+}
+```
+
+Root and targets of indicator is equivalent of IoT sensor and publishers configurations (which are the same and differentiated by dataSource) merged with single variable configuration (examples for different dataSources will be provided in docs folder in postman collection). The root and target seem to be more undestandable for the end user (smth like the root of data and the target for data).
