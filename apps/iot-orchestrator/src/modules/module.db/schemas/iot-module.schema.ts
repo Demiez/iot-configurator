@@ -18,10 +18,12 @@ import { v4 } from 'uuid';
   },
 })
 export class IotModule {
-  @Prop({ default: v4() })
+  @Prop({ default: () => v4() })
   _id: string;
   @Prop({ required: true })
   config: string;
+  @Prop({ required: true })
+  isStarted: boolean;
 
   // special fields
   @Prop()

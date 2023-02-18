@@ -19,7 +19,7 @@ import { ITemplate } from '~iotcon-models';
   },
 })
 export class ModuleTemplate implements ITemplate {
-  @Prop({ default: v4() })
+  @Prop({ default: () => v4() })
   _id: string;
   @Prop({ required: true })
   version: number;

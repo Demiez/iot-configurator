@@ -1,11 +1,15 @@
 import { Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
-import { ModuleTemplateDataModel } from '~iotcon-models';
+import {
+  ModuleSchemasDataModel,
+  ModuleTemplateDataModel,
+  ModuleTemplatesDataModel,
+} from '~iotcon-models';
 import { SchemaTemplateRepository } from './repository/schema-template.repository';
 import { join } from 'path';
 import process from 'process';
 import { readFileSync } from 'fs';
 import { ModuleSchemaDataModel } from '~iotcon-models';
-import { v4 } from 'uuid';
+import { NOT_FOUND_POPULATION_MESSAGE } from './constants/schema-template.constants';
 
 @Injectable()
 export class SchemaTemplateService implements OnApplicationBootstrap {
@@ -28,18 +32,37 @@ export class SchemaTemplateService implements OnApplicationBootstrap {
     }
 
     if (schemasCount === 0) {
-      this.logger.log('Schemas not found. Performing default population');
+      this.logger.log('Schemas' + NOT_FOUND_POPULATION_MESSAGE);
       defaultPopulationOperations.push(this.populateDefaultSchemas());
     }
 
     if (templatesCount === 0) {
-      this.logger.log('Templates not found. Performing default population');
+      this.logger.log('Templates' + NOT_FOUND_POPULATION_MESSAGE);
       defaultPopulationOperations.push(this.populateDefaultTemplates());
     }
 
     await Promise.all(defaultPopulationOperations);
 
     this.logger.log('Finished default schemas/templates population');
+  }
+
+  public async getAllModuleSchemas(): Promise<ModuleSchemasDataModel> {
+    const schemas = await this.schemaTemplateRepository.findAllModuleSchemas();
+
+    return new ModuleSchemasDataModel(
+      schemas.length,
+      schemas.map((schema) => new ModuleSchemaDataModel(schema)),
+    );
+  }
+
+  public async getAllModuleTemplates(): Promise<ModuleTemplatesDataModel> {
+    const templates =
+      await this.schemaTemplateRepository.findAllModuleTemplates();
+
+    return new ModuleTemplatesDataModel(
+      templates.length,
+      templates.map((template) => new ModuleTemplateDataModel(template)),
+    );
   }
 
   private async populateDefaultSchemas(): Promise<void> {
@@ -51,10 +74,6 @@ export class SchemaTemplateService implements OnApplicationBootstrap {
     const moduleSchemasData: ModuleSchemaDataModel[] = JSON.parse(
       readFileSync(defaultFilePath).toString(),
     );
-
-    moduleSchemasData.forEach((moduleSchemaData) => {
-      moduleSchemaData._id = v4();
-    });
 
     await this.schemaTemplateRepository.insertManyModuleSchemas(
       moduleSchemasData,
@@ -70,10 +89,6 @@ export class SchemaTemplateService implements OnApplicationBootstrap {
     const moduleTemplatesData: ModuleTemplateDataModel[] = JSON.parse(
       readFileSync(defaultFilePath).toString(),
     );
-
-    moduleTemplatesData.forEach((moduleTemplateData) => {
-      moduleTemplateData._id = v4();
-    });
 
     await this.schemaTemplateRepository.insertManyModuleTemplates(
       moduleTemplatesData,

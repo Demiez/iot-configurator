@@ -8,8 +8,6 @@ export class ModuleTemplateDataModel extends Identifier implements ITemplate {
 
   constructor(moduleTemplate: ITemplate) {
     super();
-    this.populateIds(moduleTemplate);
-
     const { version, templateId, config } = moduleTemplate;
 
     this.version = version;

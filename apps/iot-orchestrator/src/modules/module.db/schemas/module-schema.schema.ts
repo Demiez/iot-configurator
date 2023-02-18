@@ -19,7 +19,7 @@ import { ISchema, ModuleTypesEnum } from '~iotcon-models';
   },
 })
 export class ModuleSchema implements ISchema {
-  @Prop({ default: v4() })
+  @Prop({ default: () => v4() })
   _id: string;
   @Prop({ required: true })
   name: string;

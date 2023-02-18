@@ -10,7 +10,6 @@ export class ModuleSchemaDataModel extends Identifier implements ISchema {
 
   constructor(moduleSchema: ISchema) {
     super();
-    this.populateIds(moduleSchema);
 
     this.name = moduleSchema.name;
     this.type = moduleSchema.type;

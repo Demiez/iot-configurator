@@ -54,4 +54,12 @@ export class SchemaTemplateRepository {
       }
     }
   }
+
+  public async findAllModuleSchemas(): Promise<ModuleSchemaDocument[]> {
+    return await this.moduleSchemaModel.find({});
+  }
+
+  public async findAllModuleTemplates(): Promise<ModuleTemplateDocument[]> {
+    return await this.moduleTemplateModel.find({});
+  }
 }

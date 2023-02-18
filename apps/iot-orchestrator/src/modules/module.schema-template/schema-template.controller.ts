@@ -1,7 +1,12 @@
 import { Metadata, ServerUnaryCall } from '@grpc/grpc-js';
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { ISchemas, ITemplates } from '~iotcon-models';
+import {
+  ISchemas,
+  ITemplates,
+  ModuleSchemasDataModel,
+  ModuleTemplatesDataModel,
+} from '~iotcon-models';
 import {
   RpcServicesEnum,
   Empty,
@@ -21,8 +26,10 @@ export class SchemaTemplateController {
     _request: Empty,
     _metadata: Metadata,
     _call: ServerUnaryCall<Empty, ISchemas>,
-  ): Promise<void> {
-    console.log('Not implemented');
+  ): Promise<ModuleSchemasDataModel> {
+    const result = await this.schemaTemplateService.getAllModuleSchemas();
+
+    return result;
   }
 
   @GrpcMethod(
@@ -33,7 +40,9 @@ export class SchemaTemplateController {
     _request: Empty,
     _metadata: Metadata,
     _call: ServerUnaryCall<Empty, ITemplates>,
-  ): Promise<void> {
-    console.log('Not implemented');
+  ): Promise<ModuleTemplatesDataModel> {
+    const result = await this.schemaTemplateService.getAllModuleTemplates();
+
+    return result;
   }
 }
