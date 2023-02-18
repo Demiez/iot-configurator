@@ -185,6 +185,7 @@ export interface TransactionIdDto {
 }
 
 export interface TransactionCompleteDto {
+  transactionId: string;
   isComplete: boolean;
 }
 
@@ -641,13 +642,16 @@ export const TransactionIdDto = {
 };
 
 function createBaseTransactionCompleteDto(): TransactionCompleteDto {
-  return { isComplete: false };
+  return { transactionId: "", isComplete: false };
 }
 
 export const TransactionCompleteDto = {
   encode(message: TransactionCompleteDto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.transactionId !== "") {
+      writer.uint32(10).string(message.transactionId);
+    }
     if (message.isComplete === true) {
-      writer.uint32(8).bool(message.isComplete);
+      writer.uint32(16).bool(message.isComplete);
     }
     return writer;
   },
@@ -660,6 +664,9 @@ export const TransactionCompleteDto = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          message.transactionId = reader.string();
+          break;
+        case 2:
           message.isComplete = reader.bool();
           break;
         default:
@@ -671,17 +678,22 @@ export const TransactionCompleteDto = {
   },
 
   fromJSON(object: any): TransactionCompleteDto {
-    return { isComplete: isSet(object.isComplete) ? Boolean(object.isComplete) : false };
+    return {
+      transactionId: isSet(object.transactionId) ? String(object.transactionId) : "",
+      isComplete: isSet(object.isComplete) ? Boolean(object.isComplete) : false,
+    };
   },
 
   toJSON(message: TransactionCompleteDto): unknown {
     const obj: any = {};
+    message.transactionId !== undefined && (obj.transactionId = message.transactionId);
     message.isComplete !== undefined && (obj.isComplete = message.isComplete);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<TransactionCompleteDto>, I>>(object: I): TransactionCompleteDto {
     const message = createBaseTransactionCompleteDto();
+    message.transactionId = object.transactionId ?? "";
     message.isComplete = object.isComplete ?? false;
     return message;
   },

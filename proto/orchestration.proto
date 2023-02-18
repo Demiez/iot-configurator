@@ -64,7 +64,8 @@ message TransactionIdDto {
 }
 
 message TransactionCompleteDto {
-  bool isComplete = 1;
+  string transactionId = 1;
+  bool isComplete = 2;
 }
 
 message ModulesIdsDto {

@@ -2,7 +2,12 @@ import { Logger, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import process from 'process';
 import { join } from 'path';
-import { DbProvider, SchemaTemplateModule } from './modules';
+import {
+  DbProvider,
+  OrchestrationModule,
+  RmqModule,
+  SchemaTemplateModule,
+} from './modules';
 
 @Module({
   imports: [
@@ -11,6 +16,8 @@ import { DbProvider, SchemaTemplateModule } from './modules';
     }),
     DbProvider._initialize(),
     SchemaTemplateModule,
+    RmqModule,
+    OrchestrationModule,
   ],
   controllers: [],
   providers: [Logger],
