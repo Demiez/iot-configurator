@@ -3,16 +3,7 @@ syntax = "proto3";
 package indicator;
 
 import "google/protobuf/empty.proto";
-
-enum DataSourceTypesEnum {
-  UNKNOWN_TYPE = 0;
-  MQTT = 1;
-  INSITE = 2;
-  RMQ = 3;
-  MODBUS = 4;
-  OPCUA = 5;
-  WITS0 = 6;
-}
+import "datasource.proto";
 
 enum RmqExchangeTypesEnum {
   UNKNOWN_EXCHANGE_TYPE = 0;
@@ -65,7 +56,7 @@ message IndicatorSourceDto {
   string uom = 4;
   string uoc = 5;
 
-  optional DataSourceTypesEnum dataSourceType = 6;
+  optional datasource.DataSourceTypesEnum dataSourceType = 6;
   optional string group = 7;
   optional bool isExternal = 8;
   optional bool isDefault = 9;
@@ -106,7 +97,18 @@ message IndicatorDto {
   repeated IndicatorSourceDto targets = 7;
 }
 
+message IndicatorsDto {
+  int32 total = 1;
+  repeated IndicatorDto indicators = 2;
+}
+
+message IndicatorIdDto {
+  string id = 1;
+}
+
 
 service IndicatorService {
   rpc createIndicator(IndicatorDto) returns (IndicatorDto);
+  rpc getIndicatorById(IndicatorIdDto) returns (IndicatorDto);
+  rpc getAllIndicators(google.protobuf.Empty) returns (IndicatorsDto);
 }

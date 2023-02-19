@@ -160,6 +160,97 @@ importers:
       tsconfig-paths: 4.1.0
       typescript: 4.7.4
 
+  apps/indicator-service:
+    specifiers:
+      '@grpc/grpc-js': 1.8.0
+      '@grpc/proto-loader': 0.7.4
+      '@nestjs/cli': 9.0.0
+      '@nestjs/common': 9.0.0
+      '@nestjs/config': 2.2.0
+      '@nestjs/core': 9.0.0
+      '@nestjs/microservices': 9.2.1
+      '@nestjs/mongoose': 9.2.1
+      '@nestjs/platform-express': 9.0.0
+      '@nestjs/schematics': 9.0.0
+      '@nestjs/testing': 9.0.0
+      '@types/amqplib': 0.10.1
+      '@types/express': 4.17.13
+      '@types/jest': 28.1.8
+      '@types/lodash': 4.14.191
+      '@types/node': 16.0.0
+      '@types/supertest': ^2.0.11
+      '@types/uuid': 9.0.0
+      '@typescript-eslint/eslint-plugin': 5.0.0
+      '@typescript-eslint/parser': 5.0.0
+      amqplib: 0.10.3
+      eslint: 8.0.1
+      eslint-config-prettier: 8.3.0
+      eslint-plugin-prettier: 4.0.0
+      jest: 28.1.3
+      lodash: 4.17.21
+      mongoose: 6.8.4
+      prettier: 2.3.2
+      reflect-metadata: 0.1.13
+      rimraf: 3.0.2
+      rxjs: 7.2.0
+      source-map-support: 0.5.20
+      supertest: 6.1.3
+      ts-jest: 28.0.8
+      ts-loader: 9.2.3
+      ts-node: 10.0.0
+      tsconfig-paths: 4.1.0
+      typescript: 4.7.4
+      uuid: 9.0.0
+      ~iotcon-errors: workspace:*
+      ~iotcon-models: workspace:*
+      ~iotcon-proto: workspace:*
+      ~iotcon-sdk: workspace:*
+    dependencies:
+      '@grpc/grpc-js': 1.8.0
+      '@grpc/proto-loader': 0.7.4
+      '@nestjs/common': 9.0.0_am7yutbq3niv3526eiuqe4mc3q
+      '@nestjs/config': 2.2.0_yiwyuzecw5wwnx4lnkqqfhh7oi
+      '@nestjs/core': 9.0.0_r6xshbggffvo2kxlvn7lufc3ym
+      '@nestjs/microservices': 9.2.1_grvifnkwjgr23bkupubjkyqm2e
+      '@nestjs/mongoose': 9.2.1_r4ndaeh4vx3kfjcrrc4i73b7zi
+      '@nestjs/platform-express': 9.0.0_alqbdw5ypfcue4vycgic65q76y
+      amqplib: 0.10.3
+      lodash: 4.17.21
+      mongoose: 6.8.4
+      reflect-metadata: 0.1.13
+      rimraf: 3.0.2
+      rxjs: 7.2.0
+      uuid: 9.0.0
+      ~iotcon-errors: link:../../libs/iotcon-errors
+      ~iotcon-models: link:../../libs/iotcon-models
+      ~iotcon-proto: link:../../libs/iotcon-proto
+      ~iotcon-sdk: link:../../libs/iotcon-sdk
+    devDependencies:
+      '@nestjs/cli': 9.0.0
+      '@nestjs/schematics': 9.0.0_typescript@4.7.4
+      '@nestjs/testing': 9.0.0_tb6j74idzhhxewoozixgdchqiy
+      '@types/amqplib': 0.10.1
+      '@types/express': 4.17.13
+      '@types/jest': 28.1.8
+      '@types/lodash': 4.14.191
+      '@types/node': 16.0.0
+      '@types/supertest': 2.0.12
+      '@types/uuid': 9.0.0
+      '@typescript-eslint/eslint-plugin': 5.0.0_7nil47z5g6fhz4w5tvdms7hcui
+      '@typescript-eslint/parser': 5.0.0_uhaujixt4myxtnzhmcamhb342a
+      eslint: 8.0.1
+      eslint-config-prettier: 8.3.0_eslint@8.0.1
+      eslint-plugin-prettier: 4.0.0_hcq7pjzitcx4p7wl7rkbetct74
+      jest: 28.1.3_wcht2oh6f25rlmm4jcagra5h7u
+      prettier: 2.3.2
+      source-map-support: 0.5.20
+      supertest: 6.1.3
+      ts-jest: 28.0.8_qglmbi2i2uib5oy4iovazhrsri
+      ts-loader: 9.2.3_l2co7ao223gzrfox7yaiyzd7wu
+      ts-node: 10.0.0_obrsqnaqniu2x2rgbw3thf4upm
+      tsconfig-paths: 4.1.0
+      typescript: 4.7.4
+
   apps/iot-orchestrator:
     specifiers:
       '@grpc/grpc-js': 1.8.0
@@ -268,16 +359,20 @@ importers:
 
   libs/iotcon-models:
     specifiers:
+      '@types/lodash': 4.14.191
       '@types/node': 18.11.18
+      lodash: 4.17.21
       rimraf: 3.0.2
       typescript: 4.9.3
       ~iotcon-proto: workspace:*
       ~iotcon-sdk: workspace:*
     dependencies:
+      lodash: 4.17.21
       rimraf: 3.0.2
       ~iotcon-proto: link:../iotcon-proto
       ~iotcon-sdk: link:../iotcon-sdk
     devDependencies:
+      '@types/lodash': 4.14.191
       '@types/node': 18.11.18
       typescript: 4.9.3
 
@@ -7556,7 +7651,7 @@ packages:
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
-      source-map-support: 0.5.20
+      source-map-support: 0.5.21
       typescript: 4.7.4
       yn: 3.1.1
     dev: true

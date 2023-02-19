@@ -10,11 +10,13 @@
   "author": "Dmytro Petrenko",
   "license": "MIT",
   "dependencies": {
+    "lodash": "4.17.21",
     "rimraf": "3.0.2",
     "~iotcon-proto": "workspace:*",
     "~iotcon-sdk": "workspace:*"
   },
   "devDependencies": {
+    "@types/lodash": "4.14.191",
     "@types/node": "18.11.18",
     "typescript": "4.9.3"
   }
