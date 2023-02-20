@@ -2,15 +2,22 @@
 
 The **Internet of Things (IoT)** describes physical objects with sensors, processing ability, software, and other technologies that connect and exchange data with other devices and systems over Internet or any othe communications networks.<br>
 
-**IoT Configurator (iotcon)** is planned to be a part of the IoT generic data for any system and can be seen as separate IoT system or as IoT subsystem and freely integrated due to the possibility of addition of specific protocols (opcua, modbus, rmq, mqtt, insite and so on), which are implemented through DataSource abstraction, management of required connectors via **Indicators** as high-level abstraction over sensor/publishers and variables, orchestrating low-level modules in Transaction-Orchestrator pipe for futher data processing from edge devices. **Iotcon** ensures that required IoT data lifecycle is processed quickly via connector modules, logically organized through local events and can be operated on at any enterprise level.<br>
+**IoT Configurator (iotcon)** is planned to be a part of the IoT generic data for any system and can be seen as separate IoT system or as IoT subsystem and freely integrated due to the possibility of addition of specific protocols (opcua, modbus, rmq, mqtt, insite and so on), which are implemented through DataSource abstraction, management of required connectors via **Indicators** as high-level abstraction over sensor/publishers and their variables, orchestrating low-level modules in Transaction-Orchestrator pipe for futher data processing from edge devices. **Iotcon** ensures that required IoT data lifecycle is processed quickly via connector modules, logically organized through local events and can be operated on at any enterprise level.<br>
 
-**Why indicators?** - in my opinion, current IoT state is quite complicated to the end-user, it still remains interconnection of unknown terms. With **Indicators** it's quite evident, that there is some data, which indicates some part of flow (it will relate 1:1 to IoT `variable` in scope of specific `connector`). With use of `Indicator` user doesn't really care of connector setup (like sensor taking some data and passing it to publisher) and only focuses on data with specific unit measurement and class. So in fact `Indicator` flow should be close to [Global Variable Devices](https://docs.devicewise.com/Content/Products/GatewayDevelopersGuide/Devices/DeviceTypes/GlobalVariables/Global-Variables-device.htm) for basic understanding of the idea<br>
+**Why indicators?** - in my opinion, current IoT state is quite complicated to the end-user, it still remains interconnection of unknown terms. With **Indicators** it's quite evident, that there is some data, which indicates some part of flow (it will relate 1:1 to IoT `variable` in scope of specific `connector`). With use of `Indicator` user is focused only on data, but not connector setup with separate variables. `Indicators` still maintain the configuration part for sensor and publisher, because connector modules are required to process data. So in fact `Indicator` flow should be close to [Global Variable Devices](https://docs.devicewise.com/Content/Products/GatewayDevelopersGuide/Devices/DeviceTypes/GlobalVariables/Global-Variables-device.htm) for basic understanding of the idea<br>
 
 ## dev documentation
 
 - [Monorepo Setup and Management](./.docs/monorepo/README.md)
 - [Project libraries](./.docs/libs/README.md)
 - [Project board](https://github.com/users/Demiez/projects/2)
+
+# Double API documentation level
+
+Because of complexity of IoT Systems it's really hard to maintain full understanding of the available API. With the aim to approach to the maximal coverage (if it is possible to reach without prior knowledge) there are 2 levels of API functionality docs available:
+
+- `swagger API` - available via specific url (for example `domain/api/v1`) with models descriptions and out of the box UI to perform REST API calls
+- `postman collection` - available in `/.docs` folder and has coverage of main use-cases and combinations saved as examples
 
 # Design
 
@@ -22,7 +29,7 @@ Architecture of **Iotcon** is shown on below diagram, iotcon subsystem can repre
 
 **Iotcon** dataSources serve as generic source of data standartization, with specific default fields, which will be managed on deeper layers of IoT system. The number of configured fields differ. In current system implementation only basic and not all dataSource fields are taken (they are available for extension), mostly with aim to identify that mandatory data of specific type can be persisted in the system.
 
-**Iotcon** has the following supported data sources for connectors (these are added as examples, with the links to documentations):
+**Iotcon** has the following supported dataSources for connectors (these are added as examples, with the links to documentations):
 
 - INSITE ([Intelligent Edge](https://www.insight.com/en_US/what-we-do/expertise/intelligent-edge.html))
 - MQTT ([MQTT: The Standard for IoT Messaging](https://mqtt.org/)
@@ -37,13 +44,13 @@ Architecture of **Iotcon** is shown on below diagram, iotcon subsystem can repre
 
 - iot modules schemas and templates management
 - transactions processing and logging
-- module configs storage and retrieval
+- discrete iot modules whole configs storage and retrieval
 
 `IoT module` should be considered a base functionality item and is itself a connector (sensor/publisher) with specific variables. Manipulations over modules are performed via `transactions`, each one is supposed to have some number of `operations` for modules. Operation holds `transactionId` field, as a mark for transaction service to identify the result of transaction, `mode` and `config` fields (each config depends on dataSource type). Before the module creation there is a need to specify `schema` and `template` that are also different and depend on dataSource type.
 
 Each `transaction` must be logged and linked as 1:M relation to operations (because each transaction can have a link multiple performed operations, each of these has own module and mode). `Transaction` can have 2 generic states (complete and not complete, that are presented by boolean field `isComplete`). Failed transactions must still have logged moduleIds and operationModes.
 
-`Modules storage` (precisely their configs) is performed in JSON stringified format as generic approach in current implementation for extensible solution, because types of possible configs can vary in different IoT systems. Still it is possible to extend to different nested schema types, if needed.
+`Modules storage` (precisely their configs) is performed in JSON stringified format as generic approach in current implementation for extensible solution, because types of possible configs can vary in different IoT systems. On orchestration level all operations need to be generic so modules are not differentiated explicitly into sensors or publishers (like on transaction level). Still it is possible to extend to different nested schema types, if needed.
 
 The following limitations also apply:
 
@@ -67,7 +74,7 @@ Variables usage at **Iotcon** is based on the understanding, explained by AWS fo
 
 # External and internal types of indicators
 
-The terminology is mostly used to comprehend with understanding of indicators produced inside of the IoT Configurator (**internals**) and from outside of the system (**externals**). The aim here stays for possibility of integration with other/external Edge systems. In architectural plane IoT system is not isolated, so creating a basis for externals is logical. The external indicator is also supposed to have unpublished state, which leads to possibility to use it like placeholder for future external data (from MQTT or RMQ brokers). Internals meanwhile are required to have both root and target (at least default one).
+The terminology is mostly used to comprehend with understanding of indicators produced inside of the IoT Configurator (**internals**) and from outside of the system (**externals**). The aim here stays for possibility of integration with other/external Edge systems. In architectural plane IoT system is not isolated, so creating a basis for externals is logical. The external indicator is also supposed to have unpublished state, which leads to possibility to use it like placeholder for future external data (from MQTT or RMQ brokers). Internals meanwhile are required to have both sensor and publisher (at least default one).
 
 # Single API
 
@@ -80,9 +87,9 @@ Single API flow includes CRUD for indicators (internals and externals). Standard
   "description": "string",
   "group": "string",
   "tags": ["string"],
-  "root": {},
-  "targets": {}[]
+  "sensor": {},
+  "publishers": {}[]
 }
 ```
 
-Root and targets of indicator is equivalent of IoT sensor and publishers configurations (which are the same and differentiated by dataSource) merged with single variable configuration (examples for different dataSources will be provided in docs folder in postman collection). The root and target seem to be more undestandable for the end user (smth like the root of data and the target for data).
+In scope of IoT Configurator sensor and publishers configurations are merged with single variable configuration based on the dataSource to approach to user flow simplification (examples for different configs for implemented dataSources will be provided in docs folder in postman collection).

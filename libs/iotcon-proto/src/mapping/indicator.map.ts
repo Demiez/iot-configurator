@@ -2,57 +2,57 @@ import { DataSourceTypesEnum } from '../proto/datasource';
 import {
   EndiansEnum,
   IndicatorDto,
-  IndicatorSourceDto,
+  IndicatorModuleDto,
   RegisterTypesEnum,
   RmqExchangeTypesEnum,
   SubscriptionModesEnum,
   TypeValuesEnum,
 } from '../proto/indicator';
 
-function mapSource(source: IndicatorSourceDto) {
-  if (source.dataSourceType) {
-    source.dataSourceType = DataSourceTypesEnum[
-      source.dataSourceType
+function mapModule(module: IndicatorModuleDto) {
+  if (module.dataSourceType) {
+    module.dataSourceType = DataSourceTypesEnum[
+      module.dataSourceType
     ] as unknown as DataSourceTypesEnum;
   }
 
-  if (source.exchangeType) {
-    source.exchangeType = RmqExchangeTypesEnum[
-      source.exchangeType
+  if (module.exchangeType) {
+    module.exchangeType = RmqExchangeTypesEnum[
+      module.exchangeType
     ] as unknown as RmqExchangeTypesEnum;
   }
 
-  if (source.modbusData) {
-    if (source.modbusData.registerType) {
-      source.modbusData.registerType = RegisterTypesEnum[
-        source.modbusData.registerType
+  if (module.modbusData) {
+    if (module.modbusData.registerType) {
+      module.modbusData.registerType = RegisterTypesEnum[
+        module.modbusData.registerType
       ] as unknown as RegisterTypesEnum;
     }
-    if (source.modbusData.typeValue) {
-      source.modbusData.typeValue = TypeValuesEnum[
-        source.modbusData.typeValue
+    if (module.modbusData.typeValue) {
+      module.modbusData.typeValue = TypeValuesEnum[
+        module.modbusData.typeValue
       ] as unknown as TypeValuesEnum;
     }
-    if (source.modbusData.endian) {
-      source.modbusData.endian = EndiansEnum[
-        source.modbusData.endian
+    if (module.modbusData.endian) {
+      module.modbusData.endian = EndiansEnum[
+        module.modbusData.endian
       ] as unknown as EndiansEnum;
     }
   }
 
-  if (source.subscriptionMode) {
-    source.subscriptionMode = SubscriptionModesEnum[
-      source.subscriptionMode
+  if (module.subscriptionMode) {
+    module.subscriptionMode = SubscriptionModesEnum[
+      module.subscriptionMode
     ] as unknown as SubscriptionModesEnum;
   }
 }
 
 export function mapIndicator(indicator: IndicatorDto) {
-  if (indicator.root) {
-    mapSource(indicator.root);
+  if (indicator.sensor) {
+    mapModule(indicator.sensor);
   }
 
-  if (indicator.targets && indicator.targets.length > 0) {
-    indicator.targets.forEach((target) => mapSource(target));
+  if (indicator.publishers && indicator.publishers.length > 0) {
+    indicator.publishers.forEach((publisher) => mapModule(publisher));
   }
 }

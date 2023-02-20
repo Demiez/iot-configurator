@@ -259,7 +259,7 @@ export interface VariableModbusDataDto {
   startAddress: number;
 }
 
-export interface IndicatorSourceDto {
+export interface IndicatorModuleDto {
   id?: string | undefined;
   dataSourceId: string;
   variableName: string;
@@ -276,7 +276,7 @@ export interface IndicatorSourceDto {
   record?: string | undefined;
   descriptor?: string | undefined;
   isWellBased?:
-    | string
+    | boolean
     | undefined;
   /** mqtt specific */
   mqttServerAddress?: string | undefined;
@@ -312,8 +312,8 @@ export interface IndicatorDto {
   description?: string | undefined;
   group?: string | undefined;
   tags: string[];
-  root?: IndicatorSourceDto;
-  targets: IndicatorSourceDto[];
+  sensor?: IndicatorModuleDto;
+  publishers: IndicatorModuleDto[];
 }
 
 export interface IndicatorsDto {
@@ -401,7 +401,7 @@ export const VariableModbusDataDto = {
   },
 };
 
-function createBaseIndicatorSourceDto(): IndicatorSourceDto {
+function createBaseIndicatorModuleDto(): IndicatorModuleDto {
   return {
     id: undefined,
     dataSourceId: "",
@@ -432,8 +432,8 @@ function createBaseIndicatorSourceDto(): IndicatorSourceDto {
   };
 }
 
-export const IndicatorSourceDto = {
-  encode(message: IndicatorSourceDto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const IndicatorModuleDto = {
+  encode(message: IndicatorModuleDto, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.id !== undefined) {
       writer.uint32(10).string(message.id);
     }
@@ -471,7 +471,7 @@ export const IndicatorSourceDto = {
       writer.uint32(98).string(message.descriptor);
     }
     if (message.isWellBased !== undefined) {
-      writer.uint32(106).string(message.isWellBased);
+      writer.uint32(104).bool(message.isWellBased);
     }
     if (message.mqttServerAddress !== undefined) {
       writer.uint32(114).string(message.mqttServerAddress);
@@ -515,10 +515,10 @@ export const IndicatorSourceDto = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): IndicatorSourceDto {
+  decode(input: _m0.Reader | Uint8Array, length?: number): IndicatorModuleDto {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseIndicatorSourceDto();
+    const message = createBaseIndicatorModuleDto();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -559,7 +559,7 @@ export const IndicatorSourceDto = {
           message.descriptor = reader.string();
           break;
         case 13:
-          message.isWellBased = reader.string();
+          message.isWellBased = reader.bool();
           break;
         case 14:
           message.mqttServerAddress = reader.string();
@@ -608,7 +608,7 @@ export const IndicatorSourceDto = {
     return message;
   },
 
-  fromJSON(object: any): IndicatorSourceDto {
+  fromJSON(object: any): IndicatorModuleDto {
     return {
       id: isSet(object.id) ? String(object.id) : undefined,
       dataSourceId: isSet(object.dataSourceId) ? String(object.dataSourceId) : "",
@@ -622,7 +622,7 @@ export const IndicatorSourceDto = {
       isPrimary: isSet(object.isPrimary) ? Boolean(object.isPrimary) : undefined,
       record: isSet(object.record) ? String(object.record) : undefined,
       descriptor: isSet(object.descriptor) ? String(object.descriptor) : undefined,
-      isWellBased: isSet(object.isWellBased) ? String(object.isWellBased) : undefined,
+      isWellBased: isSet(object.isWellBased) ? Boolean(object.isWellBased) : undefined,
       mqttServerAddress: isSet(object.mqttServerAddress) ? String(object.mqttServerAddress) : undefined,
       mqttTopic: isSet(object.mqttTopic) ? String(object.mqttTopic) : undefined,
       exchangeName: isSet(object.exchangeName) ? String(object.exchangeName) : undefined,
@@ -641,7 +641,7 @@ export const IndicatorSourceDto = {
     };
   },
 
-  toJSON(message: IndicatorSourceDto): unknown {
+  toJSON(message: IndicatorModuleDto): unknown {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.dataSourceId !== undefined && (obj.dataSourceId = message.dataSourceId);
@@ -679,8 +679,8 @@ export const IndicatorSourceDto = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<IndicatorSourceDto>, I>>(object: I): IndicatorSourceDto {
-    const message = createBaseIndicatorSourceDto();
+  fromPartial<I extends Exact<DeepPartial<IndicatorModuleDto>, I>>(object: I): IndicatorModuleDto {
+    const message = createBaseIndicatorModuleDto();
     message.id = object.id ?? undefined;
     message.dataSourceId = object.dataSourceId ?? "";
     message.variableName = object.variableName ?? "";
@@ -714,7 +714,15 @@ export const IndicatorSourceDto = {
 };
 
 function createBaseIndicatorDto(): IndicatorDto {
-  return { id: undefined, name: "", description: undefined, group: undefined, tags: [], root: undefined, targets: [] };
+  return {
+    id: undefined,
+    name: "",
+    description: undefined,
+    group: undefined,
+    tags: [],
+    sensor: undefined,
+    publishers: [],
+  };
 }
 
 export const IndicatorDto = {
@@ -734,11 +742,11 @@ export const IndicatorDto = {
     for (const v of message.tags) {
       writer.uint32(42).string(v!);
     }
-    if (message.root !== undefined) {
-      IndicatorSourceDto.encode(message.root, writer.uint32(50).fork()).ldelim();
+    if (message.sensor !== undefined) {
+      IndicatorModuleDto.encode(message.sensor, writer.uint32(50).fork()).ldelim();
     }
-    for (const v of message.targets) {
-      IndicatorSourceDto.encode(v!, writer.uint32(58).fork()).ldelim();
+    for (const v of message.publishers) {
+      IndicatorModuleDto.encode(v!, writer.uint32(58).fork()).ldelim();
     }
     return writer;
   },
@@ -766,10 +774,10 @@ export const IndicatorDto = {
           message.tags.push(reader.string());
           break;
         case 6:
-          message.root = IndicatorSourceDto.decode(reader, reader.uint32());
+          message.sensor = IndicatorModuleDto.decode(reader, reader.uint32());
           break;
         case 7:
-          message.targets.push(IndicatorSourceDto.decode(reader, reader.uint32()));
+          message.publishers.push(IndicatorModuleDto.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -786,8 +794,10 @@ export const IndicatorDto = {
       description: isSet(object.description) ? String(object.description) : undefined,
       group: isSet(object.group) ? String(object.group) : undefined,
       tags: Array.isArray(object?.tags) ? object.tags.map((e: any) => String(e)) : [],
-      root: isSet(object.root) ? IndicatorSourceDto.fromJSON(object.root) : undefined,
-      targets: Array.isArray(object?.targets) ? object.targets.map((e: any) => IndicatorSourceDto.fromJSON(e)) : [],
+      sensor: isSet(object.sensor) ? IndicatorModuleDto.fromJSON(object.sensor) : undefined,
+      publishers: Array.isArray(object?.publishers)
+        ? object.publishers.map((e: any) => IndicatorModuleDto.fromJSON(e))
+        : [],
     };
   },
 
@@ -802,11 +812,12 @@ export const IndicatorDto = {
     } else {
       obj.tags = [];
     }
-    message.root !== undefined && (obj.root = message.root ? IndicatorSourceDto.toJSON(message.root) : undefined);
-    if (message.targets) {
-      obj.targets = message.targets.map((e) => e ? IndicatorSourceDto.toJSON(e) : undefined);
+    message.sensor !== undefined &&
+      (obj.sensor = message.sensor ? IndicatorModuleDto.toJSON(message.sensor) : undefined);
+    if (message.publishers) {
+      obj.publishers = message.publishers.map((e) => e ? IndicatorModuleDto.toJSON(e) : undefined);
     } else {
-      obj.targets = [];
+      obj.publishers = [];
     }
     return obj;
   },
@@ -818,10 +829,10 @@ export const IndicatorDto = {
     message.description = object.description ?? undefined;
     message.group = object.group ?? undefined;
     message.tags = object.tags?.map((e) => e) || [];
-    message.root = (object.root !== undefined && object.root !== null)
-      ? IndicatorSourceDto.fromPartial(object.root)
+    message.sensor = (object.sensor !== undefined && object.sensor !== null)
+      ? IndicatorModuleDto.fromPartial(object.sensor)
       : undefined;
-    message.targets = object.targets?.map((e) => IndicatorSourceDto.fromPartial(e)) || [];
+    message.publishers = object.publishers?.map((e) => IndicatorModuleDto.fromPartial(e)) || [];
     return message;
   },
 };

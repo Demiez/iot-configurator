@@ -1,5 +1,5 @@
 import { SubscriptionModesEnum } from '../../../enums';
 
-export abstract class OpcuaSourceBaseModel {
+export abstract class OpcuaModuleBaseModel {
   public subscriptionMode?: SubscriptionModesEnum = undefined;
 }

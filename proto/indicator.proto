@@ -49,7 +49,7 @@ message VariableModbusDataDto {
   int32 startAddress = 4;
 }
 
-message IndicatorSourceDto {
+message IndicatorModuleDto {
   optional string id = 1;
   string dataSourceId = 2;
   string variableName = 3;
@@ -65,7 +65,7 @@ message IndicatorSourceDto {
   // insite specific
   optional string record = 11;
   optional string descriptor = 12;
-  optional string isWellBased = 13;
+  optional bool isWellBased = 13;
   // mqtt specific
   optional string mqttServerAddress = 14;
   optional string mqttTopic = 15;
@@ -93,8 +93,8 @@ message IndicatorDto {
   optional string group = 4;
   repeated string tags = 5;
 
-  IndicatorSourceDto root = 6;
-  repeated IndicatorSourceDto targets = 7;
+  IndicatorModuleDto sensor = 6;
+  repeated IndicatorModuleDto publishers = 7;
 }
 
 message IndicatorsDto {

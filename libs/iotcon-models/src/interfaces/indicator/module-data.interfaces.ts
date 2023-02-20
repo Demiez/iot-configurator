@@ -1,6 +1,6 @@
 import { DataSourceTypesEnum, RmqExchangeTypesEnum } from '../../enums';
 
-export interface ISourceData {
+export interface IModuleData {
   dataSourceId?: string;
   dataSourceType?: DataSourceTypesEnum;
   mqttTopic?: string;
@@ -9,6 +9,6 @@ export interface ISourceData {
   exchangeDurable?: boolean;
   routingKey?: string;
   variableName?: string;
-  unitMeasure?: string;
-  unitClass?: string;
+  uom?: string;
+  uoc?: string;
 }

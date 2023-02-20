@@ -1,2 +1,2 @@
 export * from './indicators.interfaces';
-export * from './source-data.interfaces';
+export * from './module-data.interfaces';

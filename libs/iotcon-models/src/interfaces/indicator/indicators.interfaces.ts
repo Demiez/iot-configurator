@@ -1,6 +1,7 @@
 import {
   IndicatorDto,
   IndicatorIdDto,
+  IndicatorModuleDto,
   IndicatorsDto,
   VariableModbusDataDto,
 } from '~iotcon-proto';
@@ -22,11 +23,16 @@ export interface IVariableModbusData extends VariableModbusDataDto {
   endian: EndiansEnum;
 }
 
-export interface IIndicator extends IIdentifier, IndicatorDto {
+export interface IIndicatorModule extends IndicatorModuleDto {
   dataSourceType?: DataSourceTypesEnum;
   exchangeType?: RmqExchangeTypesEnum;
   modbusData?: IVariableModbusData;
   subscriptionMode?: SubscriptionModesEnum;
+}
+
+export interface IIndicator extends IIdentifier, IndicatorDto {
+  root: IIndicatorModule;
+  targets: IIndicatorModule[];
 }
 
 export interface IIndicators extends IndicatorsDto {
