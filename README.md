@@ -12,18 +12,18 @@ The **Internet of Things (IoT)** describes physical objects with sensors, proces
 - [Project libraries](./.docs/libs/README.md)
 - [Project board](https://github.com/users/Demiez/projects/2)
 
+# Design
+
+Architecture of **Iotcon** is shown on below diagram, iotcon subsystem can represent a part of Overall IoT System Architecture:
+
+![flowdiagram](./.docs/images/iotcon_architecture.png)
+
 # Double API documentation level
 
 Because of complexity of IoT Systems it's really hard to maintain full understanding of the available API. With the aim to approach to the maximal coverage (if it is possible to reach without prior knowledge) there are 2 levels of API functionality docs available:
 
 - `swagger API` - available via specific url (for example `domain/api/v1`) with models descriptions and out of the box UI to perform REST API calls
 - `postman collection` - available in `/.docs` folder and has coverage of main use-cases and combinations saved as examples
-
-# Design
-
-Architecture of **Iotcon** is shown on below diagram, iotcon subsystem can represent a part of Overall IoT System Architecture:
-
-![flowdiagram](./.docs/images/iotcon_architecture.png)
 
 # Supported data sources
 
