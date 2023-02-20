@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import { MetaContextEnum } from '~iotcon-models';
-import { mapDataSource } from '~iotcon-proto';
+import { mapDataSource, mapIndicator } from '~iotcon-proto';
 
 export function GrpcBodyUpdate(context: MetaContextEnum): MethodDecorator {
   return function (
@@ -18,6 +18,11 @@ export function GrpcBodyUpdate(context: MetaContextEnum): MethodDecorator {
       switch (context) {
         case MetaContextEnum.DATA_SOURCE_SERVICE: {
           mapDataSource(body);
+          break;
+        }
+        case MetaContextEnum.INDICATOR_SERVICE: {
+          mapIndicator(body);
+          break;
         }
       }
 

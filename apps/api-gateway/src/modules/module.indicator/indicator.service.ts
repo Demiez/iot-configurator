@@ -1,6 +1,12 @@
 import { Service } from 'typedi';
-import { IndicatorServiceClient } from '~iotcon-proto';
+import { IIndicator } from '~iotcon-models';
+import {
+  IndicatorRpcNamesEnum,
+  IndicatorServiceClient,
+  mapIndicator,
+} from '~iotcon-proto';
 import { BaseGrpcClientService } from '../../core/abstract/base-grpc-service';
+import { IndicatorRequestModel, IndicatorViewModel } from './models';
 
 @Service()
 export class IndicatorService extends BaseGrpcClientService {
@@ -28,14 +34,19 @@ export class IndicatorService extends BaseGrpcClientService {
   }
 
   public async createIndicator(
-    requestModel: DataSourceRequestModel
-  ): Promise<void> {
+    requestModel: IndicatorRequestModel
+  ): Promise<IndicatorViewModel> {
     const result = await this.sendUnaryGrpcRequest<
-      DataSourceServiceClient,
-      IDataSource,
-      IDataSourceId
-    >(this.grpcClient, DataSourceRpcNamesEnum.CREATE_DATA_SOURCE, requestModel);
+      IndicatorServiceClient,
+      IIndicator,
+      IIndicator
+    >(
+      this.grpcClient,
+      IndicatorRpcNamesEnum.CREATE_INDICATOR,
+      requestModel,
+      mapIndicator
+    );
 
-    return new DataSourceIdViewModel(result);
+    return new IndicatorViewModel(result);
   }
 }

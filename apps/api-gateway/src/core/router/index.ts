@@ -1,7 +1,7 @@
 import { Application, Request, Response } from 'express';
 import Container from 'typedi';
 import { BaseStatus, StandardResponseViewModel } from '~iotcon-models';
-import { DataSourceController } from '../../modules';
+import { DataSourceController, IndicatorController } from '../../modules';
 import { APP_ROOT, APP_ROOT_MESSAGE } from '../constants';
 import { MetadataKeysEnum } from '../enums/metadata-keys.enum';
 import { IRouteDefinition } from '../interfaces/route.interfaces';
@@ -13,7 +13,7 @@ export default (app: Application): void => {
       .status(200)
       .send(new StandardResponseViewModel({}, APP_ROOT_MESSAGE, BaseStatus.OK));
   });
-  [DataSourceController].forEach((controller: unknown) => {
+  [DataSourceController, IndicatorController].forEach((controller: unknown) => {
     const controllerInstance = Container.get(controller);
 
     const prefix = Reflect.getMetadata(MetadataKeysEnum.PREFIX, controller);

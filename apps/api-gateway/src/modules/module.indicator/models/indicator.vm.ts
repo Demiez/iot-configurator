@@ -4,19 +4,15 @@ import {
   ApiModelProperty,
   SwaggerDefinitionConstant,
 } from 'swagger-express-ts';
-import {
-  DataSourceTypesEnum,
-  IIndicator,
-  IndicatorBaseModel,
-} from '~iotcon-models';
+import { DataSourceTypesEnum, IIndicator } from '~iotcon-models';
 import { IndicatorModuleRequestModel } from './indicator-module.rm';
 
 @ApiModel({
-  name: 'IndicatorRequestModel',
+  name: 'IndicatorViewModel',
   description:
-    'Generic Model for Indicator creation based on sensor/publisher modules',
+    'Indicator View Model - includes data about sensor and publishers',
 })
-export class IndicatorRequestModel extends IndicatorBaseModel {
+export class IndicatorViewModel implements IIndicator {
   @ApiModelProperty({
     description: 'id of indicator (uuid)',
     type: SwaggerDefinitionConstant.STRING,
@@ -89,9 +85,8 @@ export class IndicatorRequestModel extends IndicatorBaseModel {
   })
   public publishers: IndicatorModuleRequestModel[];
 
-  constructor(body: IIndicator) {
-    super();
-    const pickedBody = pick(body, keys(body));
+  constructor(indicator: IIndicator) {
+    const pickedBody = pick(indicator, keys(indicator));
 
     Object.assign(this, pickedBody);
   }

@@ -31,8 +31,8 @@ export interface IIndicatorModule extends IndicatorModuleDto {
 }
 
 export interface IIndicator extends IIdentifier, IndicatorDto {
-  root: IIndicatorModule;
-  targets: IIndicatorModule[];
+  sensor: IIndicatorModule;
+  publishers: IIndicatorModule[];
 }
 
 export interface IIndicators extends IndicatorsDto {

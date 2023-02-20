@@ -2,6 +2,9 @@ import {
   DataSourceTypesEnum,
   IIndicatorModule,
   IndicatorModuleDataModel,
+  IVariableModbusData,
+  RmqExchangeTypesEnum,
+  SubscriptionModesEnum,
 } from '~iotcon-models';
 import { keys, pick } from 'lodash';
 import {
@@ -97,6 +100,85 @@ export class IndicatorModuleRequestModel extends IndicatorModuleDataModel {
     example: true as boolean,
   })
   public isWellBased?: boolean;
+
+  @ApiModelProperty({
+    description: 'opcua specific - mode for subscription',
+    type: SwaggerDefinitionConstant.STRING,
+    enum: Object.values(SubscriptionModesEnum),
+    example: 'POLLING' as string,
+  })
+  public subscriptionMode?: SubscriptionModesEnum;
+
+  @ApiModelProperty({
+    description: 'rmq specific - exchange name',
+    type: SwaggerDefinitionConstant.STRING,
+    example: 'iotcon.indicator.data' as string,
+  })
+  public exchangeName?: string;
+
+  @ApiModelProperty({
+    description: 'rmq specific - type of exchange for connector',
+    type: SwaggerDefinitionConstant.STRING,
+    enum: Object.values(RmqExchangeTypesEnum),
+    example: 'direct' as string,
+  })
+  public exchangeType?: RmqExchangeTypesEnum;
+
+  @ApiModelProperty({
+    description: 'rmq specific - durable setting',
+    type: SwaggerDefinitionConstant.BOOLEAN,
+    example: true as boolean,
+  })
+  public exchangeDurable?: boolean;
+
+  @ApiModelProperty({
+    description: 'rmq specific - routing key title',
+    type: SwaggerDefinitionConstant.STRING,
+    example: 'indicator-data-rmq' as string,
+  })
+  public routingKey?: string;
+
+  @ApiModelProperty({
+    description: 'modbus specific - sample rate',
+    type: SwaggerDefinitionConstant.NUMBER,
+    example: 2000 as number,
+  })
+  public modbusSampleRate?: number;
+
+  @ApiModelProperty({
+    description: 'modbus specific - should data be read by blocks',
+    type: SwaggerDefinitionConstant.BOOLEAN,
+    example: true as boolean,
+  })
+  public modbusReadBlocksData?: boolean;
+
+  @ApiModelProperty({
+    description: 'modbus specific - modbus data for variable',
+    model: 'VariableModbusDataViewModel',
+  })
+  public modbusData?: IVariableModbusData;
+
+  @ApiModelProperty({
+    description: 'wits0 specific - sample rate',
+    type: SwaggerDefinitionConstant.NUMBER,
+    example: 2000 as number,
+  })
+  public wits0SampleRate?: number;
+
+  @ApiModelProperty({
+    description: 'wits0 specific - direction',
+    type: SwaggerDefinitionConstant.BOOLEAN,
+    example: true as boolean,
+  })
+  public wits0Direction?: boolean;
+
+  @ApiModelProperty({
+    description:
+      'wits0 specific - encoding for data positioning, servers instead of variableName with semicolon delimiter',
+    type: SwaggerDefinitionConstant.STRING,
+    example: 'record=1;item=1' as string,
+  })
+  public variableId?: string;
 
   constructor(body: IIndicatorModule) {
     super(body);
