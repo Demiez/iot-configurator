@@ -21,6 +21,13 @@
       "name": "Attach IoT Orchestrator",
       "address": "localhost",
       "port": 5802
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach Indicator Service",
+      "address": "localhost",
+      "port": 5803
     }
   ]
 }

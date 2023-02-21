@@ -2,22 +2,15 @@ import { Logger, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import process from 'process';
 import { join } from 'path';
-import {
-  DbProvider,
-  OrchestrationModule,
-  RmqModule,
-  SchemaTemplateModule,
-} from './modules';
+import { DbProvider, IndicatorModule, RmqModule } from './modules';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: join(process.cwd(), '../../.env'),
     }),
-    DbProvider._initialize(),
-    SchemaTemplateModule,
     RmqModule,
-    OrchestrationModule,
+    IndicatorModule,
   ],
   controllers: [],
   providers: [Logger],

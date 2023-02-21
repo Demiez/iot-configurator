@@ -1,7 +1,7 @@
 import { Metadata, ServerUnaryCall } from '@grpc/grpc-js';
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { IIndicator } from '~iotcon-models';
+import { IIndicator, IndicatorDataModel } from '~iotcon-models';
 import { RpcServicesEnum, Empty, IndicatorRpcNamesEnum } from '~iotcon-proto';
 import { IndicatorService } from './indicator.service';
 
@@ -14,10 +14,12 @@ export class IndicatorController {
     IndicatorRpcNamesEnum.CREATE_INDICATOR,
   )
   public async createIndicator(
-    _request: IIndicator,
+    request: IIndicator,
     _metadata: Metadata,
     _call: ServerUnaryCall<Empty, IIndicator>,
   ): Promise<void> {
-    console.log('Not implemented');
+    const indicatorData = new IndicatorDataModel(request);
+
+    await this.indicatorService.createIndicator(indicatorData);
   }
 }

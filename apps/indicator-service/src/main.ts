@@ -24,7 +24,8 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger,
   });
-  const protoPath = join(__dirname, '../../../proto/indicator.proto');
+  const protoDir = join(__dirname, '../../../proto');
+  const protoPath = join(protoDir, 'indicator.proto');
 
   app.use(express.json({ limit: '10mb' }));
   app.use(
@@ -63,7 +64,7 @@ async function bootstrap() {
           defaults: false,
           arrays: true,
           objects: true,
-          includeDirs: [protoPath],
+          includeDirs: [protoDir],
         },
       },
     },

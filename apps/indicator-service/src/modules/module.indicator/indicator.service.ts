@@ -1,10 +1,13 @@
-import { Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { IndicatorDataModel } from '~iotcon-models';
 
 @Injectable()
-export class IndicatorService implements OnApplicationBootstrap {
+export class IndicatorService {
   constructor(private readonly logger: Logger) {}
 
-  onApplicationBootstrap(): void {
-    throw new Error('Method not implemented.');
+  public async createIndicator(
+    indicatorData: IndicatorDataModel,
+  ): Promise<void> {
+    console.log(indicatorData);
   }
 }
