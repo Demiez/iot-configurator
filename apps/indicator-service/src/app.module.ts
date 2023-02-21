@@ -2,7 +2,12 @@ import { Logger, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import process from 'process';
 import { join } from 'path';
-import { DbProvider, IndicatorModule, RmqModule } from './modules';
+import {
+  DbProvider,
+  IndicatorModule,
+  RmqModule,
+  ValidationModule,
+} from './modules';
 
 @Module({
   imports: [
@@ -11,6 +16,7 @@ import { DbProvider, IndicatorModule, RmqModule } from './modules';
     }),
     RmqModule,
     IndicatorModule,
+    ValidationModule,
   ],
   controllers: [],
   providers: [Logger],

@@ -17,4 +17,17 @@ export class IotconUtils implements IUtils {
       });
     });
   };
+
+  public convertVariableToString = (
+    variableObject: Record<string, unknown>
+  ): string => {
+    return Object.keys(variableObject)[0];
+  };
+
+  // eslint-disable-next-line
+  public checkIsMinTwoValuesTrue = (x: any, y: any, z: any): boolean => {
+    const baseValue = !!x;
+
+    return baseValue ? y || z : y && z;
+  };
 }

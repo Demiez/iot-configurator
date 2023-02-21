@@ -6,4 +6,17 @@ export interface IUtils {
    * @param baseConstructors - array of extended base classes
    */
   applyMixins: (derivedConstructor: any, baseConstructors: any[]) => void;
+  /**
+   * Converts js variable name to string value
+   * @param variableObject - object that contains variable, put { variable }
+   */
+  convertVariableToString: (variableObject: Record<string, unknown>) => string;
+  /**
+   * Checks minimal of provided values
+   * @param x - any value
+   * @param y - any value
+   * @param z - any value
+   */
+  // eslint-disable-next-line
+  checkIsMinTwoValuesTrue: (x: any, y: any, z: any) => boolean;
 }
