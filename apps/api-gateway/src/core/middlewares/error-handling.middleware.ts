@@ -6,6 +6,7 @@ import {
   FieldIsBadModel,
 } from '~iotcon-errors';
 import { BaseStatus, StandardResponseViewModel } from '~iotcon-models';
+import { utils } from '~iotcon-sdk';
 
 function handleRpcError(
   error: ErrorResponse,
@@ -15,7 +16,17 @@ function handleRpcError(
   delete error.level;
 
   const errorData = error.details.split('/');
-  const errorMessage = errorData[1] || error.details;
+  const isJSON = !!errorData[1] && utils.checkIsJsonString(errorData[1]);
+  let errorMessage = '';
+
+  if (isJSON) {
+    error.details = JSON.parse(errorData[1]);
+    errorMessage = (error.details as unknown as { message: string }[])
+      .map((detail) => detail.message)
+      .join(',');
+  } else {
+    errorMessage = errorData[1] || error.details;
+  }
 
   error.errorCode = errorData[1] ? errorData[0] : undefined;
 

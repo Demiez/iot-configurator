@@ -6,11 +6,13 @@ export interface IUtils {
    * @param baseConstructors - array of extended base classes
    */
   applyMixins: (derivedConstructor: any, baseConstructors: any[]) => void;
+
   /**
    * Converts js variable name to string value
    * @param variableObject - object that contains variable, put { variable }
    */
   convertVariableToString: (variableObject: Record<string, unknown>) => string;
+
   /**
    * Checks minimal of provided values
    * @param x - any value
@@ -19,4 +21,10 @@ export interface IUtils {
    */
   // eslint-disable-next-line
   checkIsMinTwoValuesTrue: (x: any, y: any, z: any) => boolean;
+
+  /**
+   * Checks if string is a valid JSON string
+   * @param value - any string value
+   */
+  checkIsJsonString: (value: string) => boolean;
 }

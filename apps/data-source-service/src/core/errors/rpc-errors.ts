@@ -9,8 +9,14 @@ function createMessage(
   let errorDataMessage = '';
 
   if (errorDetails.length > 0) {
-    errorDataMessage =
-      errorDetails.length === 1 ? errorDetails[0] : errorDetails.join(',');
+    const isStringDetail = typeof errorDetails[0] === 'string';
+
+    if (isStringDetail) {
+      errorDataMessage =
+        errorDetails.length === 1 ? errorDetails[0] : errorDetails.join(',');
+    } else {
+      errorDataMessage = JSON.stringify(errorDetails);
+    }
   }
 
   return `${errorCode}/${errorDataMessage}`;

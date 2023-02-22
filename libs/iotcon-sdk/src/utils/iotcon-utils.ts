@@ -30,4 +30,13 @@ export class IotconUtils implements IUtils {
 
     return baseValue ? y || z : y && z;
   };
+
+  public checkIsJsonString(value: string): boolean {
+    try {
+      JSON.parse(value);
+    } catch (error) {
+      return false;
+    }
+    return true;
+  }
 }
