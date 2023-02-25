@@ -14,6 +14,7 @@ import {
   TypeValuesEnum,
 } from '../../enums';
 import { IIdentifier } from '../core';
+import { ISourceData } from './source-data.interfaces';
 
 export interface IIndicatorId extends IndicatorIdDto {}
 
@@ -37,4 +38,15 @@ export interface IIndicator extends IIdentifier, IndicatorDto {
 
 export interface IIndicators extends IndicatorsDto {
   indicators: IIndicator[];
+}
+
+export interface IIndicatorDocument {
+  _id: string;
+  name: string;
+  isExternal: boolean;
+  description?: string;
+  group?: string;
+  publishersIds: string[];
+  sourceData?: ISourceData;
+  tags: string[];
 }
