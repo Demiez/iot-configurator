@@ -3,7 +3,7 @@ import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { IIndicator, IndicatorDataModel } from '~iotcon-models';
 import { RpcServicesEnum, Empty, IndicatorRpcNamesEnum } from '~iotcon-proto';
-import { IndicatorService } from './indicator.service';
+import { IndicatorService } from './services/indicator.service';
 
 @Controller()
 export class IndicatorController {

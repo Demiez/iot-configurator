@@ -1,1 +1,1 @@
-export * from './iot-module.schema';
+export * from './indicator.schema';
