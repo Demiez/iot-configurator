@@ -1,6 +1,6 @@
 import { RpcException } from '@nestjs/microservices';
 import { status } from '@grpc/grpc-js';
-import { ErrorCodes, ErrorDetailsType } from '~iotcon-errors';
+import { ErrorCodes, ErrorDetailsType, ErrorResponse } from '~iotcon-errors';
 
 function createMessage(
   errorCode: ErrorCodes,
@@ -20,6 +20,27 @@ function createMessage(
   }
 
   return `${errorCode}/${errorDataMessage}`;
+}
+
+export function handleRpcError(error: ErrorResponse): void {
+  const details = error.details.split('/');
+  const code = details[0] as ErrorCodes;
+  const errorMessage = details[1];
+
+  switch (error.code) {
+    case 3:
+      throw new BadRequestRpcError(code, [errorMessage]);
+    case 16:
+      throw new UnauthorizedRpcError(code, [errorMessage]);
+    case 9:
+      throw new ForbiddenRpcError(code, [errorMessage]);
+    case 5: {
+      throw new NotFoundRpcError(code, [errorMessage]);
+    }
+    case 13:
+    default:
+      throw new InternalRpcError(code, [errorMessage]);
+  }
 }
 
 export class ForbiddenRpcError extends RpcException {

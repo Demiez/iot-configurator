@@ -14,7 +14,8 @@ import {
   GlobalRpcExceptionFilter,
 } from './core/filters';
 
-const { NODE_ENV, GRPC_PORT_INDICATOR_SERVICE } = process.env;
+const { NODE_ENV, GRPC_PORT_INDICATOR_SERVICE, PORT_INDICATOR_SERVICE } =
+  process.env;
 
 async function bootstrap() {
   const logger = new IotconLogger(
@@ -70,6 +71,9 @@ async function bootstrap() {
     },
     { inheritAppConfig: true },
   );
+
+  await app.listen(PORT_INDICATOR_SERVICE);
+  Logger.log(`HTTP Server is listening on port ${PORT_INDICATOR_SERVICE}`);
 
   await app.startAllMicroservices();
   Logger.log(`gRPC Server is listening on port ${GRPC_PORT_INDICATOR_SERVICE}`);

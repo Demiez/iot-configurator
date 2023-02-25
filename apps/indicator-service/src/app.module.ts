@@ -5,6 +5,7 @@ import { join } from 'path';
 import {
   DbProvider,
   IndicatorModule,
+  IntegrationModule,
   RmqModule,
   ValidationModule,
 } from './modules';
@@ -14,9 +15,11 @@ import {
     ConfigModule.forRoot({
       envFilePath: join(process.cwd(), '../../.env'),
     }),
+    DbProvider._initialize(),
     RmqModule,
     IndicatorModule,
     ValidationModule,
+    IntegrationModule,
   ],
   controllers: [],
   providers: [Logger],

@@ -3,6 +3,7 @@ import { has, isEmpty } from 'lodash';
 import { ErrorCodes } from '~iotcon-errors';
 import { IndicatorDataModel, IndicatorModuleDataModel } from '~iotcon-models';
 import { ForbiddenRpcError } from '../../../core/errors/rpc-errors';
+import { IndicatorDataSourceService } from '../../module.integration/services/indicator-data-source.service';
 import { ValidationService } from '../../module.validation/validation.service';
 import { DUPLICATE_INDICATOR_NAME_MESSAGE } from '../constants/indicator.constants';
 import { IndicatorRepository } from '../repository/indicator.repository';
@@ -15,6 +16,7 @@ export class IndicatorService {
     private readonly validationService: ValidationService,
     private readonly indicatorRepository: IndicatorRepository,
     private readonly indicatorSettingsService: IndicatorSettingsService,
+    private readonly indicatorDataSourceService: IndicatorDataSourceService,
   ) {}
 
   public async createIndicator(
@@ -44,6 +46,12 @@ export class IndicatorService {
 
     const defaultSettings =
       this.indicatorSettingsService.retrieveDefaultSettings();
+
+    const dataSources = await this.indicatorDataSourceService.getDataSources();
+    const dataSource = await this.indicatorDataSourceService.getDataSourceById(
+      '22',
+    );
+    console.log(dataSources);
   }
 
   private extractDataSourceIds(
