@@ -9,7 +9,7 @@ import {
 export class DefaultSettingsDataModel implements IDefaultSettings {
   mqttSettings: IMqttSettings = undefined;
   rmqSettings: IDefaultRmqSettings = undefined;
-  targetDestination: DataSourceTypesEnum.MQTT | DataSourceTypesEnum.RMQ =
+  defaultPublisherType: DataSourceTypesEnum.MQTT | DataSourceTypesEnum.RMQ =
     undefined;
   processingSettings: IIndicatorProcessingSettings;
 
@@ -22,7 +22,7 @@ export class DefaultSettingsDataModel implements IDefaultSettings {
       exchangeDurable: true,
       routingKey: 'iotcon-default-rmq',
     } as IDefaultRmqSettings;
-    this.targetDestination = DataSourceTypesEnum.MQTT;
+    this.defaultPublisherType = DataSourceTypesEnum.MQTT;
     // TODO: add model for IndicatorProcessingSettingsDataModel
     this.processingSettings = {
       channelName: 'indicator-processing',

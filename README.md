@@ -12,6 +12,7 @@ The **Internet of Things (IoT)** describes physical objects with sensors, proces
 - [Project libraries](./.docs/libs/README.md)
 - [Project board](https://github.com/users/Demiez/projects/2)
 - [API documentation](./.docs/api-doc/README.md)
+- [Functionality TODO list](./.docs/todo-list/README.md)
 
 # Design
 

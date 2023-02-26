@@ -5,7 +5,7 @@ import { IIndicatorProcessingSettings } from './indicator-processing.interfaces'
 export interface IDefaultSettings {
   mqttSettings: IMqttSettings;
   rmqSettings: IDefaultRmqSettings;
-  targetDestination: DataSourceTypesEnum.MQTT | DataSourceTypesEnum.RMQ;
+  defaultPublisherType: DataSourceTypesEnum.MQTT | DataSourceTypesEnum.RMQ;
   processingSettings: IIndicatorProcessingSettings;
   _created?: Date;
 }

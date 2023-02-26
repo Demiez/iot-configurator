@@ -1,8 +1,14 @@
 import { isBoolean, isInteger, isNil, isNumber, isString } from 'lodash';
 import { validate as validateUuid } from 'uuid';
 import { FieldIsBadModel } from '~iotcon-errors';
-import { IBaseVariable, UocsEnum, UomsEnum } from '~iotcon-models';
 import {
+  IBaseVariable,
+  IndicatorModuleDataModel,
+  UocsEnum,
+  UomsEnum,
+} from '~iotcon-models';
+import {
+  INDICATOR_MODULE_REQUIRED_FIELD_NOT_FOUND,
   INDICATOR_MODULE_VARIABLE_NAME_MESSAGE,
   VARIABLE_ID_VALUE_MESSAGE,
   VARIABLE_INDICATOR_KEY_MESSAGE,
@@ -115,6 +121,25 @@ export abstract class BaseValidator {
     if (isBatchVariable) {
       this.validateIndicatorKey(indicatorKey, errors);
     }
+  }
+
+  protected static validateFieldsExistence(
+    indicatorModule: IndicatorModuleDataModel,
+    requiredFieldsList: string[],
+    errors: FieldIsBadModel[],
+  ): void {
+    const targetFields = Object.keys(indicatorModule);
+
+    requiredFieldsList.forEach((fieldName) => {
+      if (!targetFields.includes(fieldName)) {
+        errors.push(
+          new FieldIsBadModel(
+            fieldName,
+            INDICATOR_MODULE_REQUIRED_FIELD_NOT_FOUND,
+          ),
+        );
+      }
+    });
   }
 
   public static validateExternalVariableName(
