@@ -19,4 +19,10 @@ export class IndicatorRepository {
 
     return !!indicator;
   }
+
+  public async checkIfIndicatorExistsById(_id: string): Promise<boolean> {
+    return (await this.indicatorModel.exists({
+      _id,
+    })) as unknown as boolean;
+  }
 }

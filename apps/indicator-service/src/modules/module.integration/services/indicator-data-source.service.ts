@@ -1,15 +1,23 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { Client, ClientGrpc } from '@nestjs/microservices';
+import { isEmpty } from 'lodash';
 import { lastValueFrom, Observable } from 'rxjs';
+import { ErrorCodes } from '~iotcon-errors';
 import {
+  DataSourcesByTypesRequestModel,
+  DataSourceTypesEnum,
   IDataSource,
   IDataSourceId,
   IDataSources,
   IDataSourcesByTypes,
   IDataSourcesIds,
+  DataSourceGenericDataModel,
 } from '~iotcon-models';
 import { Empty, RpcServicesEnum } from '~iotcon-proto';
-import { handleRpcError } from '../../../core/errors/rpc-errors';
+import {
+  handleRpcError,
+  NotFoundRpcError,
+} from '../../../core/errors/rpc-errors';
 import { dataSourceGrpcOptions } from '../grpc-options';
 
 interface IDataSourceGrpcService {
@@ -56,5 +64,66 @@ export class IndicatorDataSourceService implements OnModuleInit {
     } catch (error) {
       handleRpcError(error);
     }
+  }
+
+  public async getDataSourcesByIds(
+    ids: string[],
+  ): Promise<DataSourceGenericDataModel[]> {
+    let result: IDataSources;
+
+    try {
+      const result$ = this.dataSourceClient.getDataSourcesByIds({
+        ids,
+      });
+
+      result = await lastValueFrom(result$);
+    } catch (error) {
+      handleRpcError(error);
+    }
+
+    if (isEmpty(result.dataSources)) {
+      throw new NotFoundRpcError(ErrorCodes.RECORD_NOT_FOUND, [
+        'No dataSources found by ids',
+      ]);
+    }
+
+    this.logger.log(`Found ${result.total} dataSources by ids`);
+
+    return result.dataSources.map(
+      (dataSource) => new DataSourceGenericDataModel(dataSource),
+    );
+  }
+
+  public async getDataSourcesByTypes(
+    types: DataSourceTypesEnum[],
+    isDefault: boolean,
+  ): Promise<DataSourceGenericDataModel[]> {
+    const requestModel = new DataSourcesByTypesRequestModel(types, isDefault);
+
+    let result: IDataSources;
+
+    try {
+      const result$ = this.dataSourceClient.getDataSourcesByTypes(requestModel);
+
+      result = await lastValueFrom(result$);
+    } catch (error) {
+      handleRpcError(error);
+    }
+
+    if (result.total !== types.length) {
+      throw new NotFoundRpcError(ErrorCodes.RECORD_NOT_FOUND, [
+        'Failed to find all dataSources by types',
+      ]);
+    }
+
+    this.logger.log(
+      `Found ${result.total} ${
+        isDefault ? 'default' : 'standard'
+      } dataSources by types`,
+    );
+
+    return result.dataSources.map(
+      (dataSource) => new DataSourceGenericDataModel(dataSource),
+    );
   }
 }

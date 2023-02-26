@@ -1,5 +1,7 @@
 import { keys, pick } from 'lodash';
 import { DataSourceTypesEnum } from '../../enums';
+import { IDefaultRmqSettings, IMqttSettings } from '../../interfaces';
+import { DataSourceGenericDataModel } from '../data-source';
 import { IndicatorModuleTypesBaseModel } from './abstract/indicator-module-types.bm';
 
 export class IndicatorModuleDataModel extends IndicatorModuleTypesBaseModel {
@@ -48,6 +50,55 @@ export class IndicatorModuleDataModel extends IndicatorModuleTypesBaseModel {
     Object.assign(this, pickedModule);
   }
 
-  // TODO: _initializeDefault
+  public static _initializeDefault(
+    module: IndicatorModuleDataModel,
+    defaultDataSource: DataSourceGenericDataModel,
+    dataSourceType: DataSourceTypesEnum,
+    defaultSettings: IDefaultRmqSettings & IMqttSettings
+  ): IndicatorModuleDataModel {
+    const { sourceName, mqttServerAddress } = defaultDataSource;
+
+    const dataSourceId = defaultDataSource.dataSourceId;
+    const variableName = undefined;
+    const uom = 'UOM_unitless';
+    const uoc = module.uoc;
+
+    const mqttTopic = (defaultSettings as IMqttSettings).mqttTopic;
+
+    switch (dataSourceType) {
+      case DataSourceTypesEnum.MQTT: {
+        return new this({
+          sourceName,
+          dataSourceId,
+          dataSourceType,
+          mqttServerAddress,
+          variableName,
+          uom,
+          uoc,
+          mqttTopic,
+          isDefault: true,
+        });
+      }
+      case DataSourceTypesEnum.RMQ: {
+        const { exchangeName, exchangeType, exchangeDurable, routingKey } =
+          defaultSettings as IDefaultRmqSettings;
+
+        return new this({
+          sourceName,
+          dataSourceId,
+          dataSourceType,
+          exchangeName,
+          exchangeType,
+          exchangeDurable,
+          routingKey,
+          variableName,
+          uom,
+          uoc,
+          isDefault: true,
+        });
+      }
+    }
+  }
+
   // TODO: _initializeFromPublisher
 }
