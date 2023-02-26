@@ -1,5 +1,14 @@
 # IoT Configurator
 
+![Node version][node-version-image]
+![Express version][express-version-image]
+![NestJs version][nestjs-version-image]
+![gRPC proto version][grpc-proto-version-image]
+![Mongo version][mongo-version-image]
+![Redis version][redis-version-image]
+![RMQ version][rmq-version-image]
+![MQTT version][mqtt-version-image]
+
 The **Internet of Things (IoT)** describes physical objects with sensors, processing ability, software, and other technologies that connect and exchange data with other devices and systems over Internet or any othe communications networks.<br>
 
 **IoT Configurator (iotcon)** is planned to be a part of the IoT generic data for any system and can be seen as separate IoT system or as IoT subsystem and freely integrated due to the possibility of addition of specific protocols (opcua, modbus, rmq, mqtt, insite and so on), which are implemented through DataSource abstraction, management of required connectors via **Indicators** as high-level abstraction over sensor/publishers and their variables, orchestrating low-level modules in Transaction-Orchestrator pipe for futher data processing from edge devices. **Iotcon** ensures that required IoT data lifecycle is processed quickly via connector modules, logically organized through local events and can be operated on at any enterprise level.<br>
@@ -88,3 +97,12 @@ Single API flow includes CRUD for indicators (internals and externals). Standard
 ```
 
 In scope of IoT Configurator sensor and publishers configurations are merged with single variable configuration based on the dataSource to approach to user flow simplification (examples for different configs for implemented dataSources will be provided in docs folder in postman collection).
+
+[node-version-image]: https://img.shields.io/badge/node-%3E%3D%2018.12.0-brightgreen
+[express-version-image]: https://img.shields.io/badge/express-v.4.18.2-brightgreen
+[nestjs-version-image]: https://img.shields.io/badge/nestjs-v.9.0.0-brightgreen
+[grpc-proto-version-image]: https://img.shields.io/badge/grpc-proto3-brightgreen
+[mongo-version-image]: https://img.shields.io/badge/mongo-v.4.4.0-brightgreen
+[redis-version-image]: https://img.shields.io/badge/redis-latest-brightgreen
+[rmq-version-image]: https://img.shields.io/badge/rmq-v.3-brightgreen
+[mqtt-version-image]: https://img.shields.io/badge/mqtt-latest-brightgreen
