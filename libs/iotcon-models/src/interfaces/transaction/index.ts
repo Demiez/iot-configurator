@@ -1,3 +1,4 @@
-export * from './base-variable.interfaces';
-export * from './mqtt-settings.interfaces';
-export * from './rmq-settings.interfaces';
+export * from './source-specific';
+export * from './variable.interfaces';
+export * from './sensor.interfaces';
+export * from './publisher.interfaces';

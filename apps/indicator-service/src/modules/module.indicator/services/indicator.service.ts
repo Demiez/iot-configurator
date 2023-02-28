@@ -158,7 +158,7 @@ export class IndicatorService {
       }
     }
 
-    const transactionResult = {};
+    const _transactionResult = {};
   }
 
   public checkIsExternalIndicator(
