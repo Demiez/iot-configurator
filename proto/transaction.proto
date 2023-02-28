@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package transaction;
+
+import "google/protobuf/empty.proto";
+import "indicator.proto";
+
+service TransactionService {
+  rpc createTransaction(indicator.IndicatorDto) returns (google.protobuf.Empty);
+}

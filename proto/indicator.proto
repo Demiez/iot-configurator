@@ -56,34 +56,35 @@ message IndicatorModuleDto {
   string uom = 4;
   string uoc = 5;
 
-  optional datasource.DataSourceTypesEnum dataSourceType = 6;
-  optional string group = 7;
-  optional bool isExternal = 8;
-  optional bool isDefault = 9;
-  optional bool isPrimary = 10;
+  optional string sourceName = 6;
+  optional datasource.DataSourceTypesEnum dataSourceType = 7;
+  optional string group = 8;
+  optional bool isExternal = 9;
+  optional bool isDefault = 10;
+  optional bool isPrimary = 11;
 
   // insite specific
-  optional string record = 11;
-  optional string descriptor = 12;
-  optional bool isWellBased = 13;
+  optional string record = 12;
+  optional string descriptor = 13;
+  optional bool isWellBased = 14;
   // mqtt specific
-  optional string mqttServerAddress = 14;
-  optional string mqttTopic = 15;
+  optional string mqttServerAddress = 15;
+  optional string mqttTopic = 16;
   // rmq specific
-  optional string exchangeName = 16;
-  optional RmqExchangeTypesEnum exchangeType = 17;
-  optional bool exchangeDurable = 18;
-  optional string routingKey = 19;
+  optional string exchangeName = 17;
+  optional RmqExchangeTypesEnum exchangeType = 18;
+  optional bool exchangeDurable = 19;
+  optional string routingKey = 20;
   // modbus specific
-  optional int32 modbusSampleRate = 20;
-  optional bool modbusReadBlocksData = 21;
-  optional VariableModbusDataDto modbusData = 22;
+  optional int32 modbusSampleRate = 21;
+  optional bool modbusReadBlocksData = 22;
+  optional VariableModbusDataDto modbusData = 23;
   // opcua specific
-  optional SubscriptionModesEnum subscriptionMode = 23;
+  optional SubscriptionModesEnum subscriptionMode = 24;
   // wits0 specific
-  optional int32 wits0SampleRate = 24;
-  optional bool wits0Direction = 25;
-  optional string variableId = 26;
+  optional int32 wits0SampleRate = 25;
+  optional bool wits0Direction = 26;
+  optional string variableId = 27;
 }
 
 message IndicatorDto {

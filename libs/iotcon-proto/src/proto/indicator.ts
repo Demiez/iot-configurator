@@ -265,6 +265,7 @@ export interface IndicatorModuleDto {
   variableName: string;
   uom: string;
   uoc: string;
+  sourceName?: string | undefined;
   dataSourceType?: DataSourceTypesEnum | undefined;
   group?: string | undefined;
   isExternal?: boolean | undefined;
@@ -408,6 +409,7 @@ function createBaseIndicatorModuleDto(): IndicatorModuleDto {
     variableName: "",
     uom: "",
     uoc: "",
+    sourceName: undefined,
     dataSourceType: undefined,
     group: undefined,
     isExternal: undefined,
@@ -449,68 +451,71 @@ export const IndicatorModuleDto = {
     if (message.uoc !== "") {
       writer.uint32(42).string(message.uoc);
     }
+    if (message.sourceName !== undefined) {
+      writer.uint32(50).string(message.sourceName);
+    }
     if (message.dataSourceType !== undefined) {
-      writer.uint32(48).int32(message.dataSourceType);
+      writer.uint32(56).int32(message.dataSourceType);
     }
     if (message.group !== undefined) {
-      writer.uint32(58).string(message.group);
+      writer.uint32(66).string(message.group);
     }
     if (message.isExternal !== undefined) {
-      writer.uint32(64).bool(message.isExternal);
+      writer.uint32(72).bool(message.isExternal);
     }
     if (message.isDefault !== undefined) {
-      writer.uint32(72).bool(message.isDefault);
+      writer.uint32(80).bool(message.isDefault);
     }
     if (message.isPrimary !== undefined) {
-      writer.uint32(80).bool(message.isPrimary);
+      writer.uint32(88).bool(message.isPrimary);
     }
     if (message.record !== undefined) {
-      writer.uint32(90).string(message.record);
+      writer.uint32(98).string(message.record);
     }
     if (message.descriptor !== undefined) {
-      writer.uint32(98).string(message.descriptor);
+      writer.uint32(106).string(message.descriptor);
     }
     if (message.isWellBased !== undefined) {
-      writer.uint32(104).bool(message.isWellBased);
+      writer.uint32(112).bool(message.isWellBased);
     }
     if (message.mqttServerAddress !== undefined) {
-      writer.uint32(114).string(message.mqttServerAddress);
+      writer.uint32(122).string(message.mqttServerAddress);
     }
     if (message.mqttTopic !== undefined) {
-      writer.uint32(122).string(message.mqttTopic);
+      writer.uint32(130).string(message.mqttTopic);
     }
     if (message.exchangeName !== undefined) {
-      writer.uint32(130).string(message.exchangeName);
+      writer.uint32(138).string(message.exchangeName);
     }
     if (message.exchangeType !== undefined) {
-      writer.uint32(136).int32(message.exchangeType);
+      writer.uint32(144).int32(message.exchangeType);
     }
     if (message.exchangeDurable !== undefined) {
-      writer.uint32(144).bool(message.exchangeDurable);
+      writer.uint32(152).bool(message.exchangeDurable);
     }
     if (message.routingKey !== undefined) {
-      writer.uint32(154).string(message.routingKey);
+      writer.uint32(162).string(message.routingKey);
     }
     if (message.modbusSampleRate !== undefined) {
-      writer.uint32(160).int32(message.modbusSampleRate);
+      writer.uint32(168).int32(message.modbusSampleRate);
     }
     if (message.modbusReadBlocksData !== undefined) {
-      writer.uint32(168).bool(message.modbusReadBlocksData);
+      writer.uint32(176).bool(message.modbusReadBlocksData);
     }
     if (message.modbusData !== undefined) {
-      VariableModbusDataDto.encode(message.modbusData, writer.uint32(178).fork()).ldelim();
+      VariableModbusDataDto.encode(message.modbusData, writer.uint32(186).fork()).ldelim();
     }
     if (message.subscriptionMode !== undefined) {
-      writer.uint32(184).int32(message.subscriptionMode);
+      writer.uint32(192).int32(message.subscriptionMode);
     }
     if (message.wits0SampleRate !== undefined) {
-      writer.uint32(192).int32(message.wits0SampleRate);
+      writer.uint32(200).int32(message.wits0SampleRate);
     }
     if (message.wits0Direction !== undefined) {
-      writer.uint32(200).bool(message.wits0Direction);
+      writer.uint32(208).bool(message.wits0Direction);
     }
     if (message.variableId !== undefined) {
-      writer.uint32(210).string(message.variableId);
+      writer.uint32(218).string(message.variableId);
     }
     return writer;
   },
@@ -538,66 +543,69 @@ export const IndicatorModuleDto = {
           message.uoc = reader.string();
           break;
         case 6:
-          message.dataSourceType = reader.int32() as any;
+          message.sourceName = reader.string();
           break;
         case 7:
-          message.group = reader.string();
+          message.dataSourceType = reader.int32() as any;
           break;
         case 8:
-          message.isExternal = reader.bool();
+          message.group = reader.string();
           break;
         case 9:
-          message.isDefault = reader.bool();
+          message.isExternal = reader.bool();
           break;
         case 10:
-          message.isPrimary = reader.bool();
+          message.isDefault = reader.bool();
           break;
         case 11:
-          message.record = reader.string();
+          message.isPrimary = reader.bool();
           break;
         case 12:
-          message.descriptor = reader.string();
+          message.record = reader.string();
           break;
         case 13:
-          message.isWellBased = reader.bool();
+          message.descriptor = reader.string();
           break;
         case 14:
-          message.mqttServerAddress = reader.string();
+          message.isWellBased = reader.bool();
           break;
         case 15:
-          message.mqttTopic = reader.string();
+          message.mqttServerAddress = reader.string();
           break;
         case 16:
-          message.exchangeName = reader.string();
+          message.mqttTopic = reader.string();
           break;
         case 17:
-          message.exchangeType = reader.int32() as any;
+          message.exchangeName = reader.string();
           break;
         case 18:
-          message.exchangeDurable = reader.bool();
+          message.exchangeType = reader.int32() as any;
           break;
         case 19:
-          message.routingKey = reader.string();
+          message.exchangeDurable = reader.bool();
           break;
         case 20:
-          message.modbusSampleRate = reader.int32();
+          message.routingKey = reader.string();
           break;
         case 21:
-          message.modbusReadBlocksData = reader.bool();
+          message.modbusSampleRate = reader.int32();
           break;
         case 22:
-          message.modbusData = VariableModbusDataDto.decode(reader, reader.uint32());
+          message.modbusReadBlocksData = reader.bool();
           break;
         case 23:
-          message.subscriptionMode = reader.int32() as any;
+          message.modbusData = VariableModbusDataDto.decode(reader, reader.uint32());
           break;
         case 24:
-          message.wits0SampleRate = reader.int32();
+          message.subscriptionMode = reader.int32() as any;
           break;
         case 25:
-          message.wits0Direction = reader.bool();
+          message.wits0SampleRate = reader.int32();
           break;
         case 26:
+          message.wits0Direction = reader.bool();
+          break;
+        case 27:
           message.variableId = reader.string();
           break;
         default:
@@ -615,6 +623,7 @@ export const IndicatorModuleDto = {
       variableName: isSet(object.variableName) ? String(object.variableName) : "",
       uom: isSet(object.uom) ? String(object.uom) : "",
       uoc: isSet(object.uoc) ? String(object.uoc) : "",
+      sourceName: isSet(object.sourceName) ? String(object.sourceName) : undefined,
       dataSourceType: isSet(object.dataSourceType) ? dataSourceTypesEnumFromJSON(object.dataSourceType) : undefined,
       group: isSet(object.group) ? String(object.group) : undefined,
       isExternal: isSet(object.isExternal) ? Boolean(object.isExternal) : undefined,
@@ -648,6 +657,7 @@ export const IndicatorModuleDto = {
     message.variableName !== undefined && (obj.variableName = message.variableName);
     message.uom !== undefined && (obj.uom = message.uom);
     message.uoc !== undefined && (obj.uoc = message.uoc);
+    message.sourceName !== undefined && (obj.sourceName = message.sourceName);
     message.dataSourceType !== undefined && (obj.dataSourceType = message.dataSourceType !== undefined
       ? dataSourceTypesEnumToJSON(message.dataSourceType)
       : undefined);
@@ -686,6 +696,7 @@ export const IndicatorModuleDto = {
     message.variableName = object.variableName ?? "";
     message.uom = object.uom ?? "";
     message.uoc = object.uoc ?? "";
+    message.sourceName = object.sourceName ?? undefined;
     message.dataSourceType = object.dataSourceType ?? undefined;
     message.group = object.group ?? undefined;
     message.isExternal = object.isExternal ?? undefined;
