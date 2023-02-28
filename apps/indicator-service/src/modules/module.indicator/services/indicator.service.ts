@@ -10,6 +10,7 @@ import {
 } from '~iotcon-models';
 import { ForbiddenRpcError } from '../../../core/errors/rpc-errors';
 import { IndicatorDataSourceService } from '../../module.integration/services/indicator-data-source.service';
+import { IndicatorTransactionService } from '../../module.integration/services/indicator-transaction.service';
 import { ValidationService } from '../../module.validation/validation.service';
 import {
   DUPLICATE_INDICATOR_ID_MESSAGE,
@@ -28,6 +29,7 @@ export class IndicatorService {
     private readonly indicatorRepository: IndicatorRepository,
     private readonly indicatorSettingsService: IndicatorSettingsService,
     private readonly indicatorDataSourceService: IndicatorDataSourceService,
+    private readonly indicatorTransactionService: IndicatorTransactionService,
   ) {}
 
   public async createIndicator(
@@ -158,6 +160,7 @@ export class IndicatorService {
       }
     }
 
+    await this.indicatorTransactionService.createTransaction(indicatorData);
     const _transactionResult = {};
   }
 
