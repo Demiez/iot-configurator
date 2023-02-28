@@ -28,6 +28,13 @@
       "name": "Attach Indicator Service",
       "address": "localhost",
       "port": 5803
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach Transaction Service",
+      "address": "localhost",
+      "port": 5804
     }
   ]
 }
