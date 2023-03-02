@@ -1,9 +1,10 @@
 import { Logger, Module } from '@nestjs/common';
+import { TransactionIotOrchestratorService } from './services/transaction-iot-orchestrator.service';
 
 @Module({
   controllers: [],
-  providers: [Logger],
+  providers: [Logger, TransactionIotOrchestratorService],
   imports: [],
-  exports: [],
+  exports: [TransactionIotOrchestratorService],
 })
 export class IntegrationModule {}

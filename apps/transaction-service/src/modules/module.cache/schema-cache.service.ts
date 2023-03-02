@@ -136,8 +136,8 @@ export class SchemaCacheService implements OnModuleInit {
       keys.push(
         sensorType === DataSourceTypesEnum.MQTT ||
           sensorType === DataSourceTypesEnum.RMQ
-          ? sensorType + '_collector'
-          : sensorType + '_sensor',
+          ? sensorType.toLowerCase() + '_collector'
+          : sensorType.toLowerCase() + '_sensor',
       );
     }
 

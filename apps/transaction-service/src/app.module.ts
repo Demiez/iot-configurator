@@ -4,6 +4,7 @@ import process from 'process';
 import { join } from 'path';
 import {
   CacheModule,
+  DataSourceModule,
   DbProvider,
   IntegrationModule,
   RmqModule,
@@ -20,6 +21,7 @@ import {
     TransactionModule,
     IntegrationModule,
     CacheModule,
+    DataSourceModule,
   ],
   controllers: [],
   providers: [Logger],
