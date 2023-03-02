@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import process from 'process';
 import { join } from 'path';
 import {
+  CacheModule,
   DbProvider,
   IntegrationModule,
   RmqModule,
@@ -18,6 +19,7 @@ import {
     RmqModule,
     TransactionModule,
     IntegrationModule,
+    CacheModule,
   ],
   controllers: [],
   providers: [Logger],

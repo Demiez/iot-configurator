@@ -8,7 +8,7 @@ const protoPath = join(
 );
 const { NODE_ENV, GRPC_PORT_IOT_ORCHESTRATOR, URL } = process.env;
 
-export const dataSourceGrpcOptions: ClientOptions = {
+export const orchestrationGrpcOptions: ClientOptions = {
   transport: Transport.GRPC,
   options: {
     package: 'orchestration',
