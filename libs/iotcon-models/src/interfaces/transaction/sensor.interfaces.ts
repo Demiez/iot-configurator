@@ -5,7 +5,7 @@ import {
   IOpcuaConnector,
   IRmqConnector,
   IWits0Connector,
-} from './source-specific';
+} from './data-source-specific';
 
 export interface ISensor
   extends IInsiteConnector,

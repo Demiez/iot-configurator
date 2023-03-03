@@ -4,7 +4,7 @@ import {
   IMqttConnector,
   IRmqConnector,
   IWits0Connector,
-} from './source-specific';
+} from './data-source-specific';
 import { IBaseVariable } from './variable.interfaces';
 
 export interface IPublisherTarget {

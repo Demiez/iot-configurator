@@ -11,6 +11,7 @@ import { CachedSchemasDataModel } from '../../module.cache/models/cached-schemas
 import { SchemaCacheService } from '../../module.cache/schema-cache.service';
 import { DataSourceService } from '../../module.data-source/data-source.service';
 import { TransactionIotOrchestratorService } from '../../module.integration/services/transaction-iot-orchestrator.service';
+import { OperationBaseModel } from '../models/abstract/operation.bm';
 
 @Injectable()
 export class TransactionService {
@@ -29,9 +30,14 @@ export class TransactionService {
     const { schemas, sensorKey, publisherKeys } =
       await this.getSchemasAndCacheKeys(sensor, publishers);
 
-    console.log(schemas);
+    const operations: OperationBaseModel[] = [];
 
-    // const operations: OperationBaseModel[] = [];
+    await this.createTransactionServiceMethodFactory(
+      sensor,
+      schemas,
+      operations,
+      sensorKey,
+    )();
   }
 
   public async getTransactionsModulesSchemas(
@@ -99,5 +105,38 @@ export class TransactionService {
       : keys.slice(sensorDataSourceType ? 1 : 0);
 
     return { schemas, sensorKey, publisherKeys };
+  }
+
+  private createTransactionServiceMethodFactory(
+    sensor: IndicatorModuleDataModel,
+    schemas: CachedSchemasDataModel,
+    operations: OperationBaseModel[],
+    sensorKey?: string,
+    publisherKey?: string,
+    processedData?: ProcessedSensorDataModel,
+    persistedSignalKey?: string,
+  ) {
+    return {
+      [DataSourceTypesEnum.INSITE]: () =>
+        this.insiteTransactionService.createUpdateInsiteTransaction(
+          signalSource,
+          schemas,
+          operations,
+          sensorKey,
+          publisherKey,
+          processedData,
+          persistedSignalKey,
+        ),
+      [DataSourceTypesEnum.MQTT]: () =>
+        this.mqttTransactionService.createUpdateMqttTransaction(
+          signalSource,
+          schemas,
+          operations,
+          sensorKey,
+          publisherKey,
+          processedData,
+          persistedSignalKey,
+        ),
+    }[signalSource.dataSourceType];
   }
 }

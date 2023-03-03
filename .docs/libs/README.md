@@ -24,6 +24,6 @@ Any available lib package can be used by updating corresponding package.json, bu
 Models lib shares enums, interfaces or model throughout the solution. Main model types are:
 
 - BaseModel (`bm.ts`) - used for abstract classes only, cannot be directly instantiated
-- RequestModel (`rm.ts`) - used for fast abstraction of request data, mostly from api-gateway
+- RequestModel (`rm.ts`) - used for fast abstraction of request data, mostly from api-gateway or from transaction to orchestrator
 - DataModel (`dm.ts`) - used for data processing and transmision, still it has a broader use than dtos, because can also have construtors, proto dto convertions and some logic mapping methods
 - ViewModel (`vm.ts`) - used to provide data back from solution predominantly on api-gateway level
