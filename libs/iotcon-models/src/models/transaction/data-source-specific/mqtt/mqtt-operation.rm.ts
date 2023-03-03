@@ -50,6 +50,7 @@ export class MqttOperationRequestModel extends OperationBaseModel {
 
     // Connection settings
     this.config.databusKey = generatedDatabusKey;
+    this.config.useDefaultEnv = true;
 
     // Secondary optional fields
     if (groupId) {

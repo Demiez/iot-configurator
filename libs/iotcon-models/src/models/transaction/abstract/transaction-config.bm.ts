@@ -13,5 +13,6 @@ export abstract class TransactionConfigBaseModel {
   public moduleName?: string;
   public groupId?: string;
   public description?: string;
+  public useDefaultEnv?: boolean;
   public mqttServerAddress?: string;
 }

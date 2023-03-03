@@ -2,42 +2,42 @@ import { v4 } from 'uuid';
 import { ModuleTypesEnum, OperationModesEnum } from '../../../../enums';
 import { IDataSourceSchema } from '../../../../interfaces';
 import { OperationBaseModel } from '../../abstract';
-import { InsiteTransactionConfigDataModel } from './insite-transaction-config.dm';
+import { ModbusTransactionConfigDataModel } from './modbus-transaction-config.dm';
 
-export class InsiteOperationRequestModel extends OperationBaseModel {
-  public config: InsiteTransactionConfigDataModel =
-    {} as InsiteTransactionConfigDataModel;
+export class ModbusOperationRequestModel extends OperationBaseModel {
+  public config: ModbusTransactionConfigDataModel =
+    {} as ModbusTransactionConfigDataModel;
 
   constructor(
     mode: OperationModesEnum,
     moduleType: ModuleTypesEnum,
-    configData: InsiteTransactionConfigDataModel,
+    configData: ModbusTransactionConfigDataModel,
     connectorSchema: IDataSourceSchema,
     generatedDatabusKey: string
   ) {
     super(mode);
 
     const {
-      record,
-      descriptor,
-      isWellBased,
+      modbusSampleRate,
+      readBlocksData,
       sourceName,
       moduleId,
       moduleName,
       variables,
-      isPrimary,
       mqttServerAddress,
       groupId,
       description,
+      isPrimary,
     } = configData;
 
     // Generated operationId for completion check
     this.operationId = v4();
 
     // Sensor unique fields
-    this.config.record = record;
-    this.config.descriptor = descriptor;
-    this.config.isWellBased = isWellBased;
+    if (moduleType === ModuleTypesEnum.IOT_SENSOR) {
+      this.config.modbusSampleRate = modbusSampleRate;
+      this.config.readBlocksData = readBlocksData;
+    }
 
     // Base module configuration
     this.config.sourceName = sourceName;
@@ -54,8 +54,8 @@ export class InsiteOperationRequestModel extends OperationBaseModel {
 
     // Connection settings
     this.config.databusKey = generatedDatabusKey;
-    this.config.mqttServerAddress = mqttServerAddress;
     this.config.useDefaultEnv = true;
+    this.config.mqttServerAddress = mqttServerAddress;
 
     // Secondary optional fields
     if (groupId) {
