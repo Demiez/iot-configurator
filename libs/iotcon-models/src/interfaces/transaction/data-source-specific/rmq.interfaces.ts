@@ -34,3 +34,9 @@ export interface IRmqOutput {
   routingKey: string;
   variables: IBaseVariable[];
 }
+
+export interface IRmqExchangeDetails {
+  name: string;
+  type: RmqExchangeTypesEnum;
+  durable: boolean;
+}

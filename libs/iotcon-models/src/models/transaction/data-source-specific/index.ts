@@ -25,3 +25,12 @@ export * from './rmq/rmq-operation.rm';
 export * from './rmq/rmq-publisher.dm';
 export * from './rmq/rmq-sensor.dm';
 export * from './rmq/rmq-transaction-config.dm';
+export * from './rmq/rmq-settings.dm';
+// WITS0
+export * from './wits0/wits0-compared-source.dm';
+export * from './wits0/wits0-operation.rm';
+export * from './wits0/wits0-publisher.dm';
+export * from './wits0/wits0-sensor.dm';
+export * from './wits0/wits0-subscription.dm';
+export * from './wits0/wits0-transaction-config.dm';
+export * from './wits0/wits0-variable.dm';

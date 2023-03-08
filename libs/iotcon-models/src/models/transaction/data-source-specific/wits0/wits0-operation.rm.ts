@@ -2,28 +2,29 @@ import { v4 } from 'uuid';
 import { ModuleTypesEnum, OperationModesEnum } from '../../../../enums';
 import { IDataSourceSchema } from '../../../../interfaces';
 import { OperationBaseModel } from '../../abstract';
-import { RmqTransactionConfigDataModel } from './rmq-transaction-config.dm';
+import { Wits0TransactionConfigDataModel } from './wits0-transaction-config.dm';
 
-export class RmqOperationRequestModel extends OperationBaseModel {
-  public config: RmqTransactionConfigDataModel =
-    {} as RmqTransactionConfigDataModel;
+export class Wits0OperationRequestModel extends OperationBaseModel {
+  public config: Wits0TransactionConfigDataModel =
+    {} as Wits0TransactionConfigDataModel;
 
   constructor(
     mode: OperationModesEnum,
     moduleType: ModuleTypesEnum,
-    configData: RmqTransactionConfigDataModel,
+    configData: Wits0TransactionConfigDataModel,
     connectorSchema: IDataSourceSchema,
     generatedDatabusKey: string
   ) {
     super(mode);
 
     const {
+      wits0Address,
+      useWits0Env,
       sourceName,
       moduleId,
       moduleName,
-      rmqSettings,
-      outputs,
-      inputs,
+      subscription,
+      mqttServerAddress,
       groupId,
       description,
       isPrimary,
@@ -31,6 +32,11 @@ export class RmqOperationRequestModel extends OperationBaseModel {
 
     // Generated operationId for completion check
     this.operationId = v4();
+
+    // Wits0 unique fields
+    this.config.wits0Address = wits0Address;
+    this.config.useWits0Env = useWits0Env;
+    this.config.subscription = subscription;
 
     // Base module configuration
     this.config.sourceName = sourceName;
@@ -42,16 +48,9 @@ export class RmqOperationRequestModel extends OperationBaseModel {
     this.config.moduleName = moduleName ? moduleName : this.config.moduleId;
     this.config.isPrimary = isPrimary;
 
-    // Signals data
-    if (moduleType === ModuleTypesEnum.IOTCON_COLLECTOR) {
-      this.config.inputs = inputs;
-    } else {
-      this.config.outputs = outputs;
-    }
-
     // Connection settings
-    this.config.rmqSettings = rmqSettings;
     this.config.databusKey = generatedDatabusKey;
+    this.config.mqttServerAddress = mqttServerAddress;
 
     // Secondary optional fields
     if (groupId) {
