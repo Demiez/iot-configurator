@@ -14,3 +14,14 @@ export * from './modbus/modbus-publisher.dm';
 export * from './modbus/modbus-sensor.dm';
 export * from './modbus/modbus-transaction-config.dm';
 export * from './modbus/modbus-variable.dm';
+// OPCUA
+export * from './opcua/opcua-operation.rm';
+export * from './opcua/opcua-publisher.dm';
+export * from './opcua/opcua-sensor.dm';
+export * from './opcua/opcua-transaction-config.dm';
+// RMQ
+export * from './rmq/rmq-config-settings.dm';
+export * from './rmq/rmq-operation.rm';
+export * from './rmq/rmq-publisher.dm';
+export * from './rmq/rmq-sensor.dm';
+export * from './rmq/rmq-transaction-config.dm';

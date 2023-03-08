@@ -1,44 +1,33 @@
 import { v4 } from 'uuid';
-import { USE_DEFAULT_ENV } from '../../../../constants';
 import { ModuleTypesEnum, OperationModesEnum } from '../../../../enums';
 import { IDataSourceSchema } from '../../../../interfaces';
 import { OperationBaseModel } from '../../abstract';
-import { InsiteTransactionConfigDataModel } from './insite-transaction-config.dm';
+import { RmqTransactionConfigDataModel } from './rmq-transaction-config.dm';
 
-export class InsiteOperationRequestModel extends OperationBaseModel {
-  public config: InsiteTransactionConfigDataModel =
-    {} as InsiteTransactionConfigDataModel;
+export class RmqOperationRequestModel extends OperationBaseModel {
+  public config: RmqTransactionConfigDataModel =
+    {} as RmqTransactionConfigDataModel;
 
   constructor(
     mode: OperationModesEnum,
     moduleType: ModuleTypesEnum,
-    configData: InsiteTransactionConfigDataModel,
+    configData: RmqTransactionConfigDataModel,
     connectorSchema: IDataSourceSchema,
     generatedDatabusKey: string
   ) {
     super(mode);
 
     const {
-      record,
-      descriptor,
-      isWellBased,
       sourceName,
       moduleId,
       moduleName,
-      variables,
-      isPrimary,
-      mqttServerAddress,
+      rmqSettings,
+      outputs,
+      inputs,
       groupId,
       description,
+      isPrimary,
     } = configData;
-
-    // Generated operationId for completion check
-    this.operationId = v4();
-
-    // Sensor unique fields
-    this.config.record = record;
-    this.config.descriptor = descriptor;
-    this.config.isWellBased = isWellBased;
 
     // Base module configuration
     this.config.sourceName = sourceName;
@@ -51,12 +40,15 @@ export class InsiteOperationRequestModel extends OperationBaseModel {
     this.config.isPrimary = isPrimary;
 
     // Signals data
-    this.config.variables = variables;
+    if (moduleType === ModuleTypesEnum.IOTCON_COLLECTOR) {
+      this.config.inputs = inputs;
+    } else {
+      this.config.outputs = outputs;
+    }
 
     // Connection settings
+    this.config.rmqSettings = rmqSettings;
     this.config.databusKey = generatedDatabusKey;
-    this.config.mqttServerAddress = mqttServerAddress;
-    this.config.useDefaultEnv = USE_DEFAULT_ENV;
 
     // Secondary optional fields
     if (groupId) {

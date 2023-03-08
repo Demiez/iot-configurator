@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+import { USE_DEFAULT_ENV } from '../../../../constants';
 import { ModuleTypesEnum, OperationModesEnum } from '../../../../enums';
 import { IDataSourceSchema } from '../../../../interfaces';
 import { OperationBaseModel } from '../../abstract';
@@ -54,7 +55,7 @@ export class ModbusOperationRequestModel extends OperationBaseModel {
 
     // Connection settings
     this.config.databusKey = generatedDatabusKey;
-    this.config.useDefaultEnv = true;
+    this.config.useDefaultEnv = USE_DEFAULT_ENV;
     this.config.mqttServerAddress = mqttServerAddress;
 
     // Secondary optional fields

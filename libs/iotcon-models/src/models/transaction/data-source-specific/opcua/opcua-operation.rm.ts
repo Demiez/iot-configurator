@@ -1,44 +1,43 @@
 import { v4 } from 'uuid';
-import { USE_DEFAULT_ENV } from '../../../../constants';
 import { ModuleTypesEnum, OperationModesEnum } from '../../../../enums';
 import { IDataSourceSchema } from '../../../../interfaces';
 import { OperationBaseModel } from '../../abstract';
-import { InsiteTransactionConfigDataModel } from './insite-transaction-config.dm';
+import { OpcuaTransactionConfigDataModel } from './opcua-transaction-config.dm';
 
-export class InsiteOperationRequestModel extends OperationBaseModel {
-  public config: InsiteTransactionConfigDataModel =
-    {} as InsiteTransactionConfigDataModel;
+export class OpcuaOperationRequestModel extends OperationBaseModel {
+  public config: OpcuaTransactionConfigDataModel =
+    {} as OpcuaTransactionConfigDataModel;
 
   constructor(
     mode: OperationModesEnum,
     moduleType: ModuleTypesEnum,
-    configData: InsiteTransactionConfigDataModel,
+    configData: OpcuaTransactionConfigDataModel,
     connectorSchema: IDataSourceSchema,
     generatedDatabusKey: string
   ) {
     super(mode);
 
     const {
-      record,
-      descriptor,
-      isWellBased,
+      opcuaAddress,
+      useOpcuaEnv,
       sourceName,
       moduleId,
       moduleName,
+      subscriptionMode,
+      subscriptions,
       variables,
-      isPrimary,
       mqttServerAddress,
       groupId,
       description,
+      isPrimary,
     } = configData;
 
     // Generated operationId for completion check
     this.operationId = v4();
 
-    // Sensor unique fields
-    this.config.record = record;
-    this.config.descriptor = descriptor;
-    this.config.isWellBased = isWellBased;
+    // Opcua unique fields
+    this.config.opcuaAddress = opcuaAddress;
+    this.config.useOpcuaEnv = useOpcuaEnv;
 
     // Base module configuration
     this.config.sourceName = sourceName;
@@ -51,12 +50,16 @@ export class InsiteOperationRequestModel extends OperationBaseModel {
     this.config.isPrimary = isPrimary;
 
     // Signals data
-    this.config.variables = variables;
+    if (moduleType === ModuleTypesEnum.IOT_SENSOR) {
+      this.config.subscriptionMode = subscriptionMode;
+      this.config.subscriptions = subscriptions;
+    } else {
+      this.config.variables = variables;
+    }
 
     // Connection settings
     this.config.databusKey = generatedDatabusKey;
     this.config.mqttServerAddress = mqttServerAddress;
-    this.config.useDefaultEnv = USE_DEFAULT_ENV;
 
     // Secondary optional fields
     if (groupId) {
