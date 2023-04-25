@@ -49,3 +49,10 @@ export interface IDataSource extends IIdentifier, DataSourceDto {
   lineSeparator?: string;
   outputRaw?: boolean;
 }
+
+export interface IDataSourceSnapshot {
+  _id?: string;
+  type: DataSourceTypesEnum;
+  databusKey: string;
+  isVirtual: boolean;
+}

@@ -5,13 +5,18 @@ import {
   DataSourceTypesEnum,
   IndicatorDataModel,
   IndicatorModuleDataModel,
+  OperationBaseModel,
+  ProcessedSensorDataModel,
 } from '~iotcon-models';
 import { NotFoundRpcError } from '../../../core/errors/rpc-errors';
 import { CachedSchemasDataModel } from '../../module.cache/models/cached-schemas.dm';
 import { SchemaCacheService } from '../../module.cache/schema-cache.service';
 import { DataSourceService } from '../../module.data-source/data-source.service';
 import { TransactionIotOrchestratorService } from '../../module.integration/services/transaction-iot-orchestrator.service';
-import { OperationBaseModel } from '../models/abstract/operation.bm';
+import {
+  InsiteTransactionService,
+  MqttTransactionService,
+} from './data-source-specific';
 
 @Injectable()
 export class TransactionService {
@@ -20,6 +25,8 @@ export class TransactionService {
     private readonly schemaCacheService: SchemaCacheService,
     private readonly dataSourceService: DataSourceService,
     private readonly transactionIotOrchestratorService: TransactionIotOrchestratorService,
+    private readonly insiteTransactionService: InsiteTransactionService,
+    private readonly mqttTransactionService: MqttTransactionService,
   ) {}
 
   public async createTransaction(
@@ -108,35 +115,35 @@ export class TransactionService {
   }
 
   private createTransactionServiceMethodFactory(
-    sensor: IndicatorModuleDataModel,
+    module: IndicatorModuleDataModel,
     schemas: CachedSchemasDataModel,
     operations: OperationBaseModel[],
     sensorKey?: string,
     publisherKey?: string,
     processedData?: ProcessedSensorDataModel,
-    persistedSignalKey?: string,
+    persistedIndicatorKey?: string,
   ) {
     return {
       [DataSourceTypesEnum.INSITE]: () =>
         this.insiteTransactionService.createUpdateInsiteTransaction(
-          signalSource,
+          module,
           schemas,
           operations,
           sensorKey,
           publisherKey,
           processedData,
-          persistedSignalKey,
+          persistedIndicatorKey,
         ),
       [DataSourceTypesEnum.MQTT]: () =>
         this.mqttTransactionService.createUpdateMqttTransaction(
-          signalSource,
+          module,
           schemas,
           operations,
           sensorKey,
           publisherKey,
           processedData,
-          persistedSignalKey,
+          persistedIndicatorKey,
         ),
-    }[signalSource.dataSourceType];
+    }[module.dataSourceType];
   }
 }

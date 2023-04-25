@@ -42,6 +42,12 @@ Architecture of **Iotcon** is shown on below diagram, iotcon subsystem can repre
 - MODBUS ([Modbus Refference](https://www.modbus.org/docs/PI_MBUS_300.pdf))
 - Wellsite Information Transfer Specification ([WITS0](https://info.erdosmiller.com/blog/wits-wellsite-information-transfer-specification-fundamentals))
 
+DataSources management is performed on 3 levels:
+
+- dataSource microservice covers basic CRUD functionality and standard seeding. It is available via gRPC communication
+- dataSource module in transactions microservices works with so called `data-source-snapshots`. `Data-source-snapshots` are cached and supposed to speed up transaction formation, while keeping required fields for transactions and pre-generated `databusKey` for the real-time (RT) dataflow (must be unique for each snapshot and indexed).
+- virtual datasources - implemented via `data-source-snapshots` only, cover specific cases when no real dataSource exists provided by user and system is supposed to handle it itself (check section for primary modules functionality)
+
 # Understanding base IoT Orchestration
 
 **Iotcon** uses **IoT Orchestrator** to perform orchestration for IoT side, which includes the following base functionality (futher development could be required depending on the subsystem integration/setup):
