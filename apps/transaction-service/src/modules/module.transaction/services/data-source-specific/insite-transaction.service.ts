@@ -6,12 +6,16 @@ import {
   ProcessedSensorDataModel,
 } from '~iotcon-models';
 import { CachedSchemasDataModel } from '../../../module.cache/models/cached-schemas.dm';
+import { DataSourceService } from '../../../module.data-source/data-source.service';
 
 @Injectable()
 export class InsiteTransactionService {
   private readonly dataSourceType = DataSourceTypesEnum.INSITE;
 
-  constructor(private readonly logger: Logger) {}
+  constructor(
+    private readonly logger: Logger,
+    private readonly dataSourceService: DataSourceService,
+  ) {}
 
   public async createUpdateInsiteTransaction(
     module: IndicatorModuleDataModel,
@@ -31,5 +35,10 @@ export class InsiteTransactionService {
       processedData,
       persistedIndicatorKey,
     ]);
+
+    const { databusKey } =
+      await this.dataSourceService.retrieveDataSourceSnapshot(
+        module.dataSourceId,
+      );
   }
 }

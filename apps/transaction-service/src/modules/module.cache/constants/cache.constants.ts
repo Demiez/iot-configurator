@@ -1,2 +1,3 @@
 export const DEFAULT_TTL_IN_SECONDS = 3600;
 export const SCHEMA_CACHE_DB_NUMBER = 0;
+export const DATA_SOURCE_CACHE_DB_NUMBER = 1;

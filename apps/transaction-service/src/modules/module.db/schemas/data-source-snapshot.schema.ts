@@ -1,29 +1,52 @@
-import { Document, Schema } from 'mongoose';
+import {
+  AsyncModelFactory,
+  Prop,
+  Schema,
+  SchemaFactory,
+} from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
 import { v4 } from 'uuid';
 import { DataSourceTypesEnum, IDataSourceSnapshot } from '~iotcon-models';
 
-interface IDataSourceSnapshotDocument extends IDataSourceSnapshot, Document {
+@Schema({
+  toObject: {
+    virtuals: true,
+    getters: true,
+  },
+  toJSON: {
+    virtuals: true,
+    getters: true,
+  },
+})
+export class DataSourceSnapshot implements IDataSourceSnapshot {
+  @Prop({ default: v4() })
   _id: string;
+  @Prop({ type: String, enum: DataSourceTypesEnum, required: true })
+  type: DataSourceTypesEnum;
+  @Prop({ required: true })
+  databusKey: string;
+  @Prop({ required: true })
+  isVirtual: boolean;
 }
 
-const dataSourceSnapshotSchema = new Schema<IDataSourceSnapshotDocument>({
-  _id: {
-    type: String,
-    default: v4,
-  },
-  type: {
-    type: String,
-    enum: Object.values(DataSourceTypesEnum),
-  },
-  databusKey: {
-    type: String,
-  },
-  isVirtual: {
-    type: Boolean,
-    default: false,
-  },
-});
+type DataSourceSnapshotDocument = HydratedDocument<DataSourceSnapshot>;
 
-dataSourceSnapshotSchema.index({ databusKey: 1 }, { unique: true });
+const DataSourceSnapshotSchema =
+  SchemaFactory.createForClass(DataSourceSnapshot);
 
-export { IDataSourceSnapshotDocument, dataSourceSnapshotSchema };
+const dataSourceSnapshotModelFactory: AsyncModelFactory = {
+  name: DataSourceSnapshot.name,
+  useFactory: () => {
+    const schema = DataSourceSnapshotSchema;
+
+    return schema;
+  },
+};
+
+DataSourceSnapshotSchema.index({ databusKey: 1 }, { unique: true });
+
+export {
+  DataSourceSnapshotDocument,
+  DataSourceSnapshotSchema,
+  dataSourceSnapshotModelFactory,
+};

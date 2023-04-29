@@ -5,3 +5,4 @@ export * from './data-source.dm';
 export * from './data-sources.dm';
 export * from './data-sources-by-types.rm';
 export * from './data-source-generic.dm';
+export * from './data-source-snapshot.dm';

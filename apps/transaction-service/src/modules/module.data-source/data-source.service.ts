@@ -2,18 +2,26 @@ import { Injectable, Logger } from '@nestjs/common';
 import { isNil } from 'lodash';
 import { ErrorCodes } from '~iotcon-errors';
 import { ForbiddenRpcError } from '~iotcon-errors/lib/errors';
-import { ISchema, ITemplate } from '~iotcon-models';
+import { IDataSourceSnapshot, ISchema, ITemplate } from '~iotcon-models';
+import { NotFoundRpcError } from '../../core/errors/rpc-errors';
+import { DataSourceSnapshotCacheService } from '../module.cache/data-source-snapshot-cache.service';
 import { ICachedItem } from '../module.cache/interfaces';
 import { CachedSchemasDataModel } from '../module.cache/models/cached-schemas.dm';
 import { SchemaCacheService } from '../module.cache/schema-cache.service';
-import { FAILED_SCHEMAS_PARSING_MESSAGE } from './constants/data-source.constants';
+import {
+  FAILED_DATASOURCE_SNAPSHOT_FROM_DB_MESSAGE,
+  FAILED_SCHEMAS_PARSING_MESSAGE,
+} from './constants/data-source.constants';
 import { DataSourceSchemaDataModel } from './models';
+import { DataSourceSnapshotRepository } from './repository/data-source-snapshot.repository';
 
 @Injectable()
 export class DataSourceService {
   constructor(
     private readonly logger: Logger,
     private readonly schemaCacheService: SchemaCacheService,
+    private readonly dataSourceSnapshotCacheService: DataSourceSnapshotCacheService,
+    private readonly dataSourceSnapshotRepository: DataSourceSnapshotRepository,
   ) {}
 
   public async retrieveDataSourceSchemas(
@@ -29,6 +37,45 @@ export class DataSourceService {
     const schemaItems = this.mapToSchemaItems(moduleSchemas, moduleTemplates);
 
     await this.schemaCacheService.putBatchOfSchemasToCache(schemaItems);
+  }
+
+  public async retrieveDataSourceSnapshot(
+    dataSourceId: string,
+  ): Promise<IDataSourceSnapshot> {
+    const cachedItem: IDataSourceSnapshot =
+      await this.dataSourceSnapshotCacheService.getSnapshotFromCache(
+        dataSourceId,
+      );
+
+    if (cachedItem) {
+      return cachedItem;
+    }
+
+    const dataSourceFromDB =
+      await this.dataSourceSnapshotRepository.getDataSourceSnapshotById(
+        dataSourceId,
+      );
+
+    if (!dataSourceFromDB) {
+      throw new NotFoundRpcError(ErrorCodes.RECORD_NOT_FOUND, [
+        FAILED_DATASOURCE_SNAPSHOT_FROM_DB_MESSAGE,
+      ]);
+    }
+
+    const { type, databusKey, isVirtual } = dataSourceFromDB;
+
+    const cacheData = new CachedDataSourceDataModel(
+      type,
+      databusKey,
+      isVirtual,
+    );
+
+    await this.dataSourceSnapshotCacheService.putSnapshotToCache(
+      dataSourceId,
+      cacheData,
+    );
+
+    return cacheData;
   }
 
   private mapToSchemaItems(
