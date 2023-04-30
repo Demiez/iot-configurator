@@ -36,9 +36,10 @@ interface IDataSourceSnapshotDocument
 }
 
 type DataSourceSnapshotDocument = HydratedDocument<DataSourceSnapshot>;
-
 const DataSourceSnapshotSchema =
   SchemaFactory.createForClass(DataSourceSnapshot);
+
+DataSourceSnapshotSchema.index({ databusKey: 1 }, { unique: true });
 
 const dataSourceSnapshotModelFactory: AsyncModelFactory = {
   name: DataSourceSnapshot.name,
@@ -48,8 +49,6 @@ const dataSourceSnapshotModelFactory: AsyncModelFactory = {
     return schema;
   },
 };
-
-DataSourceSnapshotSchema.index({ databusKey: 1 }, { unique: true });
 
 export {
   IDataSourceSnapshotDocument,

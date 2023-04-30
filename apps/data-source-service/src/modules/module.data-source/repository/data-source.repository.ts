@@ -10,19 +10,19 @@ import { DataSource, DataSourceDocument } from '../../module.db/schemas';
 export class DataSourceRepository {
   constructor(
     @InjectModel(DataSource.name)
-    private dataSourceModel: Model<DataSourceDocument>,
+    private DataSourceModel: Model<DataSourceDocument>,
   ) {}
 
   public async saveDataSource(
     dataSourceData: DataSourceDataModel,
   ): Promise<DataSourceDocument> {
-    const dataSource = new this.dataSourceModel(dataSourceData);
+    const dataSource = new this.DataSourceModel(dataSourceData);
 
     return await dataSource.save();
   }
 
   public async findAllDataSources(): Promise<DataSourceDocument[]> {
-    const dataSources = await this.dataSourceModel.find();
+    const dataSources = await this.DataSourceModel.find();
 
     return dataSources;
   }
@@ -31,7 +31,7 @@ export class DataSourceRepository {
     types: DataSourceTypesEnum[],
     isDefault: boolean,
   ): Promise<DataSourceDocument[]> {
-    const dataSources = await this.dataSourceModel.find({
+    const dataSources = await this.DataSourceModel.find({
       type: { $in: types },
       isDefault,
     });
@@ -40,7 +40,7 @@ export class DataSourceRepository {
   }
 
   public async findDataSourceById(_id: string): Promise<DataSourceDocument> {
-    return await this.dataSourceModel.findOne({ _id });
+    return await this.DataSourceModel.findOne({ _id });
   }
 
   public async tryFindDataSourceById(_id: string): Promise<DataSourceDocument> {
@@ -58,7 +58,7 @@ export class DataSourceRepository {
   public async findDataSourcesByIds(
     ids: string[],
   ): Promise<DataSourceDocument[]> {
-    const dataSources = await this.dataSourceModel.find({
+    const dataSources = await this.DataSourceModel.find({
       _id: { $in: ids },
     });
 
@@ -66,7 +66,7 @@ export class DataSourceRepository {
   }
 
   public async deleteDataSourceById(_id: string): Promise<unknown> {
-    const dataSource = await this.dataSourceModel.findOne({
+    const dataSource = await this.DataSourceModel.findOne({
       _id,
     });
 
@@ -78,14 +78,14 @@ export class DataSourceRepository {
   }
 
   public async deleteAllDataSources(): Promise<unknown> {
-    return await this.dataSourceModel.deleteMany();
+    return await this.DataSourceModel.deleteMany();
   }
 
   public async insertManyDataSources(
     dataSources: DataSourceDataModel[],
   ): Promise<void> {
     try {
-      await this.dataSourceModel.insertMany(dataSources, {
+      await this.DataSourceModel.insertMany(dataSources, {
         ordered: false,
       });
     } catch (error) {

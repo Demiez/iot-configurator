@@ -44,6 +44,10 @@ class Variable implements IVariable {
   variableId?: string;
 }
 
+interface IVariableDocument extends IVariable, HydratedDocument<Variable> {
+  _id: string;
+}
+
 type VariableDocument = HydratedDocument<Variable>;
 const VariableSchema = SchemaFactory.createForClass(Variable);
 
@@ -68,4 +72,10 @@ const variableModelFactory: AsyncModelFactory = {
   },
 };
 
-export { Variable, VariableDocument, VariableSchema, variableModelFactory };
+export {
+  Variable,
+  IVariableDocument,
+  VariableDocument,
+  VariableSchema,
+  variableModelFactory,
+};

@@ -61,6 +61,12 @@ class Publisher implements IPublisher {
   _updated: Date;
 }
 
+interface IPublisherDocument extends IPublisher, HydratedDocument<Publisher> {
+  _id: string;
+  _created: Date;
+  _updated: Date;
+}
+
 type PublisherDocument = HydratedDocument<Publisher>;
 const PublisherSchema = SchemaFactory.createForClass(Publisher);
 
@@ -89,4 +95,10 @@ const publisherModelFactory: AsyncModelFactory = {
   },
 };
 
-export { Publisher, PublisherDocument, PublisherSchema, publisherModelFactory };
+export {
+  Publisher,
+  IPublisherDocument,
+  PublisherDocument,
+  PublisherSchema,
+  publisherModelFactory,
+};

@@ -59,6 +59,12 @@ class Sensor implements ISensor {
   _updated: Date;
 }
 
+interface ISensorDocument extends ISensor, HydratedDocument<Sensor> {
+  _id: string;
+  _created: Date;
+  _updated: Date;
+}
+
 type SensorDocument = HydratedDocument<Sensor>;
 const SensorSchema = SchemaFactory.createForClass(Sensor);
 
@@ -91,4 +97,10 @@ const sensorModelFactory: AsyncModelFactory = {
   },
 };
 
-export { Sensor, SensorDocument, SensorSchema, sensorModelFactory };
+export {
+  Sensor,
+  ISensorDocument,
+  SensorDocument,
+  SensorSchema,
+  sensorModelFactory,
+};
