@@ -43,16 +43,6 @@ export class InsiteTransactionService extends BaseTransactionService {
     processedData?: ProcessedSensorDataModel,
     persistedIndicatorKey?: string,
   ): Promise<void> {
-    this.logger.log([
-      module,
-      schemas,
-      operations,
-      sensorKey,
-      publisherKey,
-      processedData,
-      persistedIndicatorKey,
-    ]);
-
     // TODO: virtuals are always false, add check when implemented
     const { databusKey } =
       await this.dataSourceService.retrieveDataSourceSnapshot(
