@@ -10,12 +10,14 @@ import {
 import process from 'process';
 import { ErrorCodes } from '~iotcon-errors';
 import { InternalRpcError } from '../../core/errors/rpc-errors';
-import { DataSourceSchemaDataModel } from '../module.data-source/models';
 import {
   DATA_SOURCE_CACHE_DB_NUMBER,
   DEFAULT_TTL_IN_SECONDS,
 } from './constants/cache.constants';
-import { IDataSourceSnapshot } from '~iotcon-models';
+import {
+  DataSourceSnapshotDataModel,
+  IDataSourceSnapshot,
+} from '~iotcon-models';
 
 @Injectable()
 export class DataSourceSnapshotCacheService implements OnModuleInit {
@@ -64,14 +66,14 @@ export class DataSourceSnapshotCacheService implements OnModuleInit {
 
   public async getSnapshotFromCache(
     dataSourceId: string,
-  ): Promise<DataSourceSchemaDataModel> {
+  ): Promise<DataSourceSnapshotDataModel> {
     const cachedData = await this.snapshotCache.get(dataSourceId);
 
     if (!cachedData) {
       return;
     }
 
-    return JSON.parse(cachedData) as DataSourceSn;
+    return new DataSourceSnapshotDataModel(JSON.parse(cachedData));
   }
 
   public async clearSnapshotCache(): Promise<void> {

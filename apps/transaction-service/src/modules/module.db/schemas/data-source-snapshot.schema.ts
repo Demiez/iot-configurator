@@ -29,6 +29,12 @@ export class DataSourceSnapshot implements IDataSourceSnapshot {
   isVirtual: boolean;
 }
 
+interface IDataSourceSnapshotDocument
+  extends IDataSourceSnapshot,
+    HydratedDocument<DataSourceSnapshot> {
+  _id: string;
+}
+
 type DataSourceSnapshotDocument = HydratedDocument<DataSourceSnapshot>;
 
 const DataSourceSnapshotSchema =
@@ -46,6 +52,7 @@ const dataSourceSnapshotModelFactory: AsyncModelFactory = {
 DataSourceSnapshotSchema.index({ databusKey: 1 }, { unique: true });
 
 export {
+  IDataSourceSnapshotDocument,
   DataSourceSnapshotDocument,
   DataSourceSnapshotSchema,
   dataSourceSnapshotModelFactory,

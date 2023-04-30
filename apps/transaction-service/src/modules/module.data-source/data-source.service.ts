@@ -2,7 +2,13 @@ import { Injectable, Logger } from '@nestjs/common';
 import { isNil } from 'lodash';
 import { ErrorCodes } from '~iotcon-errors';
 import { ForbiddenRpcError } from '~iotcon-errors/lib/errors';
-import { IDataSourceSnapshot, ISchema, ITemplate } from '~iotcon-models';
+import {
+  DataSourceSnapshotDataModel,
+  DataSourceTypesEnum,
+  IDataSourceSnapshot,
+  ISchema,
+  ITemplate,
+} from '~iotcon-models';
 import { NotFoundRpcError } from '../../core/errors/rpc-errors';
 import { DataSourceSnapshotCacheService } from '../module.cache/data-source-snapshot-cache.service';
 import { ICachedItem } from '../module.cache/interfaces';
@@ -14,6 +20,7 @@ import {
 } from './constants/data-source.constants';
 import { DataSourceSchemaDataModel } from './models';
 import { DataSourceSnapshotRepository } from './repository/data-source-snapshot.repository';
+import { v4 } from 'uuid';
 
 @Injectable()
 export class DataSourceService {
@@ -41,6 +48,10 @@ export class DataSourceService {
 
   public async retrieveDataSourceSnapshot(
     dataSourceId: string,
+    createDataIfNotExist?: {
+      type: DataSourceTypesEnum;
+      isVirtual: boolean;
+    },
   ): Promise<IDataSourceSnapshot> {
     const cachedItem: IDataSourceSnapshot =
       await this.dataSourceSnapshotCacheService.getSnapshotFromCache(
@@ -51,31 +62,52 @@ export class DataSourceService {
       return cachedItem;
     }
 
-    const dataSourceFromDB =
+    const snapshotFromDB =
       await this.dataSourceSnapshotRepository.getDataSourceSnapshotById(
         dataSourceId,
       );
 
-    if (!dataSourceFromDB) {
+    if (!snapshotFromDB && !createDataIfNotExist) {
       throw new NotFoundRpcError(ErrorCodes.RECORD_NOT_FOUND, [
         FAILED_DATASOURCE_SNAPSHOT_FROM_DB_MESSAGE,
       ]);
     }
 
-    const { type, databusKey, isVirtual } = dataSourceFromDB;
+    let snapshotData: DataSourceSnapshotDataModel;
 
-    const cacheData = new CachedDataSourceDataModel(
-      type,
-      databusKey,
-      isVirtual,
-    );
+    if (!snapshotFromDB) {
+      const { type, isVirtual } = createDataIfNotExist;
+      const newDatabusKey = v4();
 
-    await this.dataSourceSnapshotCacheService.putSnapshotToCache(
-      dataSourceId,
-      cacheData,
-    );
+      snapshotData = DataSourceSnapshotDataModel._initializeForCache(
+        type,
+        newDatabusKey,
+        isVirtual,
+      );
 
-    return cacheData;
+      await Promise.all([
+        this.dataSourceSnapshotRepository.saveDataSourceSnapshot(snapshotData),
+        this.dataSourceSnapshotCacheService.putSnapshotToCache(
+          dataSourceId,
+          snapshotData,
+        ),
+      ]);
+    } else {
+      const { type, databusKey, isVirtual } = snapshotFromDB;
+
+      snapshotData = DataSourceSnapshotDataModel._initializeForCache(
+        type,
+        databusKey,
+        isVirtual,
+      );
+
+      await this.dataSourceSnapshotCacheService.putSnapshotToCache(
+        dataSourceId,
+        snapshotData,
+      );
+    }
+
+    return snapshotData;
   }
 
   private mapToSchemaItems(
